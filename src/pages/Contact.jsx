@@ -97,7 +97,7 @@ const Contact = () => {
               <div className="absolute top-0 right-0 w-20 h-20 bg-cyan-400/5 rounded-bl-[3rem] rounded-tr-2xl" />
 
               <p className="text-gray-300 text-sm leading-relaxed mb-2">
-                Available for freelance &amp; full-time opportunities.
+                Available for freelance & full-time opportunities.
               </p>
               <p className="text-gray-500 text-xs mb-8">
                 Response time: within 24 hours.

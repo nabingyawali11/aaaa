@@ -191,7 +191,7 @@ const MusicPlayer = () => {
                     type="submit"
                     className="flex-1 px-4 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold text-sm shadow-lg shadow-cyan-500/20 transition"
                   >
-                    Unlock &amp; Play
+                    Unlock & Play
                   </button>
                 </div>
               </form>
