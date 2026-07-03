@@ -1,0 +1,30 @@
+/* Your existing index.css with the spin animation */
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;600;800&display=swap");
+
+@import "tailwindcss";
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  body {
+    @apply bg-white text-gray-900 antialiased;
+  }
+  section {
+    @apply scroll-mt-20;
+  }
+}
+
+/* Add this animation if not already present */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
