@@ -56,7 +56,7 @@ const MusicPlayer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === "20630431") {
+    if (password === "20610113") {
       setIsUnlocked(true);
       setIsOpen(false);
       setError("");
@@ -175,7 +175,7 @@ const MusicPlayer = () => {
                     Hint
                   </span>
                   <span className="text-xs text-slate-400 font-medium italic">
-                    "only close own now this"
+                    "do you know the developer nicely"
                   </span>
                 </div>
 
