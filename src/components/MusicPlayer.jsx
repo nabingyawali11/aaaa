@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Music, Music2, Unlock, X } from "lucide-react";
-import songFile from "../assets/song/song1.mp3";
+import songFile from "../assets/song/song 2.mp3";
 
 const MusicPlayer = () => {
   const [isOpen, setIsOpen] = useState(false);
