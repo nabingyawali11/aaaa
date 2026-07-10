@@ -77,13 +77,17 @@ const Hero = () => {
       />
       <motion.div
         animate={{ y: [0, 14, 0], opacity: [0.07, 0.14, 0.07] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        transition={{
+          duration: 9,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
         className="absolute bottom-1/4 right-[6%] w-64 h-64 rounded-full bg-slate-400 blur-[100px] pointer-events-none"
       />
 
       {/* ── Main content ── */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-16 items-center min-h-screen py-28">
-
         {/* LEFT — Text column */}
         <motion.div
           variants={stagger}
@@ -105,17 +109,20 @@ const Hero = () => {
               className="leading-[1.05] text-white"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              <span className="flex items-center gap-3 text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-br from-white via-slate-200 to-slate-500 bg-clip-text text-transparent">
+              <span className="flex items-center gap-3 text-5xl md:text-6xl lg:text-7xl font-bold bg-linear-to-br from-white via-slate-200 to-slate-500 bg-clip-text text-transparent">
                 Aayusa
               </span>
-              <span className="block text-5xl md:text-6xl lg:text-7xl font-bold italic bg-gradient-to-r from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent mt-1">
+              <span className="block text-5xl md:text-6xl lg:text-7xl font-bold italic bg-linear-to-r from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent mt-1">
                 Nyaupane
               </span>
             </h1>
           </motion.div>
 
           {/* Divider */}
-          <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
+          <motion.div
+            variants={fadeUp}
+            className="flex items-center gap-3 mb-6"
+          >
             <div className="h-px w-10 bg-cyan-500/60" />
             <div className="h-px flex-1 bg-slate-700/60" />
           </motion.div>
@@ -133,7 +140,10 @@ const Hero = () => {
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mb-8">
             <motion.a
               href="#projects"
-              whileHover={{ scale: 1.03, boxShadow: "0 0 28px rgba(34,211,238,0.25)" }}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: "0 0 28px rgba(34,211,238,0.25)",
+              }}
               whileTap={{ scale: 0.97 }}
               className="px-7 py-3 rounded-full bg-cyan-500 text-slate-900 font-semibold text-sm tracking-wide transition-colors duration-200 hover:bg-cyan-400"
             >
@@ -151,7 +161,9 @@ const Hero = () => {
 
           {/* Social Links */}
           <motion.div variants={fadeUp} className="flex items-center gap-3">
-            <span className="text-slate-600 text-xs tracking-widest uppercase mr-1">Find me on</span>
+            <span className="text-slate-600 text-xs tracking-widest uppercase mr-1">
+              Find me on
+            </span>
             <div className="h-px w-6 bg-slate-700" />
             <div className="flex items-center gap-2">
               {socialLinks.map(({ icon: Icon, href, label, color }) => (
@@ -179,7 +191,7 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
           className="flex justify-center md:justify-end items-center order-1 md:order-2"
         >
-          <div className="relative w-72 h-72 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem]">
+          <div className="relative w-72 h-72 md:w-88 md:h-88 lg:w-104 lg:h-104">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -191,7 +203,10 @@ const Hero = () => {
               className="absolute -inset-8 rounded-full border border-dotted border-slate-600/20"
             />
             <motion.div
-              animate={{ borderRadius: seamlessMorph, opacity: [0.18, 0.28, 0.18] }}
+              animate={{
+                borderRadius: seamlessMorph,
+                opacity: [0.18, 0.28, 0.18],
+              }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               className="absolute inset-0 bg-cyan-500 blur-[80px]"
             />
@@ -207,7 +222,11 @@ const Hero = () => {
               transition={{
                 opacity: { duration: 1 },
                 scale: { duration: 1 },
-                borderRadius: { duration: 10, repeat: Infinity, ease: "easeInOut" },
+                borderRadius: {
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
               }}
               className="relative w-full h-full overflow-hidden border border-cyan-400/20 shadow-[0_0_60px_-10px_rgba(34,211,238,0.25),0_0_120px_-30px_rgba(34,211,238,0.12)] bg-slate-800"
             >
@@ -216,7 +235,7 @@ const Hero = () => {
                 alt="Aayusa Nyaupane"
                 className="w-full h-full object-cover scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-slate-900/30 via-transparent to-transparent" />
             </motion.div>
           </div>
         </motion.div>
@@ -249,7 +268,12 @@ const Hero = () => {
             <motion.div
               key={i}
               animate={{ y: [0, 6, 0], opacity: [0.25, 1, 0.25] }}
-              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut", delay }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay,
+              }}
               style={{ width: `${20 - i * 4}px`, height: `${20 - i * 4}px` }}
               className="border-r-2 border-b-2 border-cyan-400/80 rotate-45"
             />
@@ -258,7 +282,7 @@ const Hero = () => {
       </motion.div>
 
       {/* Bottom edge fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-28 bg-linear-to-t from-slate-900 to-transparent pointer-events-none" />
     </section>
   );
 };

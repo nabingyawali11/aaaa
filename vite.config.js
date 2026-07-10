@@ -2,9 +2,25 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
-import { cloudflare } from "@cloudflare/vite-plugin";
+const CLOUDINARY_API_KEY = "517133882581521";
+const CLOUDINARY_API_SECRET = "aI5N1pZNQ0oGQuIbUqX5EFVI2vA";
+const cloudinaryAuth =
+  "Basic " + Buffer.from(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`).toString("base64");
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), cloudflare()],
+  plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      "/api/cloudinary": {
+        target: "https://api.cloudinary.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/cloudinary/, ""),
+        configure: (proxy) => {
+          proxy.on("proxyReq", (proxyReq) => {
+            proxyReq.setHeader("Authorization", cloudinaryAuth);
+          });
+        },
+      },
+    },
+  },
 });
