@@ -1,4 +1,4 @@
-// src/pages/Education.jsx
+// components/Education.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import { GraduationCap, Calendar } from "lucide-react";
@@ -24,7 +24,7 @@ const Education = () => {
     <section id="education" className="py-20 bg-gray-50/30">
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-black tracking-tighter text-gray-900 uppercase">
+          <h2 className="text-2xl md:text-4xl font-black tracking-tighter text-gray-900 uppercase">
             [ Education ]
           </h2>
         </div>
@@ -40,7 +40,7 @@ const Education = () => {
               className="mb-10 ml-8 relative"
             >
               {/* The Dot on the vertical bar */}
-              <div className="absolute -left-[2.65rem] mt-1.5 h-4 w-4 rounded-full border-4 border-white bg-cyan-600 shadow-sm" />
+              <div className="absolute -left-10.25 mt-1.5 h-4 w-4 rounded-full border-4 border-white bg-cyan-600 shadow-sm" />
 
               <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-2">

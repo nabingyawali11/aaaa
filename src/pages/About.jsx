@@ -1,20 +1,52 @@
-// src/pages/About.jsx
-import React, { useRef } from "react";
-import { motion } from "framer-motion";
+// src/components/About.jsx
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { FileText } from "lucide-react";
 import SpotlightText from "../components/SpotlightText";
 import Aiyesa_Reusme from "../assets/Aiyesa_Reusme.pdf";
 
 const About = () => {
   const sectionRef = useRef(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth spring physics for the spotlight tracker
+  const springX = useSpring(mouseX, { stiffness: 300, damping: 40 });
+  const springY = useSpring(mouseY, { stiffness: 300, damping: 40 });
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const unsubX = springX.on("change", (v) =>
+      setPos((prev) => ({ ...prev, x: v })),
+    );
+    const unsubY = springY.on("change", (v) =>
+      setPos((prev) => ({ ...prev, y: v })),
+    );
+    return () => {
+      unsubX();
+      unsubY();
+    };
+  }, [springX, springY]);
+
+  const handleMouseMove = (e) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    // Track mouse position relative to this specific section
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
 
   return (
     <>
-      <SpotlightText className="space-y-6 text-gray-700 text-lg leading-relaxed">
+      <SpotlightText
+        mousePos={pos}
+        className="space-y-6 text-gray-700 text-lg leading-relaxed"
+      >
         <section
           id="about"
           ref={sectionRef}
-          className="py-24 cursor-none overflow-hidden bg-gray-50"
+          onMouseMove={handleMouseMove}
+          className="py-24 md:cursor-none overflow-hidden"
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-16 text-center">
             [About Me]
@@ -29,7 +61,7 @@ const About = () => {
               </span>{" "}
               and a BCA student at{" "}
               <span className="font-bold text-gray-900">
-                Butwal Kalika Campus.
+                Butwal Kalika Campus .
               </span>{" "}
               I enjoy building{" "}
               <span className="font-bold text-gray-900">
@@ -41,7 +73,7 @@ const About = () => {
               </span>
               .
             </p>
-            <br />
+            <br></br>
             <p>
               Along with technical skills, I have strong{" "}
               <span className="font-bold text-gray-900">

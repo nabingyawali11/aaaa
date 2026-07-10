@@ -16,8 +16,10 @@ function App() {
           path="/"
           element={
             <PasswordGate>
-              <MusicPlayer />
-              <Home />
+              <div className="bg-white text-gray-900 antialiased">
+                <MusicPlayer />
+                <Home />
+              </div>
             </PasswordGate>
           }
         />
@@ -27,8 +29,10 @@ function App() {
           path="*"
           element={
             <PasswordGate>
-              <MusicPlayer />
-              <Home />
+              <div className="bg-white text-gray-900 antialiased">
+                <MusicPlayer />
+                <Home />
+              </div>
             </PasswordGate>
           }
         />

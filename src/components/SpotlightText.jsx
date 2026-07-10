@@ -92,7 +92,7 @@ const SpotlightText = ({ children, className = "" }) => {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative cursor-none select-none ${className}`}
+      className={`relative md:cursor-none select-none ${className}`}
       style={{
         "--x": "0px",
         "--y": "0px",
@@ -119,7 +119,7 @@ const SpotlightText = ({ children, className = "" }) => {
               if (React.isValidElement(child)) {
                 // If child is a React element, clone it and add special styling for highlighted text
                 return React.cloneElement(child, {
-                  className: `${child.props.className || ''} [&_.font-bold]:text-cyan-400 [&_.font-bold]:font-bold`,
+                  className: `${child.props.className || ""} [&_.font-bold]:text-cyan-400 [&_.font-bold]:font-bold`,
                 });
               }
               return child;
