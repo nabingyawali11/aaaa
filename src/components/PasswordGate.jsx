@@ -36,6 +36,9 @@ function PasswordGate({ children }) {
         <p className="text-sm text-slate-400 -mt-4">
           This site is password protected
         </p>
+        <p className="text-xs text-slate-500 italic -mt-4">
+          Hint: First time we meet and exchange name and talk
+        </p>
         <input
           type="password"
           value={input}
