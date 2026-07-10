@@ -260,43 +260,24 @@ const Gallery = () => {
                 </p>
               </motion.div>
             ) : (
-              <div className="relative">
-                <AnimatePresence mode="wait">
-                  <motion.button
+              <div className="relative overflow-hidden rounded-[2rem] border bg-white/50 shadow-[0_20px_70px_-40px_rgba(111,138,109,0.12)]" style={{ borderColor: "rgba(111,138,109,0.12)", aspectRatio: "4/5" }}>
+                <AnimatePresence mode="popLayout">
+                  <motion.img
                     key={images[mobileIndex]?.id || images[mobileIndex]?.public_id || mobileIndex}
-                    initial={{ opacity: 0, x: 40 }}
+                    src={images[mobileIndex]?.secure_url}
+                    alt={images[mobileIndex]?.original_filename || images[mobileIndex]?.filename || images[mobileIndex]?.public_id}
+                    initial={{ opacity: 0, x: 80 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -40 }}
-                    transition={{ duration: 0.3 }}
-                    type="button"
-                    onClick={() => openLightbox(images[mobileIndex])}
-                    className="group relative w-full overflow-hidden rounded-[2rem] border bg-white/50 shadow-[0_20px_70px_-40px_rgba(111,138,109,0.12)]"
-                    style={{ borderColor: "rgba(111,138,109,0.12)", aspectRatio: "4/5" }}
-                  >
-                    <img
-                      src={images[mobileIndex]?.secure_url}
-                      alt={images[mobileIndex]?.original_filename || images[mobileIndex]?.filename || images[mobileIndex]?.public_id}
-                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                    />
-                    <div
-                      className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100"
-                      style={{
-                        background: "linear-gradient(to top, rgba(42,42,42,0.5), transparent)",
-                      }}
-                    />
-                    <div
-                      className="absolute bottom-4 left-4 rounded-full border px-4 py-2 text-sm opacity-0 transition duration-500 group-hover:opacity-100"
-                      style={{
-                        borderColor: "rgba(255,255,255,0.2)",
-                        backgroundColor: "rgba(248,248,245,0.9)",
-                        color: "#2a2a2a",
-                      }}
-                    >
-                      View softly
-                    </div>
-                  </motion.button>
+                    exit={{ opacity: 0, x: -80 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
                 </AnimatePresence>
-
+                <button
+                  type="button"
+                  onClick={() => openLightbox(images[mobileIndex])}
+                  className="absolute inset-0"
+                />
                 <button
                   type="button"
                   onClick={goPrev}
@@ -321,7 +302,6 @@ const Gallery = () => {
                 >
                   <ChevronRight size={20} />
                 </button>
-
               </div>
             )}
           </div>
