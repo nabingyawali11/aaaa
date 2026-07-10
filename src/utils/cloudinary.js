@@ -11,14 +11,11 @@ export async function fetchGalleryImages() {
     const body = { expression: "folder=sunflower", max_results: 500 };
     if (cursor) body.cursor = cursor;
 
-    const response = await fetch(
-      `/api/cloudinary/v1_1/${CLOUDINARY_CLOUD_NAME}/resources/search`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      },
-    );
+    const response = await fetch("/api/cloudinary-search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
