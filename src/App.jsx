@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import NavbarFooter from "./components/NavbarFooter";
 import ScrollToTop from "./components/ScrollToTop";
 import MusicPlayer from "./components/MusicPlayer";
 
@@ -19,7 +18,7 @@ function App() {
             </>
           }
         />
-        <Route path="/aayusa/3/4/1" element={<NavbarFooter />} />
+
       </Routes>
     </div>
   );
