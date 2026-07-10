@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Flower2, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Flower2, X } from "lucide-react";
 import { fetchGalleryImages } from "../utils/cloudinary";
 
 const STORAGE_KEY = "aayusa-portfolio-gallery";
@@ -69,11 +69,15 @@ const Gallery = () => {
   }, [images.length, visibleCount, isMobile]);
 
 
+  const [direction, setDirection] = useState(1);
+
   const goNext = useCallback(() => {
+    setDirection(1);
     setMobileIndex((i) => (i + 1) % images.length);
   }, [images.length]);
 
   const goPrev = useCallback(() => {
+    setDirection(-1);
     setMobileIndex((i) => (i - 1 + images.length) % images.length);
   }, [images.length]);
 
@@ -253,15 +257,16 @@ const Gallery = () => {
                 </p>
               </motion.div>
             ) : (
+              <>
               <div className="relative overflow-hidden rounded-[2rem] border bg-white/50 shadow-[0_20px_70px_-40px_rgba(111,138,109,0.12)]" style={{ borderColor: "rgba(111,138,109,0.12)", aspectRatio: "4/5" }}>
                 <AnimatePresence mode="popLayout">
                   <motion.img
                     key={images[mobileIndex]?.id || images[mobileIndex]?.public_id || mobileIndex}
                     src={images[mobileIndex]?.secure_url}
                     alt={images[mobileIndex]?.original_filename || images[mobileIndex]?.filename || images[mobileIndex]?.public_id}
-                    initial={{ opacity: 0, x: 80 }}
+                    initial={{ opacity: 0, x: direction * 80 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -80 }}
+                    exit={{ opacity: 0, x: direction * -80 }}
                     transition={{ duration: 0.35, ease: "easeInOut" }}
                     className="absolute inset-0 h-full w-full object-cover"
                   />
@@ -271,31 +276,40 @@ const Gallery = () => {
                   onClick={() => openLightbox(images[mobileIndex])}
                   className="absolute inset-0"
                 />
+              </div>
+              <div className="mt-4 flex items-center justify-between">
                 <button
                   type="button"
                   onClick={goPrev}
-                  className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border transition active:scale-90"
+                  className="rounded-full border px-6 py-3 text-sm font-semibold tracking-wide transition hover:brightness-110 active:scale-95"
                   style={{
-                    borderColor: "rgba(255,255,255,0.3)",
-                    backgroundColor: "rgba(248,248,245,0.85)",
-                    color: "#2a2a2a",
+                    borderColor: "#6F8A6D",
+                    backgroundColor: "#6F8A6D",
+                    color: "#fff",
+                    fontFamily: "'Georgia', serif",
+                    fontSize: "0.9rem",
+                    letterSpacing: "0.08em",
                   }}
                 >
-                  <ChevronLeft size={20} />
+                  🌻 previous
                 </button>
                 <button
                   type="button"
                   onClick={goNext}
-                  className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border transition active:scale-90"
+                  className="rounded-full border px-6 py-3 text-sm font-semibold tracking-wide transition hover:brightness-110 active:scale-95"
                   style={{
-                    borderColor: "rgba(255,255,255,0.3)",
-                    backgroundColor: "rgba(248,248,245,0.85)",
+                    borderColor: "#F6C343",
+                    backgroundColor: "#F6C343",
                     color: "#2a2a2a",
+                    fontFamily: "'Georgia', serif",
+                    fontSize: "0.9rem",
+                    letterSpacing: "0.08em",
                   }}
                 >
-                  <ChevronRight size={20} />
+                  next 🌻
                 </button>
               </div>
+              </>
             )}
           </div>
         ) : (
