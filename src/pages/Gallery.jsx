@@ -68,13 +68,6 @@ const Gallery = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [images.length, visibleCount, isMobile]);
 
-  useEffect(() => {
-    if (!isMobile || images.length === 0) return;
-    const interval = setInterval(() => {
-      setMobileIndex((i) => (i + 1) % images.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [isMobile, images.length]);
 
   const goNext = useCallback(() => {
     setMobileIndex((i) => (i + 1) % images.length);
