@@ -94,7 +94,7 @@ const Gallery = () => {
                 className="text-sm uppercase tracking-[0.35em]"
                 style={{ color: "#6F8A6D" }}
               >
-                A quiet garden
+                A Garden of Smiles
               </p>
               <h1
                 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
