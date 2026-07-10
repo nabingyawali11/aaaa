@@ -36,9 +36,6 @@ function PasswordGate({ children }) {
         <p className="text-sm text-slate-400 -mt-4">
           This site is password protected
         </p>
-        <p className="text-xs text-slate-500 italic -mt-4">
-          Hint: First time we meet and exchange name and talk
-        </p>
         <input
           type="password"
           value={input}
@@ -53,6 +50,9 @@ function PasswordGate({ children }) {
         {error && (
           <p className="text-sm text-red-400 -mt-2">Incorrect password</p>
         )}
+        <p className="text-sm text-amber-400/90 font-medium bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-2 text-center -mt-2">
+          Hint: First time we meet and exchange name and talk
+        </p>
         <button
           type="submit"
           className="w-64 rounded-lg bg-cyan-600 px-4 py-3 text-lg font-medium text-white transition hover:bg-cyan-500 active:scale-95"
