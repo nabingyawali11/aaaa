@@ -5,6 +5,7 @@ import Gallery from "./pages/Gallery";
 import Upload from "./pages/Upload";
 import ScrollToTop from "./components/ScrollToTop";
 import MusicPlayer from "./components/MusicPlayer";
+import PasswordGate from "./components/PasswordGate";
 
 function App() {
   return (
@@ -14,10 +15,10 @@ function App() {
         <Route
           path="/"
           element={
-            <>
+            <PasswordGate>
               <MusicPlayer />
               <Home />
-            </>
+            </PasswordGate>
           }
         />
         <Route path="/gallery" element={<Gallery />} />
@@ -25,10 +26,10 @@ function App() {
         <Route
           path="*"
           element={
-            <>
+            <PasswordGate>
               <MusicPlayer />
               <Home />
-            </>
+            </PasswordGate>
           }
         />
       </Routes>
