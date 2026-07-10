@@ -14,7 +14,7 @@ const About = () => {
         <section
           id="about"
           ref={sectionRef}
-          className="py-24 cursor-none overflow-hidden"
+          className="py-24 cursor-none overflow-hidden bg-gray-50"
         >
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-16 text-center">
             [About Me]
