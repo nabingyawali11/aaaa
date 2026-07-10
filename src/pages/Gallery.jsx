@@ -1,15 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Flower2, X } from "lucide-react";
+import { Flower2, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchGalleryImages } from "../utils/cloudinary";
 
 const STORAGE_KEY = "aayusa-portfolio-gallery";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false,
+  );
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(6);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const loadImages = async () => {
@@ -40,6 +54,7 @@ const Gallery = () => {
   }, []);
 
   useEffect(() => {
+    if (isMobile) return;
     const handleScroll = () => {
       if (
         window.innerHeight + window.scrollY >=
@@ -49,10 +64,17 @@ const Gallery = () => {
         setVisibleCount((current) => Math.min(images.length, current + 6));
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [images.length, visibleCount]);
+  }, [images.length, visibleCount, isMobile]);
+
+  const goNext = useCallback(() => {
+    setMobileIndex((i) => (i + 1) % images.length);
+  }, [images.length]);
+
+  const goPrev = useCallback(() => {
+    setMobileIndex((i) => (i - 1 + images.length) % images.length);
+  }, [images.length]);
 
   const openLightbox = (image) => setSelectedImage(image);
   const closeLightbox = () => setSelectedImage(null);
@@ -177,105 +199,247 @@ const Gallery = () => {
           </div>
         </motion.div>
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
-          {loading ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="col-span-full flex flex-col items-center justify-center py-24"
-            >
-              <div
-                className="h-10 w-10 animate-spin rounded-full border-2 border-t-transparent"
-                style={{ borderColor: "rgba(111,138,109,0.2)", borderTopColor: "transparent" }}
-              />
-              <p className="mt-4 text-sm" style={{ color: "#888" }}>
-                The garden is blooming...
-              </p>
-            </motion.div>
-          ) : images.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="col-span-full rounded-[2rem] border border-dashed p-16 text-center shadow-[0_40px_120px_-90px_rgba(111,138,109,0.12)]"
-              style={{
-                borderColor: "rgba(111,138,109,0.25)",
-                backgroundColor: "rgba(255,255,255,0.4)",
-              }}
-            >
-              <div
-                className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
-                style={{ backgroundColor: "rgba(246,195,67,0.1)" }}
+        {isMobile ? (
+          <div className="mt-14">
+            {loading ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center justify-center py-24"
               >
-                <Flower2 size={36} style={{ color: "#E8B923" }} />
-              </div>
-              <p
-                className="text-sm uppercase tracking-[0.35em]"
-                style={{ color: "#6F8A6D" }}
-              >
-                Waiting to bloom
-              </p>
-              <h2
-                className="mt-6 text-3xl font-semibold sm:text-4xl"
-                style={{ color: "#2a2a2a" }}
-              >
-                A garden in stillness
-              </h2>
-              <p
-                className="mx-auto mt-4 max-w-xl text-base leading-8"
-                style={{ color: "#888" }}
-              >
-                No photographs are here yet. When a memory finds its way into
-                this garden, it will bloom softly for you to see.
-              </p>
-            </motion.div>
-          ) : (
-            images.slice(0, visibleCount).map((item, index) => (
-              <motion.article
-                key={item.id || item.public_id}
-                initial={{ opacity: 0, y: 18 }}
+                <div
+                  className="h-10 w-10 animate-spin rounded-full border-2 border-t-transparent"
+                  style={{ borderColor: "rgba(111,138,109,0.2)", borderTopColor: "transparent" }}
+                />
+                <p className="mt-4 text-sm" style={{ color: "#888" }}>
+                  The garden is blooming...
+                </p>
+              </motion.div>
+            ) : images.length === 0 ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.08 }}
-                className="group overflow-hidden rounded-[2rem] border bg-white/50 shadow-[0_20px_70px_-40px_rgba(111,138,109,0.12)]"
-                style={{ borderColor: "rgba(111,138,109,0.12)" }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="rounded-[2rem] border border-dashed p-16 text-center shadow-[0_40px_120px_-90px_rgba(111,138,109,0.12)]"
+                style={{
+                  borderColor: "rgba(111,138,109,0.25)",
+                  backgroundColor: "rgba(255,255,255,0.4)",
+                }}
               >
+                <div
+                  className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
+                  style={{ backgroundColor: "rgba(246,195,67,0.1)" }}
+                >
+                  <Flower2 size={36} style={{ color: "#E8B923" }} />
+                </div>
+                <p
+                  className="text-sm uppercase tracking-[0.35em]"
+                  style={{ color: "#6F8A6D" }}
+                >
+                  Waiting to bloom
+                </p>
+                <h2
+                  className="mt-6 text-3xl font-semibold"
+                  style={{ color: "#2a2a2a" }}
+                >
+                  A garden in stillness
+                </h2>
+                <p
+                  className="mx-auto mt-4 max-w-xl text-base leading-8"
+                  style={{ color: "#888" }}
+                >
+                  No photographs are here yet.
+                </p>
+              </motion.div>
+            ) : (
+              <div className="relative">
+                <AnimatePresence mode="wait">
+                  <motion.button
+                    key={images[mobileIndex]?.id || images[mobileIndex]?.public_id || mobileIndex}
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -40 }}
+                    transition={{ duration: 0.3 }}
+                    type="button"
+                    onClick={() => openLightbox(images[mobileIndex])}
+                    className="group relative w-full overflow-hidden rounded-[2rem] border bg-white/50 shadow-[0_20px_70px_-40px_rgba(111,138,109,0.12)]"
+                    style={{ borderColor: "rgba(111,138,109,0.12)", aspectRatio: "4/5" }}
+                  >
+                    <img
+                      src={images[mobileIndex]?.secure_url}
+                      alt={images[mobileIndex]?.original_filename || images[mobileIndex]?.filename || images[mobileIndex]?.public_id}
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    />
+                    <div
+                      className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100"
+                      style={{
+                        background: "linear-gradient(to top, rgba(42,42,42,0.5), transparent)",
+                      }}
+                    />
+                    <div
+                      className="absolute bottom-4 left-4 rounded-full border px-4 py-2 text-sm opacity-0 transition duration-500 group-hover:opacity-100"
+                      style={{
+                        borderColor: "rgba(255,255,255,0.2)",
+                        backgroundColor: "rgba(248,248,245,0.9)",
+                        color: "#2a2a2a",
+                      }}
+                    >
+                      View softly
+                    </div>
+                  </motion.button>
+                </AnimatePresence>
+
                 <button
                   type="button"
-                  onClick={() => openLightbox(item)}
-                  className="relative block h-full w-full overflow-hidden"
+                  onClick={goPrev}
+                  className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border transition active:scale-90"
+                  style={{
+                    borderColor: "rgba(255,255,255,0.3)",
+                    backgroundColor: "rgba(248,248,245,0.85)",
+                    color: "#2a2a2a",
+                  }}
                 >
-                  <img
-                    src={item.secure_url}
-                    alt={item.original_filename || item.filename || item.public_id}
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                  />
-                  <div
-                    className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(42,42,42,0.5), transparent)",
-                    }}
-                  />
-                  <div
-                    className="absolute bottom-4 left-4 rounded-full border px-4 py-2 text-sm opacity-0 transition duration-500 group-hover:opacity-100"
-                    style={{
-                      borderColor: "rgba(255,255,255,0.2)",
-                      backgroundColor: "rgba(248,248,245,0.9)",
-                      color: "#2a2a2a",
-                    }}
-                  >
-                    View softly
-                  </div>
+                  <ChevronLeft size={20} />
                 </button>
-              </motion.article>
-            ))
-          )}
-        </div>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border transition active:scale-90"
+                  style={{
+                    borderColor: "rgba(255,255,255,0.3)",
+                    backgroundColor: "rgba(248,248,245,0.85)",
+                    color: "#2a2a2a",
+                  }}
+                >
+                  <ChevronRight size={20} />
+                </button>
 
-        {visibleCount < images.length && (
-          <div className="mt-10 flex justify-center text-sm text-slate-500">
-            Scroll down to reveal more photos.
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  <span className="text-sm tabular-nums" style={{ color: "#6F8A6D" }}>
+                    {mobileIndex + 1} / {images.length}
+                  </span>
+                </div>
+
+                <div className="mt-3 flex justify-center gap-1.5">
+                  {images.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setMobileIndex(i)}
+                      className="h-2 rounded-full transition-all duration-300"
+                      style={{
+                        width: i === mobileIndex ? "20px" : "8px",
+                        backgroundColor: i === mobileIndex ? "#E8B923" : "rgba(111,138,109,0.2)",
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+        ) : (
+          <>
+            <div className="mt-14 grid gap-6 lg:grid-cols-3">
+              {loading ? (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="col-span-full flex flex-col items-center justify-center py-24"
+                >
+                  <div
+                    className="h-10 w-10 animate-spin rounded-full border-2 border-t-transparent"
+                    style={{ borderColor: "rgba(111,138,109,0.2)", borderTopColor: "transparent" }}
+                  />
+                  <p className="mt-4 text-sm" style={{ color: "#888" }}>
+                    The garden is blooming...
+                  </p>
+                </motion.div>
+              ) : images.length === 0 ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.2 }}
+                  className="col-span-full rounded-[2rem] border border-dashed p-16 text-center shadow-[0_40px_120px_-90px_rgba(111,138,109,0.12)]"
+                  style={{
+                    borderColor: "rgba(111,138,109,0.25)",
+                    backgroundColor: "rgba(255,255,255,0.4)",
+                  }}
+                >
+                  <div
+                    className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
+                    style={{ backgroundColor: "rgba(246,195,67,0.1)" }}
+                  >
+                    <Flower2 size={36} style={{ color: "#E8B923" }} />
+                  </div>
+                  <p
+                    className="text-sm uppercase tracking-[0.35em]"
+                    style={{ color: "#6F8A6D" }}
+                  >
+                    Waiting to bloom
+                  </p>
+                  <h2
+                    className="mt-6 text-3xl font-semibold sm:text-4xl"
+                    style={{ color: "#2a2a2a" }}
+                  >
+                    A garden in stillness
+                  </h2>
+                  <p
+                    className="mx-auto mt-4 max-w-xl text-base leading-8"
+                    style={{ color: "#888" }}
+                  >
+                    No photographs are here yet. When a memory finds its way into
+                    this garden, it will bloom softly for you to see.
+                  </p>
+                </motion.div>
+              ) : (
+                images.slice(0, visibleCount).map((item, index) => (
+                  <motion.article
+                    key={item.id || item.public_id}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.08 }}
+                    className="group overflow-hidden rounded-[2rem] border bg-white/50 shadow-[0_20px_70px_-40px_rgba(111,138,109,0.12)]"
+                    style={{ borderColor: "rgba(111,138,109,0.12)" }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => openLightbox(item)}
+                      className="relative block h-full w-full overflow-hidden"
+                    >
+                      <img
+                        src={item.secure_url}
+                        alt={item.original_filename || item.filename || item.public_id}
+                        className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                      />
+                      <div
+                        className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100"
+                        style={{
+                          background:
+                            "linear-gradient(to top, rgba(42,42,42,0.5), transparent)",
+                        }}
+                      />
+                      <div
+                        className="absolute bottom-4 left-4 rounded-full border px-4 py-2 text-sm opacity-0 transition duration-500 group-hover:opacity-100"
+                        style={{
+                          borderColor: "rgba(255,255,255,0.2)",
+                          backgroundColor: "rgba(248,248,245,0.9)",
+                          color: "#2a2a2a",
+                        }}
+                      >
+                        View softly
+                      </div>
+                    </button>
+                  </motion.article>
+                ))
+              )}
+            </div>
+
+            {visibleCount < images.length && (
+              <div className="mt-10 flex justify-center text-sm text-slate-500">
+                Scroll down to reveal more photos.
+              </div>
+            )}
+          </>
         )}
       </div>
 
