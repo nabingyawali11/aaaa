@@ -68,6 +68,14 @@ const Gallery = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [images.length, visibleCount, isMobile]);
 
+  useEffect(() => {
+    if (!isMobile || images.length === 0) return;
+    const interval = setInterval(() => {
+      setMobileIndex((i) => (i + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isMobile, images.length]);
+
   const goNext = useCallback(() => {
     setMobileIndex((i) => (i + 1) % images.length);
   }, [images.length]);
@@ -314,29 +322,7 @@ const Gallery = () => {
                   <ChevronRight size={20} />
                 </button>
 
-                <div className="mt-4 flex items-center justify-center gap-2">
-                  <span className="text-sm tabular-nums" style={{ color: "#6F8A6D" }}>
-                    {mobileIndex + 1} / {images.length}
-                  </span>
-                </div>
-
-                <div className="mt-3 flex justify-center gap-1.5">
-                  {images.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setMobileIndex(i)}
-                      className="h-2 rounded-full transition-all duration-300"
-                      style={{
-                        width: i === mobileIndex ? "20px" : "8px",
-                        backgroundColor: i === mobileIndex ? "#E8B923" : "rgba(111,138,109,0.2)",
-                      }}
-                    />
-                  ))}
-                </div>
               </div>
-            )}
-          </div>
         ) : (
           <>
             <div className="mt-14 grid gap-6 lg:grid-cols-3">
