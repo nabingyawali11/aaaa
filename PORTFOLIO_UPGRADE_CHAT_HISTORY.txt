@@ -471,8 +471,29 @@ VERIFICATION:
 - Pushed to https://github.com/nabingyawali11/aaaa.git (branch main)
 
 ================================================================================
-                              
-END OF HISTORY
+                              END OF HISTORY
 ================================================================================
-END OF HISTORY
+
+                        FINAL DOC SYNC - AUG 12, 2026
+================================================================================
+
+After the song swap, all three docs were audited against the codebase and
+brought fully up to date:
+
+- PROJECT_OVERVIEW.md: Gallery entry no longer claims a route-level PasswordGate
+  (gate is the on-click modal); CountdownPage music toggle now references
+  happy-birthday-song.mp3; MemoryGallery contrast now says pink (was rose);
+  /test route (MissPage debug) added to routing table; recent-commits list
+  extended through c69fe49 and 1728074.
+- AGENTS.md: routing table gains the /test debug route; song1.mp3 documented
+  as kept-but-unreferenced.
+- Chat history: fixed a duplicated END OF HISTORY block from the earlier
+  append; file normalized to LF.
+
+VERIFICATION:
+- Docs only; no code/build impact.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main).
+
+================================================================================
+                              END OF HISTORY
 ================================================================================

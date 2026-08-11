@@ -22,6 +22,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 | `/happybirthday` | `CountdownPage` | Countdown; reveal button only after reaching zero (no preview button); "← Back" → `https://aayusaneupane.com.np/` |
 | `/happybirthday/ankita` | `HappyBirthday` | Countdown gate → "Happy Birthday to you, Aayusa!" + button to MissPage |
 | `/happybirthday/ankita/miss` | `MissPage` | Full lily-themed realm (hero photo frame, cake, story, memories, letter, CTAs); "Back Home" → `https://aayusaneupane.com.np/` |
+| `/test` | `MissPage` | Same MissPage (debug/direct-access route) |
 | `/garden/hidden-bloom-0431` | Upload | Hidden photo upload |
 | `*` | Home | Fallback (gated) |
 
