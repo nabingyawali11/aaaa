@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Music, Music2, Flower2, Heart, Sparkles, ArrowRight } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Music, Music2, Flower2, Heart, Sparkles, ArrowRight, X } from "lucide-react";
 import CandleCake from "../../components/birthday/CandleCake";
 import MemoryGallery from "../../components/birthday/MemoryGallery";
 import OriginStory from "../../components/birthday/OriginStory";
@@ -42,7 +42,11 @@ const SectionHeading = ({ kicker, title, subtitle }) => (
 const MissPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [frameIndex, setFrameIndex] = useState(0);
+  const [galleryGateOpen, setGalleryGateOpen] = useState(false);
+  const [gatePassword, setGatePassword] = useState("");
+  const [gateError, setGateError] = useState(false);
   const audioRef = useRef(null);
+  const navigate = useNavigate();
 
   const FRAME_IMAGES = [heroBackdrop, cartoon1];
 
@@ -52,6 +56,25 @@ const MissPage = () => {
     }, 4000);
     return () => clearInterval(timer);
   }, []);
+
+  const openGallery = () => {
+    if (sessionStorage.getItem("aayusa_auth") === "true") {
+      navigate("/gallery");
+    } else {
+      setGalleryGateOpen(true);
+    }
+  };
+
+  const submitGate = (e) => {
+    e.preventDefault();
+    if (gatePassword === "20820804") {
+      sessionStorage.setItem("aayusa_auth", "true");
+      navigate("/gallery");
+    } else {
+      setGateError(true);
+      setGatePassword("");
+    }
+  };
 
   useEffect(() => {
     audioRef.current = new Audio(song1);
@@ -390,24 +413,92 @@ const MissPage = () => {
               The garden still has petals left
             </h2>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                to="/gallery"
+              <button
+                type="button"
+                onClick={openGallery}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-pink-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-400 sm:w-auto"
               >
                 Explore Full Photo Garden 🌻
                 <ArrowRight size={16} />
-              </Link>
-              <Link
-                to="/"
+              </button>
+              <a
+                href="https://aayusaneupane.com.np/"
                 className="w-full rounded-full border border-pink-200/50 bg-white/70 px-8 py-4 text-center text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-pink-400 hover:text-pink-600 sm:w-auto"
               >
                 Back Home
-              </Link>
+              </a>
             </div>
           </motion.div>
         </div>
         </section>
         </div>
+
+      {/* Gallery password gate modal */}
+      <AnimatePresence>
+        {galleryGateOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          >
+            <div
+              className="absolute inset-0 bg-pink-100/60 backdrop-blur-sm"
+              onClick={() => setGalleryGateOpen(false)}
+            />
+            <motion.form
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              onSubmit={submitGate}
+              className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-pink-200/50 bg-white/90 p-8 text-center shadow-[0_40px_120px_-40px_rgba(236,72,153,0.4)] backdrop-blur-xl sm:p-10"
+            >
+              <button
+                type="button"
+                onClick={() => setGalleryGateOpen(false)}
+                aria-label="Close"
+                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-pink-200/50 bg-pink-50 text-zinc-500 transition-all duration-300 ease-out hover:bg-pink-100 hover:text-pink-600"
+              >
+                <X size={16} />
+              </button>
+              <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-pink-200/50 bg-pink-100 text-2xl">
+                🔒
+              </span>
+              <h3 className="text-xl font-bold text-zinc-800">
+                Enter Password
+              </h3>
+              <p className="mt-1 text-sm text-zinc-500">
+                This garden is password protected 🌷
+              </p>
+              <input
+                type="password"
+                value={gatePassword}
+                onChange={(e) => {
+                  setGatePassword(e.target.value);
+                  setGateError(false);
+                }}
+                placeholder="Password"
+                autoFocus
+                className="mt-6 w-full rounded-xl border border-pink-200/50 bg-pink-50/60 px-4 py-3 text-center text-lg text-zinc-800 placeholder-zinc-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-400/30"
+              />
+              {gateError && (
+                <p className="mt-2 text-sm text-pink-500">Incorrect password</p>
+              )}
+              <p className="mt-3 rounded-lg border border-pink-200/50 bg-pink-50/60 px-3 py-2 text-xs text-pink-600">
+                Hint: First time we meet and exchange name and talk
+              </p>
+              <button
+                type="submit"
+                className="mt-6 w-full rounded-full bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-400"
+              >
+                Unlock the Garden 🌻
+              </button>
+            </motion.form>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

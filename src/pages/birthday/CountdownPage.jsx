@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Music, Music2, ArrowRight, Sparkles } from "lucide-react";
 import { getNextBirthday, getBirthdayAge } from "../../data/birthday";
 import song1 from "../../assets/song/song1.mp3";
@@ -119,12 +119,12 @@ const CountdownPage = () => {
 
       {/* Back link */}
       <div className="absolute top-8 left-8 z-20">
-        <Link
-          to="/happybirthday"
+        <a
+          href="https://aayusaneupane.com.np/"
           className="rounded-full border border-white/10 px-5 py-2 text-xs font-medium tracking-wide text-slate-400 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/30 hover:text-white"
         >
           ← Back
-        </Link>
+        </a>
       </div>
 
       {/* Main card */}

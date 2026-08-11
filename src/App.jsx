@@ -26,14 +26,7 @@ function App() {
             </PasswordGate>
           }
         />
-        <Route
-          path="/gallery"
-          element={
-            <PasswordGate>
-              <Gallery />
-            </PasswordGate>
-          }
-        />
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/happybirthday/ankita" element={<HappyBirthday />} />
         <Route path="/happybirthday/ankita/miss" element={<MissPage />} />
         <Route path="/test" element={<MissPage />} />
