@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Music, Music2, ArrowRight, Sparkles } from "lucide-react";
 import { getNextBirthday, getBirthdayAge } from "../../data/birthday";
-import song1 from "../../assets/song/song1.mp3";
+import happyBirthdaySong from "../../assets/song/happy-birthday-song.mp3";
 
 const particles = Array.from({ length: 18 }, (_, i) => ({
   left: `${(i * 53) % 100}%`,
@@ -63,7 +63,7 @@ const CountdownPage = () => {
   }, [target]);
 
   useEffect(() => {
-    audioRef.current = new Audio(song1);
+    audioRef.current = new Audio(happyBirthdaySong);
     audioRef.current.loop = true;
     return () => {
       if (audioRef.current) {

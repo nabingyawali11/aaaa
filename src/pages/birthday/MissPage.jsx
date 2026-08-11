@@ -6,7 +6,7 @@ import CandleCake from "../../components/birthday/CandleCake";
 import MemoryGallery from "../../components/birthday/MemoryGallery";
 import OriginStory from "../../components/birthday/OriginStory";
 import { storyChapters, storyByline, wishLetter } from "../../data/birthday";
-import song1 from "../../assets/song/song1.mp3";
+import happyBirthdaySong from "../../assets/song/happy-birthday-song.mp3";
 import heroBackdrop from "../../assets/cartoon2.png";
 import cartoon1 from "../../assets/cartoon1.png";
 
@@ -77,7 +77,7 @@ const MissPage = () => {
   };
 
   useEffect(() => {
-    audioRef.current = new Audio(song1);
+    audioRef.current = new Audio(happyBirthdaySong);
     audioRef.current.loop = true;
     return () => {
       if (audioRef.current) {

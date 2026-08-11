@@ -377,5 +377,63 @@ VERIFICATION:
 - AGENTS.md regenerated to reflect current architecture
 
 ================================================================================
+                 
+BIRTHDAY MISS PAGE POLISH - AUG 12, 2026 (UPDATE #2)
+================================================================================
+
+SCOPE:
+Reworked the MissPage hero into a full-screen layout with a physical photo
+frame, added crossfading cartoon portraits, moved the gallery password gate to
+a click-triggered modal, swapped the Memories/Letter sections, added a shared
+cartoon2 backdrop behind Letter + Final CTA, made the letter glassmorphic,
+auto-requested the candle mic, and pointed back-buttons at the external site.
+
+WORK COMPLETED:
+
+1. HERO REDESIGN (src/pages/birthday/MissPage.jsx)
+   - Full-screen hero: min-h-screen, 12-column grid (lg:grid-cols-12),
+     text left (lg:col-span-6) + photo right (lg:col-span-6)
+   - Heading overlap fixed: pink "Happy Birthday," + inline sky "Ankita Ji!"
+     span with a sm+ line break (no absolute/negative-margin tricks)
+   - Intro copy: "Hi Ankita Ji! I'm one of your's friend which you tag name as
+     your bestfriend -- ..."
+   - Photo frame: tilted white polaroid/album mount (washi-tape corners, serif
+     italic caption "Our First meet and first duo photograph together")
+   - Images crossfade between src/assets/cartoon1.png and cartoon2.png every
+     4s (1.2s fade) via AnimatePresence; image nudged down 12px so faces clear
+     the tape strips
+
+2. GALLERY PASSWORD GATE MOVED TO BUTTON (src/App.jsx, MissPage.jsx)
+   - /gallery route no longer wrapped in PasswordGate (Gallery is public)
+   - "Explore Full Photo Garden" button opens a lily-themed password modal
+     (password 20820804, reuses sessionStorage aayusa_auth); correct password
+     navigates to /gallery; wrong password shows an error
+
+3. SECTION ORDER SWAP (MissPage.jsx)
+   - Order changed from Hero -> Candle -> Story -> Letter -> Memories -> CTA
+     to Hero -> Candle -> Story -> Memories -> Letter -> CTA
+
+4. SHARED CARTOON2 BACKDROP + GLASS LETTER (MissPage.jsx)
+   - Full-bleed cartoon2 backdrop (opacity-30, object-cover) with a vertical
+     from-white via-transparent to-white gradient merge
+   - Backdrop spans the A Letter + Final CTA sections only (not Memories)
+   - Letter card converted to transparent glassmorphism:
+     bg-white/30 + backdrop-blur-xl + border-white/50
+
+5. CANDLE MIC AUTO-PERMISSION (src/components/birthday/CandleCake.jsx)
+   - CandleCake auto-requests mic permission ~400ms after mount
+   - "Tap to Blow" fallback button only renders when NOT listening
+     (micState !== "listening"), i.e. idle/denied states keep it
+
+6. EXTERNAL BACK BUTTONS
+   - CountdownPage "<- Back" -> https://aayusaneupane.com.np/
+   - MissPage "Back Home" -> https://aayusaneupane.com.np/
+
+VERIFICATION:
+- npm run build passes with 0 errors (pre-existing chunk-size warning only)
+- Pushed to https://github.com/nabingyawali11/aaaa.git as "update bugs"
+  (commit bc5265a); earlier polish commits 9b0239a, b3dbd5a
+
+================================================================================
                               END OF HISTORY
 ================================================================================

@@ -15,7 +15,7 @@ A single-page portfolio app for **Aayusa Nyaupane**, a FullStack Developer from 
 | Route | Page | Notes |
 |-------|------|-------|
 | `/` | Home | Wrapped in `PasswordGate` (password: `20820804`, hint "First time we meet and exchange name and talk") + MusicPlayer |
-| `/gallery` | Gallery | Photo gallery wrapped in `PasswordGate` — no entry without password |
+| `/gallery` | Gallery | Public route — entry gated only by the "Explore Full Photo Garden 🌻" modal on MissPage (password `20820804`) |
 | `/happybirthday` | CountdownPage | Hidden birthday countdown — reveal ("Enter Ankita Ji's Realm") only appears after reaching zero; no preview button |
 | `/happybirthday/ankita` | HappyBirthday | Birthday countdown gate: live countdown to Aayusa's 20th; on completion shows "Happy Birthday to you, Aayusa!" + "Open Your Surprise" button → `/happybirthday/ankita/miss` |
 | `/happybirthday/ankita/miss` | MissPage | Full lily-themed birthday "realm" (cake, story, letter, memories) — direct URL or via countdown gates |
@@ -35,7 +35,7 @@ A single-page portfolio app for **Aayusa Nyaupane**, a FullStack Developer from 
 - **Upload.jsx** — Drag-and-drop image upload to Cloudinary (upload_preset `aayusa`), fake progress bar, success/error status, resets after upload
 - **HappyBirthday.jsx** — Countdown gate (uses `getNextBirthday`/`getBirthdayAge`): balloons + confetti backdrop; before zero shows a live days/hours/min/sec countdown; on reaching zero replaces it with "Happy Birthday to you, Aayusa! 🌸" and an "Open Your Surprise 🌸" button that `navigate()`s to `/happybirthday/ankita/miss`. `CandleCake` no longer rendered here (it lives on MissPage)
 - **birthday/CountdownPage.jsx** — Dark countdown to Ankita's 20th birthday (live days/hours/minutes/seconds ticking boxes), optional music toggle (`song1.mp3`), routed at `/happybirthday` (direct URL only); the reveal ("Enter Ankita Ji's Realm 🌸") only renders after reaching zero — the "Preview Birthday" button was removed so no buttons appear before zero
-- **birthday/MissPage.jsx** — The lily-themed birthday "realm" at `/happybirthday/ankita/miss`: `#FDF9F7` background with rose/sky ambient glows and falling petals, rose music toggle, hero greeting, `CandleCake`, Story section (`OriginStory` featured card + chapters 2–3), wish letter, navy/blue 3D memory carousel, and garden/home CTAs. Section titles use navy `#1e3a8a` (no white title boxes)
+- **birthday/MissPage.jsx** — The lily-themed birthday "realm" at `/happybirthday/ankita/miss`, now in **white/pink/sky** (rose replaced by pink-500 accents; navy `#1e3a8a` section headings). Section order: **Hero → CandleCake → Story → Memories → Letter → Final CTA**. Hero = full-screen two-column layout (`lg:grid-cols-12`): left is text (pink "Happy Birthday," + sky "Ankita Ji! 🌸" heading, "one of your's friend… bestfriend" intro), right is a **physical photo frame** (tilted white polaroid mount, washi-tape corners, serif caption "Our First meet and first duo photograph together 🌸") that **crossfades between `cartoon2`/`cartoon1` every 4s**. A **Letter + Final CTA** share a full-bleed `cartoon2` backdrop (opacity-30, `object-cover`, vertical white gradient merge); the Letter card is **transparent glassmorphism** (`bg-white/30 backdrop-blur-xl`). The "Explore Full Photo Garden 🌻" button opens a **lily-themed password modal** (password `20820804`, reuses `sessionStorage` `aayusa_auth`) and navigates to `/gallery` on success; "Back Home" links out to `https://aayusaneupane.com.np/`
 - **Blogs.jsx** — Sample blog list (NOT wired into routes)
 - **Experience.jsx** — Sample experience timeline (NOT wired into routes)
 
@@ -44,11 +44,11 @@ A single-page portfolio app for **Aayusa Nyaupane**, a FullStack Developer from 
 - **Navbar.jsx** — Fixed header, scroll spy highlight, lock-on-click scroll behavior, mobile menu; smooth-scrolls with navbar offset, silently updates URL
 - **Footer.jsx** — 3-column footer with social links, copyright, Privacy/Terms/Sitemap links
 - **MusicPlayer.jsx** — Floating bottom-left music button; password modal to unlock (password: `20610113`, hint "do you know the developer nicely"); loops `assets/song/song 2.mp3`; rotating icon + pulse when playing
-- **PasswordGate.jsx** — Full-screen password lock on the home page and `/gallery`; uses `sessionStorage` (`aayusa_auth`)
+- **PasswordGate.jsx** — Full-screen password lock used on the home page and `*` fallback only; uses `sessionStorage` (`aayusa_auth`, password `20820804`). The gallery is no longer route-wrapped — entry is gated by the on-click password modal inside MissPage
 - **ScrollToTop.jsx** — Floating "scroll to top" button (bottom-right) that scrolls to hero with programmatic-scroll coordination
 - **SpotlightText.jsx** — Cursor spotlight effect (dark circle with white/cyan text over gray text)
 - **CustomCursor.jsx** — Custom cursor rings (not imported in App, available for reuse)
-- **birthday/CandleCake.jsx** — Interactive SVG 3-tier cake with flickering candle flame; real mic blow-detection via `getUserMedia` → AudioContext/AnalyserNode RMS (threshold + streak), confetti bursts + Web Audio chime on blow, "Tap to Blow" manual fallback, mic-denied state; 4-song picker popup (`src/assets/song/hbd/` `1hbd`–`4hbd.mp3`, default `3hbd.mp3`) that auto-plays the chosen song, floating mini-player, dark amber wish card after blowing
+- **birthday/CandleCake.jsx** — Interactive SVG 3-tier cake with flickering candle flame; **auto-requests mic permission on mount** (getUserMedia → AudioContext/AnalyserNode RMS threshold + streak) so blowing the candle works immediately; the **"Tap to Blow" fallback button only renders when the mic is NOT listening** (idle/denied); confetti bursts + Web Audio chime on blow; 4-song picker popup (`src/assets/song/hbd/` `1hbd`–`4hbd.mp3`, default `3hbd.mp3`), floating mini-player, dark amber wish card after blowing
 - **birthday/OriginStory.jsx** — Featured story card "01 · Two Worlds, One Event" rendered as the first card of the MissPage story section (styled like the generic chapter cards); highlights `CodeFest 2025` in rose and `destiny` in navy
 - **birthday/MemoryGallery.jsx** — 3D coverflow carousel of `memoryPhotos`; cards centered with `y: "-50%"`, nav arrows + pagination BELOW the card (`relative z-30 mt-8`), aspect-ratio 4/5, click center card to open a light quote modal; fully navy/blue themed (arrows, dots, glow, modal) to contrast the rose MissPage
 - **ui/Button.jsx**, **ui/ExperienceCard.jsx**, **ui/SectionTitle.jsx**, **ui/SkillBadge.jsx** — Reusable UI primitives (not all wired into current pages)
@@ -76,6 +76,7 @@ A single-page portfolio app for **Aayusa Nyaupane**, a FullStack Developer from 
 - `song/` — `song 2.mp3` (used), `song1.mp3`, `song3.mp3`
 - `song/hbd/` — `1hbd.mp3`–`4hbd.mp3` (CandleCake song picker)
 - `lily/` — `1.png`–`7.png` (mobile gallery carousel prev/next buttons)
+- `cartoon1.png`, `cartoon2.png` — animated couple portraits; `cartoon2` is the hero backdrop (`hero-backdrop.png` is an identical copy) used in the hero frame crossfade and the Letter/Final-CTA backdrop
 
 ## Config Files
 
@@ -92,7 +93,8 @@ A single-page portfolio app for **Aayusa Nyaupane**, a FullStack Developer from 
 - Cloudinary API secret is no longer hardcoded in source files, but it WAS committed to git history via `vite.config.js` — credentials should be rotated.
 - `Blogs.jsx` and `Experience.jsx` exist but are not rendered in the app.
 - `HappyBirthday.jsx` (at `/happybirthday/ankita`) is a countdown gate: after the countdown hits zero it shows "Happy Birthday to you, Aayusa!" and an "Open Your Surprise" button to `/happybirthday/ankita/miss`; `CandleCake` was removed from it (it lives on MissPage).
-- `CountdownPage.jsx` (at `/happybirthday`) reveals its "Enter Ankita Ji's Realm 🌸" button only after reaching zero — the old "Preview Birthday" button was removed.
+- `CountdownPage.jsx` (at `/happybirthday`) reveals its "Enter Ankita Ji's Realm 🌸" button only after reaching zero — the old "Preview Birthday" button was removed; its "← Back" link points to `https://aayusaneupane.com.np/`.
+- MissPage "Back Home" button and the gallery gate unlock (`Explore Full Photo Garden 🌻`) navigate to `https://aayusaneupane.com.np/` and `/gallery` (after password), respectively.
 - `storyChapters[0]` in `birthday.js` still carries the introvert/extrovert `contrast` blocks, but since the generic loop renders `storyChapters.slice(1)`, those contrast boxes are no longer displayed (OriginStory replaces chapter 1).
 - ESLint has pre-existing repo-wide errors (no Node globals in eslint config → `process`/`Buffer` flags; core rule not counting `motion.div` JSX usage). Build passes clean.
-- Deployed/pushed to `https://github.com/nabingyawali11/aaaa.git` (branch `main`).
+- Deployed/pushed to `https://github.com/nabingyawali11/aaaa.git` (branch `main`); recent commits: `9b0239a`, `b3dbd5a`, `bc5265a`.
