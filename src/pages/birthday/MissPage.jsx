@@ -227,7 +227,7 @@ const MissPage = () => {
                     key={frameIndex}
                     src={FRAME_IMAGES[frameIndex]}
                     alt="Cartoon portrait for Ankita Ji"
-                    className="absolute inset-0 h-full w-full object-contain"
+                    className="absolute inset-x-0 top-3 h-full w-full object-contain"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -238,7 +238,7 @@ const MissPage = () => {
 
               {/* Caption */}
               <p className="mt-3 text-center font-serif text-sm italic text-zinc-500 sm:mt-4 sm:text-base">
-                Our First meet and first image duo together 🌸
+                Our First meet and first duo photograph together 🌸
               </p>
             </motion.div>
           </motion.div>
@@ -328,45 +328,11 @@ const MissPage = () => {
         </div>
       </section>
 
-      {/* Letter */}
-      <section id="letter" className="relative z-10 mx-auto max-w-3xl scroll-mt-24 px-6 py-20 sm:px-8">
-        <SectionHeading
-          kicker="A Letter"
-          title="Written, just for her"
-          subtitle="Every word below is true, and none of it is said lightly."
-        />
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-[2rem] border border-pink-200/50 bg-gradient-to-b from-pink-100/50 to-white p-8 shadow-xl backdrop-blur-md sm:p-12"
-        >
-          <Flower2 size={28} className="mb-6 text-pink-500" />
-          <p className="mb-6 text-sm font-semibold uppercase tracking-[0.25em] text-pink-500">
-            {wishLetter.salutation}
-          </p>
-          <div className="space-y-5">
-            {wishLetter.paragraphs.map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 24)}
-                className="text-base leading-[1.9] text-zinc-600"
-              >
-                {paragraph}
-              </p>
-            ))}
-          </div>
-          <p className="mt-8 whitespace-pre-line text-sm font-semibold text-pink-600">
-            {wishLetter.signature}
-          </p>
-        </motion.div>
-      </section>
-
       {/* Memories */}
       <MemoryGallery />
 
-      {/* Final CTA */}
-      <section className="relative z-10 overflow-hidden px-6 py-28 sm:px-8">
+      {/* Letter + Final CTA — shared cartoon2 backdrop */}
+      <div className="relative overflow-hidden">
         <img
           src={heroBackdrop}
           alt=""
@@ -374,6 +340,42 @@ const MissPage = () => {
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-30"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
+
+        {/* Letter */}
+        <section id="letter" className="relative z-10 mx-auto max-w-3xl scroll-mt-24 px-6 py-20 sm:px-8">
+          <SectionHeading
+            kicker="A Letter"
+            title="Written, just for her"
+            subtitle="Every word below is true, and none of it is said lightly."
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="relative overflow-hidden rounded-[2rem] border border-white/50 bg-white/30 p-8 shadow-[0_20px_60px_-20px_rgba(236,72,153,0.3)] backdrop-blur-xl sm:p-12"
+          >
+            <Flower2 size={28} className="mb-6 text-pink-500" />
+            <p className="mb-6 text-sm font-semibold uppercase tracking-[0.25em] text-pink-500">
+              {wishLetter.salutation}
+            </p>
+            <div className="space-y-5">
+              {wishLetter.paragraphs.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 24)}
+                  className="text-base leading-[1.9] text-zinc-600"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <p className="mt-8 whitespace-pre-line text-sm font-semibold text-pink-600">
+              {wishLetter.signature}
+            </p>
+          </motion.div>
+        </section>
+
+        <section className="relative z-10 mx-auto max-w-3xl px-6 py-28 text-center sm:px-8">
         <div className="relative mx-auto max-w-3xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -404,7 +406,8 @@ const MissPage = () => {
             </div>
           </motion.div>
         </div>
-      </section>
+        </section>
+        </div>
     </div>
   );
 };
