@@ -73,7 +73,7 @@ A single-page portfolio app for **Aayusa Nyaupane**, a FullStack Developer from 
 - `Aiyesa_Reusme.pdf`, `MyResume.pdf` — resumes
 - `hero.jpg`, `profile.jpg` — profile images
 - `me/` — 6 personal photos (1.webp–4.webp, 5.jpg, 6.jpg)
-- `song/` — `song 2.mp3` (used), `song1.mp3`, `song3.mp3`
+- `song/` — `happy-birthday-song.mp3` (ambient music used on CountdownPage + MissPage; imported as `happyBirthdaySong`), `song 2.mp3`, `song1.mp3` (unused, kept on disk), `song3.mp3`
 - `song/hbd/` — `1hbd.mp3`–`4hbd.mp3` (CandleCake song picker)
 - `lily/` — `1.png`–`7.png` (mobile gallery carousel prev/next buttons)
 - `cartoon1.png`, `cartoon2.png` — animated couple portraits; `cartoon2` is the hero backdrop (`hero-backdrop.png` is an identical copy) used in the hero frame crossfade and the Letter/Final-CTA backdrop

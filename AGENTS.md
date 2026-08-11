@@ -56,6 +56,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - **src/data/birthday.js** — birthday dates (BS/Gregorian), `getNextBirthday()`, `getBirthdayAge()`, `storyChapters` (chapter 1 content lives in `OriginStory`; the generic loop renders `storyChapters.slice(1)`), `memoryPhotos`, `wishLetter`, `CHIME_NOTES`.
 - **Identity strings:** use "Your Caring Person · Tech Lead" (never the developer's personal name).
 - **src/assets/lily/** — 1–7.png carousel buttons; **src/assets/song/hbd/** — 1hbd–4hbd.mp3.
+- **src/assets/song/happy-birthday-song.mp3** — ambient music on CountdownPage + MissPage (imported as `happyBirthdaySong`); `song1.mp3` also kept in the folder (re-added 2026-08-12) but is NOT referenced in code.
 - **src/assets/cartoon1.png / cartoon2.png** — crossfading hero-frame portraits; `cartoon2` also the Letter+Final-CTA backdrop (`hero-backdrop.png` is a copy of `cartoon2.png`).
 
 ## Code Constraints

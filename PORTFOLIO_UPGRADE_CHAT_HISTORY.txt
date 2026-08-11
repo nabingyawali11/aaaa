@@ -435,5 +435,44 @@ VERIFICATION:
   (commit bc5265a); earlier polish commits 9b0239a, b3dbd5a
 
 ================================================================================
-                              END OF HISTORY
+                              
+
+                     
+SONG SWAP TO HAPPY-BIRTHDAY-SONG - AUG 12, 2026
+================================================================================
+
+SCOPE:
+Replaced the ambient song used on CountdownPage and MissPage from
+src/assets/song/song1.mp3 to the new src/assets/song/happy-birthday-song.mp3,
+then re-added song1.mp3 to the folder for safekeeping (kept on disk, not used).
+
+WORK COMPLETED:
+
+1. AMBIENT TRACK SWAP
+   - src/pages/birthday/CountdownPage.jsx: import song1 ->
+     import happyBirthdaySong from ../assets/song/happy-birthday-song.mp3;
+     new Audio(song1) -> new Audio(happyBirthdaySong)
+   - src/pages/birthday/MissPage.jsx: same import + new Audio swap
+   - CandleCake.jsx untouched (its song1 import points to hbd/1hbd.mp3)
+   - old src/assets/song/song1.mp3 removed from git (commit c69fe49)
+
+2. SONG1 RE-ADDED TO FOLDER (2026-08-12)
+   - song1.mp3 put back on disk (13.5 MB, not tracked in code) so the audio
+     is not lost; happy-birthday-song.mp3 remains the only referenced track
+
+3. DOCS REFRESHED
+   - AGENTS.md: Data & Assets now documents happy-birthday-song.mp3 as the
+     ambient track and song1.mp3 as kept-but-unreferenced
+   - PROJECT_OVERVIEW.md: song/ asset list updated accordingly
+
+VERIFICATION:
+- npm run build passes with 0 errors (pre-existing chunk-size warning only)
+- happy-birthday-song.mp3 appears in dist/assets (hashed build artifact)
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main)
+
+================================================================================
+                              
+END OF HISTORY
+================================================================================
+END OF HISTORY
 ================================================================================
