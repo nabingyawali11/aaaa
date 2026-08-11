@@ -1,8 +1,8 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Cake, Heart, Flower2 } from "lucide-react";
-import CandleCake from "../components/birthday/CandleCake";
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { Cake, Heart, Flower2, ArrowRight } from "lucide-react";
+import { getNextBirthday, getBirthdayAge } from "../data/birthday";
 
 const balloons = [
   { left: "6%", size: 56, delay: 0, duration: 16, sway: 24 },
@@ -24,7 +24,58 @@ const confetti = Array.from({ length: 28 }, (_, i) => ({
   width: 6 + (i % 3) * 3,
 }));
 
+const pad = (value) => String(value).padStart(2, "0");
+
+const TimeBox = ({ value, label }) => (
+  <div className="flex flex-col items-center gap-2">
+    <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md sm:h-24 sm:w-24">
+      <AnimatePresence mode="popLayout">
+        <motion.span
+          key={value}
+          initial={{ y: 18, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -18, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="text-3xl font-bold tabular-nums text-white sm:text-4xl"
+        >
+          {pad(value)}
+        </motion.span>
+      </AnimatePresence>
+      <div className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-white/5" />
+    </div>
+    <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-amber-300/80 sm:text-xs">
+      {label}
+    </span>
+  </div>
+);
+
 const HappyBirthday = () => {
+  const navigate = useNavigate();
+  const [target] = useState(() => getNextBirthday());
+  const [timeLeft, setTimeLeft] = useState(() => getNextBirthday() - Date.now());
+  const [reached, setReached] = useState(false);
+
+  const age = getBirthdayAge();
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      const diff = target - Date.now();
+      if (diff <= 0) {
+        setReached(true);
+        setTimeLeft(0);
+        window.clearInterval(timer);
+      } else {
+        setTimeLeft(diff);
+      }
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [target]);
+
+  const days = Math.floor(timeLeft / 86400000);
+  const hours = Math.floor((timeLeft % 86400000) / 3600000);
+  const minutes = Math.floor((timeLeft % 3600000) / 60000);
+  const seconds = Math.floor((timeLeft % 60000) / 1000);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       {/* Ambient glows */}
@@ -42,7 +93,7 @@ const HappyBirthday = () => {
             height: piece.width * 1.4,
             backgroundColor: piece.color,
           }}
-          initial={{ y: -40, opacity: 0, rotate: 0 }}
+          initial={{ y: -40, opacity: 0 }}
           animate={{ y: "110vh", opacity: [0, 1, 1, 0], rotate: piece.rotate }}
           transition={{
             duration: piece.duration,
@@ -120,78 +171,104 @@ const HappyBirthday = () => {
             <Cake size={36} className="text-amber-400" />
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-amber-400"
-          >
-            A little something for you
-          </motion.p>
+          <AnimatePresence mode="wait">
+            {reached ? (
+              <motion.div
+                key="reached"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              >
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-amber-400"
+                >
+                  A little something for you
+                </motion.p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.7, ease: "easeOut" }}
-            className="bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl"
-          >
-            Happy Birthday, Ankita Ji! 🌸
-          </motion.h1>
+                <motion.h1
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45, duration: 0.7, ease: "easeOut" }}
+                  className="bg-gradient-to-r from-amber-300 via-rose-300 to-amber-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl"
+                >
+                  Happy Birthday to you, Aayusa! 🌸
+                </motion.h1>
 
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
-            className="mx-auto my-8 h-px w-40 bg-gradient-to-r from-transparent via-amber-400/70 to-transparent"
-          />
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
+                  className="mx-auto my-8 h-px w-40 bg-gradient-to-r from-transparent via-amber-400/70 to-transparent"
+                />
 
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85, duration: 0.7, ease: "easeOut" }}
-            className="mx-auto max-w-md text-base leading-relaxed text-slate-300"
-          >
-            Welcome to your 20s! ✨ Today the world celebrates the day it
-            became a little brighter. May this year bring you all the laughter,
-            love, and light you've given everyone around you. Here's to you —
-            and to every beautiful moment still waiting ahead.
-          </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.85, duration: 0.7, ease: "easeOut" }}
+                  className="mx-auto max-w-md text-base leading-relaxed text-slate-300"
+                >
+                  Today you turn {age}. The day has finally come — and a special
+                  surprise has been waiting just for you.
+                </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
-            className="mt-8 flex items-center justify-center gap-2 text-sm text-slate-400"
-          >
-            <Heart size={16} className="text-rose-400" />
-            <span>Made with love by your Caring Person · Tech Lead</span>
-            <Flower2 size={16} className="text-amber-400" />
-          </motion.div>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.1, duration: 0.6 }}
+                  className="mt-8 flex items-center justify-center gap-2 text-sm text-slate-400"
+                >
+                  <Heart size={16} className="text-rose-400" />
+                  <span>Made with love by your Caring Person · Tech Lead</span>
+                  <Flower2 size={16} className="text-amber-400" />
+                </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.25, duration: 0.6, ease: "easeOut" }}
-            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-          >
-            <Link
-              to="/gallery"
-              className="w-full rounded-full bg-amber-500 px-8 py-3 text-center text-sm font-semibold text-slate-900 transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-amber-400 sm:w-auto"
-            >
-              Visit the Garden
-            </Link>
-            <Link
-              to="/"
-              className="w-full rounded-full border border-white/15 px-8 py-3 text-center text-sm font-medium text-slate-300 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/40 hover:text-white sm:w-auto"
-            >
-              Back Home
-            </Link>
-          </motion.div>
+                <motion.button
+                  type="button"
+                  onClick={() => navigate("/happybirthday/ankita/miss")}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.25, duration: 0.6, ease: "easeOut" }}
+                  className="mt-10 inline-flex w-full items-center justify-center gap-2 rounded-full bg-amber-500 px-8 py-4 text-sm font-semibold text-slate-900 transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-amber-400 sm:w-auto"
+                >
+                  Open Your Surprise 🌸
+                  <ArrowRight size={16} />
+                </motion.button>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="counting"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-amber-300/90">
+                  Something special is blooming
+                </p>
+                <h1 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
+                  Counting down to Aayusa's {age}th Birthday 🎂
+                </h1>
+                <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-400">
+                  The garden is counting down to the day a little more sunshine
+                  enters the world. The surprise unlocks right here.
+                </p>
+
+                <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                  <TimeBox value={days} label="Days" />
+                  <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
+                  <TimeBox value={hours} label="Hours" />
+                  <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
+                  <TimeBox value={minutes} label="Minutes" />
+                  <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
+                  <TimeBox value={seconds} label="Seconds" />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
-
-      {/* Blow out the candle */}
-      <CandleCake />
     </div>
   );
 };

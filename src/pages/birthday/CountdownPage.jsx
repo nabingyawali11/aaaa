@@ -191,22 +191,7 @@ const CountdownPage = () => {
                   <ArrowRight size={16} />
                 </button>
               </motion.div>
-            ) : (
-              <motion.div
-                key="locked"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mt-10"
-              >
-                <button
-                  type="button"
-                  onClick={() => navigate("/happybirthday/ankita/miss")}
-                  className="rounded-full border border-white/15 px-6 py-2.5 text-xs font-medium tracking-wide text-slate-400 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-amber-400/40 hover:text-amber-200"
-                >
-                  Preview Birthday →
-                </button>
-              </motion.div>
-            )}
+            ) : null}
           </AnimatePresence>
         </motion.div>
       </div>

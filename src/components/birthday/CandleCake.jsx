@@ -161,6 +161,13 @@ const CandleCake = () => {
   }, []);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      startListening();
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -304,8 +311,9 @@ const CandleCake = () => {
 
   return (
     <section className="relative overflow-hidden px-6 py-16 sm:px-8 lg:px-10">
-      {/* Rose glow behind cake */}
-      <div className="pointer-events-none absolute left-1/2 top-16 h-96 w-96 -translate-x-1/2 rounded-full bg-rose-400/20 blur-[110px]" />
+      {/* Soft pink + sky glows behind cake */}
+      <div className="pointer-events-none absolute left-1/2 top-16 h-96 w-96 -translate-x-1/2 rounded-full bg-pink-200/50 blur-[110px]" />
+      <div className="pointer-events-none absolute right-10 top-40 h-72 w-72 rounded-full bg-sky-200/40 blur-[100px]" />
 
       <div className="relative mx-auto max-w-5xl">
         <motion.div
@@ -315,7 +323,7 @@ const CandleCake = () => {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="text-center"
         >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-rose-500">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
             Make a wish
           </p>
           <h2 className="text-3xl font-black tracking-tight text-[#1e3a8a] sm:text-4xl">
@@ -341,7 +349,7 @@ const CandleCake = () => {
               >
                 {/* Floating heart + sparkle */}
                 <motion.span
-                  className="absolute bottom-4 right-5 text-rose-400"
+                  className="absolute bottom-4 right-5 text-pink-400"
                   animate={{ y: [0, -8, 0], opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                 >
@@ -376,17 +384,17 @@ const CandleCake = () => {
             {micState === "listening" && (
               <div className="relative flex items-center gap-3">
                 <span className="relative flex h-4 w-4">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
-                  <span className="relative inline-flex h-4 w-4 rounded-full bg-rose-400" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-400 opacity-75" />
+                  <span className="relative inline-flex h-4 w-4 rounded-full bg-pink-400" />
                 </span>
-                <span className="text-sm font-medium text-rose-600">
+                <span className="text-sm font-medium text-pink-600">
                   Listening... blow into your mic!
                 </span>
               </div>
             )}
 
             {micState === "denied" && (
-              <p className="max-w-sm text-center text-sm leading-relaxed text-rose-500">
+              <p className="max-w-sm text-center text-sm leading-relaxed text-pink-500">
                 Microphone unavailable. No worries — tap the button below to
                 blow out the candle manually.
               </p>
@@ -397,7 +405,7 @@ const CandleCake = () => {
                 <button
                   type="button"
                   onClick={startListening}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-rose-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(244,63,94,0.6)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-rose-400 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-pink-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-400 sm:w-auto"
                 >
                   <Mic size={16} />
                   Turn on Mic to Blow Candle 🎤
@@ -408,18 +416,18 @@ const CandleCake = () => {
                 <button
                   type="button"
                   onClick={stopListening}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-rose-200 bg-white/70 px-8 py-4 text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-rose-400 hover:text-rose-600 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-pink-200/50 bg-white/70 px-8 py-4 text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-pink-400 hover:text-pink-600 sm:w-auto"
                 >
                   <MicOff size={16} />
                   Stop Listening
                 </button>
               )}
 
-              {!blown && (
+              {micState !== "listening" && !blown && (
                 <button
                   type="button"
                   onClick={extinguish}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-rose-400/50 bg-rose-500/10 px-8 py-4 text-sm font-semibold text-rose-600 transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-rose-500/20 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-pink-400/50 bg-pink-500/10 px-8 py-4 text-sm font-semibold text-pink-600 transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-500/20 sm:w-auto"
                 >
                   Tap to Blow 🎂
                 </button>
@@ -440,7 +448,7 @@ const CandleCake = () => {
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <div
-              className="absolute inset-0 bg-rose-100/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-pink-100/50 backdrop-blur-sm"
               onClick={() => setSongModalOpen(false)}
             />
             <motion.div
@@ -448,22 +456,22 @@ const CandleCake = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="relative w-full max-w-md overflow-hidden rounded-[1.75rem] border border-rose-200 bg-white/95 p-8 shadow-[0_40px_120px_-40px_rgba(244,63,94,0.4)] backdrop-blur-xl"
+              className="relative w-full max-w-md overflow-hidden rounded-[1.75rem] border border-pink-200/50 bg-white/95 p-8 shadow-[0_40px_120px_-40px_rgba(236,72,153,0.3)] backdrop-blur-xl"
             >
               <button
                 type="button"
                 onClick={() => setSongModalOpen(false)}
                 aria-label="Close song picker"
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-rose-200 bg-rose-50 text-zinc-500 transition-all duration-300 ease-out hover:bg-rose-100 hover:text-rose-600"
+                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-pink-200/50 bg-pink-50 text-zinc-500 transition-all duration-300 ease-out hover:bg-pink-100 hover:text-pink-600"
               >
                 <X size={16} />
               </button>
 
               <div className="text-center">
-                <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-rose-300 bg-rose-100 text-rose-500">
+                <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-pink-200/50 bg-pink-100 text-pink-500">
                   <Music size={24} />
                 </span>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-rose-500">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-pink-500">
                   Pick your birthday song 🎵
                 </p>
                 <h3 className="mt-2 text-xl font-bold text-zinc-800">
@@ -488,15 +496,15 @@ const CandleCake = () => {
                       }}
                       className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all duration-300 ease-out ${
                         active
-                          ? "border-rose-400 bg-rose-500/15 shadow-[0_0_24px_-6px_rgba(244,63,94,0.5)]"
-                          : "border-rose-100 bg-white hover:border-rose-300 hover:bg-rose-50/60"
+                          ? "border-pink-400 bg-pink-500/15 shadow-[0_0_24px_-6px_rgba(236,72,153,0.4)]"
+                          : "border-pink-100 bg-white hover:border-pink-300 hover:bg-pink-50/60"
                       }`}
                     >
                       <span
                         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                           active
-                            ? "bg-rose-500 text-white"
-                            : "bg-rose-100 text-rose-400"
+                            ? "bg-pink-500 text-white"
+                            : "bg-pink-100 text-pink-400"
                         }`}
                       >
                         {song.id}
@@ -504,7 +512,7 @@ const CandleCake = () => {
                       <span className="min-w-0">
                         <span
                           className={`block truncate text-sm font-semibold ${
-                            active ? "text-rose-600" : "text-zinc-700"
+                            active ? "text-pink-600" : "text-zinc-700"
                           }`}
                         >
                           {song.title}
@@ -521,7 +529,7 @@ const CandleCake = () => {
                   setSelectedSong(DEFAULT_SONG_INDEX);
                   setSongModalOpen(false);
                 }}
-                className="mt-6 w-full rounded-full border border-rose-200 bg-rose-50 px-6 py-3 text-sm font-semibold text-zinc-500 transition-all duration-300 ease-out hover:bg-rose-100 hover:text-rose-600"
+                className="mt-6 w-full rounded-full border border-pink-200/50 bg-pink-50 px-6 py-3 text-sm font-semibold text-zinc-500 transition-all duration-300 ease-out hover:bg-pink-100 hover:text-pink-600"
               >
                 Skip — use default (Nepali v3)
               </button>
@@ -540,20 +548,20 @@ const CandleCake = () => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="fixed bottom-6 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2"
           >
-            <div className="flex items-center gap-3 rounded-full border border-white/10 bg-slate-900/80 px-5 py-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8)] backdrop-blur-md">
+            <div className="flex items-center gap-3 rounded-full border border-pink-200/50 bg-white/80 px-5 py-3 shadow-[0_20px_50px_-20px_rgba(236,72,153,0.3)] backdrop-blur-md">
               <motion.span
                 animate={{ rotate: isPlaying ? 360 : 0 }}
                 transition={{ repeat: isPlaying ? Infinity : 0, duration: 3, ease: "linear" }}
-                className="shrink-0 text-amber-300"
+                className="shrink-0 text-amber-500"
               >
                 <Music size={18} />
               </motion.span>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold text-white">
+                <p className="truncate text-sm font-semibold text-zinc-800">
                   {SONGS[selectedSong].title}
                 </p>
                 {isPlaying && (
-                  <p className="text-[10px] uppercase tracking-widest text-amber-300/80">
+                  <p className="text-[10px] uppercase tracking-widest text-amber-600/80">
                     Now playing
                   </p>
                 )}
@@ -572,8 +580,8 @@ const CandleCake = () => {
                 aria-label={isMuted ? "Unmute" : "Mute"}
                 className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ease-out hover:-translate-y-0.5 ${
                   isMuted
-                    ? "border-rose-400/40 bg-rose-500/15 text-rose-300"
-                    : "border-white/15 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
+                    ? "border-pink-400/40 bg-pink-500/15 text-pink-600"
+                    : "border-pink-200/50 bg-pink-50 text-pink-500 hover:bg-pink-100 hover:text-pink-600"
                 }`}
               >
                 {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -582,7 +590,7 @@ const CandleCake = () => {
                 type="button"
                 onClick={closePlayer}
                 aria-label="Close player"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-slate-300 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-pink-200/50 bg-pink-50 text-pink-500 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-pink-100 hover:text-pink-600"
               >
                 <X size={16} />
               </button>

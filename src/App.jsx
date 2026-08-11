@@ -36,6 +36,7 @@ function App() {
         />
         <Route path="/happybirthday/ankita" element={<HappyBirthday />} />
         <Route path="/happybirthday/ankita/miss" element={<MissPage />} />
+        <Route path="/test" element={<MissPage />} />
         <Route path="/happybirthday" element={<CountdownPage />} />
         <Route path="/garden/hidden-bloom-0431" element={<Upload />} />
         <Route

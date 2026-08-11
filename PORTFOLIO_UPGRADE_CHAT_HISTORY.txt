@@ -310,5 +310,72 @@ Total Changes: 9 major files modified/created
 Status: READY FOR DEPLOYMENT ✓
 
 ================================================================================
-                             END OF HISTORY
+                  BIRTHDAY SURPRISE EXPERIENCE - AUG 12, 2026
+================================================================================
+
+SCOPE:
+Reworked the hidden birthday-surprise flow into a two-route gated experience
+(HappyBirthday countdown gate -> MissPage lily-themed realm), added a 4-song
+candle-blow picker with mini-player, converted the MissPage and memory gallery
+to a pink/blue lily theme, added a featured OriginStory card, password-gated the
+gallery, and removed dead sunflower components.
+
+WORK COMPLETED:
+
+1. HAPPYBIRTHDAY ROUTE -> COUNTDOWN GATE (src/pages/HappyBirthday.jsx)
+   - Replaced the static birthday landing with a live countdown to Aayusa's 20th
+     birthday (days/hours/minutes/seconds) using getNextBirthday()/getBirthdayAge()
+   - On reaching zero, reveals "Happy Birthday to you, Aayusa! 🌸" plus an
+     "Open Your Surprise 🌸" button that navigates to /happybirthday/ankita/miss
+   - CandleCake removed from this page (it now lives on MissPage)
+   - Balloons + confetti backdrop kept for both states
+
+2. COUNTDOWN PAGE BUTTON REMOVAL (src/pages/birthday/CountdownPage.jsx)
+   - Deleted the "Preview Birthday ->" button from the locked state
+   - No buttons render before the countdown reaches zero; the
+     "Enter Ankita Ji's Realm 🌸" button only appears once unlocked
+
+3. MISS PAGE LILY-THEME REWRITE (src/pages/birthday/MissPage.jsx)
+   - Full conversion to pink/blue lily theme: bg #FDF9F7, rose-500 accents,
+     sky-blue touches, navy #1e3a8a section headings (white title boxes removed)
+   - Falling-petal backdrop (rose/sky), rose music toggle, rose hero CTAs
+   - Section order: Hero -> CandleCake -> Story -> Letter -> MemoryGallery -> Final CTA
+   - Identity copy switched to "Your Caring Person · Tech Lead" (intro, byline, letter)
+
+4. ORIGIN STORY CARD (src/components/birthday/OriginStory.jsx - NEW)
+   - Featured "01 · Two Worlds, One Event" story card (Radiant College · CodeFest 2025)
+   - Styled exactly like the generic chapter cards (white/rose glass, number badge)
+   - Highlights "CodeFest 2025" (rose) and "destiny" (navy)
+   - Story chapter 1 body rewritten: group-photo "destiny" narrative; "Arun" name fix;
+     generic story loop now renders storyChapters.slice(1) to avoid duplication
+
+5. MEMORY GALLERY CAROUSEL (src/components/birthday/MemoryGallery.jsx)
+   - 3D coverflow carousel: cards centered with y:"-50%", nav arrows + pagination
+     BELOW the card (relative z-30 mt-8), aspect-ratio 4/5, light quote modal
+   - Converted to fully navy/blue theme (arrows, dots, glow, card borders, modal)
+     while the rest of MissPage is rose
+
+6. CANDLE CAKE SONG PICKER (src/components/birthday/CandleCake.jsx)
+   - Added 4-song selector popup that auto-opens after blowing out the candle
+   - Songs in src/assets/song/hbd/: 1hbd-4hbd.mp3; default = 3hbd.mp3
+   - Floating mini-player (play/pause, mute, close); confetti + Web Audio chime kept
+   - Post-blow wish card now a dark amber glass card with a single short message
+
+7. GALLERY PASSWORD GATE (src/App.jsx, src/pages/Gallery.jsx)
+   - /gallery route wrapped in PasswordGate (password 20820804)
+   - Mobile carousel prev/next buttons: deep-wine lily/5.png (prev) and
+     rose lily/2.png (next)
+
+8. CLEANUP / REMOVALS
+   - Deleted SurpriseGift.jsx and SunflowerBouquet.jsx and all sunflower
+     SVG-asset-set usage from MissPage
+   - Removed dead Layout.jsx and NavbarHero.jsx
+
+VERIFICATION:
+- npm run build passes with 0 errors (pre-existing chunk-size warning only)
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main)
+- AGENTS.md regenerated to reflect current architecture
+
+================================================================================
+                              END OF HISTORY
 ================================================================================
