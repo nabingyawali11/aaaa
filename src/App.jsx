@@ -6,6 +6,9 @@ import Upload from "./pages/Upload";
 import ScrollToTop from "./components/ScrollToTop";
 import MusicPlayer from "./components/MusicPlayer";
 import PasswordGate from "./components/PasswordGate";
+import HappyBirthday from "./pages/HappyBirthday";
+import CountdownPage from "./pages/birthday/CountdownPage";
+import MissPage from "./pages/birthday/MissPage";
 
 function App() {
   return (
@@ -23,7 +26,17 @@ function App() {
             </PasswordGate>
           }
         />
-        <Route path="/gallery" element={<Gallery />} />
+        <Route
+          path="/gallery"
+          element={
+            <PasswordGate>
+              <Gallery />
+            </PasswordGate>
+          }
+        />
+        <Route path="/happybirthday/ankita" element={<HappyBirthday />} />
+        <Route path="/happybirthday/ankita/miss" element={<MissPage />} />
+        <Route path="/happybirthday" element={<CountdownPage />} />
         <Route path="/garden/hidden-bloom-0431" element={<Upload />} />
         <Route
           path="*"

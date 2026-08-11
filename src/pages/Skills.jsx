@@ -1,44 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
-
-const categories = [
-  {
-    title: "Frontend",
-    skills: [
-      { name: "ReactJS", icon: "devicon:react" },
-      { name: "NextJS", icon: "devicon:nextjs" },
-      { name: "Javascript", icon: "devicon:javascript" },
-      { name: "TailwindCSS", icon: "devicon:tailwindcss" },
-      { name: "Redux", icon: "devicon:redux" },
-    ],
-  },
-  {
-    title: "Backend",
-    skills: [
-      { name: "NodeJS", icon: "devicon:nodejs" },
-      { name: "Express", icon: "devicon:express" },
-      { name: "PHP", icon: "devicon:php" },
-    ],
-  },
-  {
-    title: "Database",
-    skills: [
-      { name: "MongoDB", icon: "devicon:mongodb" },
-      { name: "MySQL", icon: "devicon:mysql" },
-      { name: "SQL", icon: "mdi:database" },
-    ],
-  },
-  {
-    title: "Tools",
-    skills: [
-      { name: "Github", icon: "devicon:github" },
-      { name: "Git", icon: "devicon:git" },
-      { name: "Postman", icon: "devicon:postman" },
-      { name: "VSCode", icon: "devicon:vscode" },
-    ],
-  },
-];
+import { skillCategories } from "../data/info";
 
 const Skills = () => {
   return (
@@ -51,7 +14,7 @@ const Skills = () => {
         </div>
 
         <div className="max-w-5xl mx-auto space-y-24">
-          {categories.map((cat) => (
+          {skillCategories.map((cat) => (
             <div
               key={cat.title}
               className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-8 md:gap-12"

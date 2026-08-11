@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Flower2, X } from "lucide-react";
 import { fetchGalleryImages } from "../utils/cloudinary";
+import lilyFlowerPrev from "../assets/lily/5.png";
+import lilyFlowerNext from "../assets/lily/2.png";
 
 const STORAGE_KEY = "aayusa-portfolio-gallery";
 
@@ -281,32 +283,34 @@ const Gallery = () => {
                 <button
                   type="button"
                   onClick={goPrev}
-                  className="rounded-full border px-6 py-3 text-sm font-semibold tracking-wide transition hover:brightness-110 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold tracking-wide transition hover:brightness-110 active:scale-95"
                   style={{
-                    borderColor: "#6F8A6D",
-                    backgroundColor: "#6F8A6D",
+                    borderColor: "#9E2258",
+                    backgroundColor: "#9E2258",
                     color: "#fff",
                     fontFamily: "'Georgia', serif",
                     fontSize: "0.9rem",
                     letterSpacing: "0.08em",
                   }}
                 >
-                  🌻 previous
+                  <img src={lilyFlowerPrev} alt="" className="h-5 w-5 object-contain" />
+                  previous
                 </button>
                 <button
                   type="button"
                   onClick={goNext}
-                  className="rounded-full border px-6 py-3 text-sm font-semibold tracking-wide transition hover:brightness-110 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold tracking-wide transition hover:brightness-110 active:scale-95"
                   style={{
-                    borderColor: "#F6C343",
-                    backgroundColor: "#F6C343",
-                    color: "#2a2a2a",
+                    borderColor: "#C8437A",
+                    backgroundColor: "#C8437A",
+                    color: "#fff",
                     fontFamily: "'Georgia', serif",
                     fontSize: "0.9rem",
                     letterSpacing: "0.08em",
                   }}
                 >
-                  next 🌻
+                  next
+                  <img src={lilyFlowerNext} alt="" className="h-5 w-5 object-contain" />
                 </button>
               </div>
               </>

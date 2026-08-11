@@ -1,19 +1,3 @@
-import {
-  Layout,
-  Code2,
-  Smartphone,
-  Terminal,
-  Globe,
-  Mic2,
-  MessageSquare,
-  GraduationCap,
-  Wind,
-  Server,
-  Database,
-  GitBranch,
-  Send,
-} from "lucide-react";
-
 export const personalInfo = {
   name: "Aayusa Nyaupane",
   role: "FullStack Developer",
@@ -25,35 +9,56 @@ export const personalInfo = {
   resumeLink: "#",
 };
 
-export const skills = [
-  { name: "ReactJS", icon: Code2, color: "text-cyan-400" },
-  { name: "NextJS", icon: Terminal, color: "text-gray-900" },
-  { name: "NodeJS", icon: Terminal, color: "text-green-600" },
-  { name: "Spring", icon: Layout, color: "text-green-500" },
-  { name: "Java", icon: Code2, color: "text-orange-600" },
-  { name: "Javascript", icon: Terminal, color: "text-yellow-400" },
-  { name: "Flutter", icon: Smartphone, color: "text-blue-400" },
-  { name: "ReactNative", icon: Smartphone, color: "text-sky-500" },
-  { name: "Github", icon: Terminal, color: "text-gray-900" },
-  { name: "MongoDB", icon: Globe, color: "text-green-500" },
-  { name: "MySQL", icon: Globe, color: "text-blue-600" },
-  { name: "PostgreSQL", icon: Globe, color: "text-blue-700" },
-  { name: "TailwindCSS", icon: Wind, color: "text-cyan-400" },
-  { name: "Express", icon: Server, color: "text-gray-600" },
-  { name: "SQL", icon: Database, color: "text-blue-500" },
-  { name: "PHP", icon: Code2, color: "text-purple-600" },
-  { name: "Git", icon: GitBranch, color: "text-orange-500" },
-  { name: "Postman", icon: Send, color: "text-orange-500" },
-  { name: "VSCode", icon: Code2, color: "text-blue-500" },
+export const educationTimeline = [
+  {
+    degree: "Bachelor in Computer Application (BCA)",
+    institution: "Butwal Kalika Campus (TU Affiliated)",
+    year: "2080 BS - Present",
+    details:
+      "Focusing on computer science fundamentals, software development, and database management.",
+  },
+  {
+    degree: "Higher Secondary Education (Management)",
+    institution: "Jagannath Secondary School",
+    year: "Passed in 2080 BS",
+    details: "Focusing on Finance, Account, and Economics.",
+  },
 ];
 
-export const education = [
+export const skillCategories = [
   {
-    date: "2023 - Present",
-    degree: "BCA (Bachelor in Computer Applications)",
-    institution: "Butwal Kalika Campus",
-    semester: "3rd Semester",
-    icon: GraduationCap,
-    desc: "Focusing on core software engineering principles and modern web architectures.",
+    title: "Frontend",
+    skills: [
+      { name: "ReactJS", icon: "devicon:react" },
+      { name: "NextJS", icon: "devicon:nextjs" },
+      { name: "Javascript", icon: "devicon:javascript" },
+      { name: "TailwindCSS", icon: "devicon:tailwindcss" },
+      { name: "Redux", icon: "devicon:redux" },
+    ],
+  },
+  {
+    title: "Backend",
+    skills: [
+      { name: "NodeJS", icon: "devicon:nodejs" },
+      { name: "Express", icon: "devicon:express" },
+      { name: "PHP", icon: "devicon:php" },
+    ],
+  },
+  {
+    title: "Database",
+    skills: [
+      { name: "MongoDB", icon: "devicon:mongodb" },
+      { name: "MySQL", icon: "devicon:mysql" },
+      { name: "SQL", icon: "mdi:database" },
+    ],
+  },
+  {
+    title: "Tools",
+    skills: [
+      { name: "Github", icon: "devicon:github" },
+      { name: "Git", icon: "devicon:git" },
+      { name: "Postman", icon: "devicon:postman" },
+      { name: "VSCode", icon: "devicon:vscode" },
+    ],
   },
 ];

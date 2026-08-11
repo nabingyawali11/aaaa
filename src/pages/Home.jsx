@@ -9,6 +9,8 @@ import Education from "./Education";
 import Contact from "./Contact";
 import Footer from "../components/Footer";
 
+const sectionComponents = [About, Education, Skills, Projects, Contact];
+
 function Home() {
   const [activeSection, setActiveSection] = useState("hero");
   const isScrollingProgrammatically = useRef(false);
@@ -73,13 +75,11 @@ function Home() {
         activeSection={activeSection}
         setActiveSection={setActiveSection}
       />
-      <main className="overflow-hidden">
+      <main className="relative overflow-hidden">
         <Hero />
-        <About />
-        <Education />
-        <Skills />
-        <Projects />
-        <Contact />
+        {sectionComponents.map((Section) => (
+          <Section key={Section.name} />
+        ))}
         <Footer />
       </main>
     </>

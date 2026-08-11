@@ -7,9 +7,9 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const apiKey = process.env.VITE_CLOUDINARY_API_KEY;
+  const apiKey = process.env.CLOUDINARY_API_KEY || process.env.VITE_CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
-  const cloudName = process.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.VITE_CLOUDINARY_CLOUD_NAME;
 
   if (!apiKey || !apiSecret || !cloudName) {
     return res.status(500).json({ error: "Cloudinary credentials not configured" });

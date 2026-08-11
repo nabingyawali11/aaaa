@@ -1,23 +1,8 @@
 // components/Education.jsx
 import React from "react";
 import { motion } from "framer-motion";
-import { GraduationCap, Calendar } from "lucide-react";
-
-const education = [
-  {
-    degree: "Bachelor in Computer Application (BCA)",
-    institution: "Butwal Kalika Campus (TU Affiliated)",
-    year: "2080 BS - Present",
-    details:
-      "Focusing on computer science fundamentals, software development, and database management.",
-  },
-  {
-    degree: "Higher Secondary Education (Management)",
-    institution: "Jagannath Secondary School",
-    year: "Passed in 2080 BS",
-    details: "Focusing on Finance, Account, and Economics.",
-  },
-];
+import { Calendar } from "lucide-react";
+import { educationTimeline } from "../data/info";
 
 const Education = () => {
   return (
@@ -30,7 +15,7 @@ const Education = () => {
         </div>
 
         <div className="relative border-l-2 border-gray-200 ml-4 md:ml-6">
-          {education.map((edu, idx) => (
+          {educationTimeline.map((edu, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, x: -20 }}

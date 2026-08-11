@@ -11,7 +11,7 @@
     @apply bg-white text-gray-900 antialiased;
   }
   section {
-    @apply scroll-mt-20;
+    @apply scroll-mt-24;
   }
 }
 

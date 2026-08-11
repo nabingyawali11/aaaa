@@ -9,27 +9,36 @@ const Hero = () => {
       icon: Github,
       href: "https://github.com/moon366",
       label: "GitHub",
-      color: "hover:text-white hover:border-white/40",
     },
     {
       icon: Linkedin,
       href: "https://www.linkedin.com/in/aayusa-neupane-445a1a351/",
       label: "LinkedIn",
-      color: "hover:text-blue-400 hover:border-blue-400/40",
     },
     {
       icon: Twitter,
       href: "https://x.com/AayusaNeu",
       label: "Twitter",
-      color: "hover:text-sky-400 hover:border-sky-400/40",
     },
     {
       icon: Mail,
       href: "mailto:aayusaneupane49@gmail.com",
       label: "Email",
-      color: "hover:text-red-400 hover:border-red-400/40",
     },
   ];
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+    window.setProgrammaticScroll?.(true, 1200);
+    const targetY = element.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+    history.pushState(
+      null,
+      "",
+      id === "hero" ? window.location.pathname : `#${id}`,
+    );
+  };
 
   const seamlessMorph = [
     "30% 70% 70% 30% / 30% 30% 70% 70%",
@@ -61,7 +70,7 @@ const Hero = () => {
 
       {/* Subtle grid overlay */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(148,163,184,1) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,1) 1px,transparent 1px)",
@@ -69,25 +78,15 @@ const Hero = () => {
         }}
       />
 
-      {/* Floating accent orbs */}
+      {/* Floating accent orb — kept very subtle for depth */}
       <motion.div
-        animate={{ y: [0, -18, 0], opacity: [0.12, 0.2, 0.12] }}
+        animate={{ y: [0, -18, 0], opacity: [0.05, 0.09, 0.05] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-1/4 left-[8%] w-72 h-72 rounded-full bg-cyan-500 blur-[120px] pointer-events-none"
       />
-      <motion.div
-        animate={{ y: [0, 14, 0], opacity: [0.07, 0.14, 0.07] }}
-        transition={{
-          duration: 9,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-        className="absolute bottom-1/4 right-[6%] w-64 h-64 rounded-full bg-slate-400 blur-[100px] pointer-events-none"
-      />
 
       {/* ── Main content ── */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-16 items-center min-h-screen py-28">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center min-h-screen py-24 md:py-28">
         {/* LEFT — Text column */}
         <motion.div
           variants={stagger}
@@ -97,7 +96,7 @@ const Hero = () => {
         >
           {/* Role badge */}
           <motion.div variants={fadeUp} className="mb-6">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 text-xs tracking-[0.25em] uppercase font-medium">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 text-xs tracking-[0.25em] uppercase font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
               FullStack Developer
             </span>
@@ -106,13 +105,13 @@ const Hero = () => {
           {/* Name */}
           <motion.div variants={fadeUp} className="mb-4 overflow-hidden">
             <h1
-              className="leading-[1.05] text-white"
+              className="leading-[1.05] text-white tracking-tight"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              <span className="flex items-center gap-3 text-5xl md:text-6xl lg:text-7xl font-bold bg-linear-to-br from-white via-slate-200 to-slate-500 bg-clip-text text-transparent">
+              <span className="flex items-center gap-3 text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight bg-linear-to-br from-white via-slate-200 to-slate-500 bg-clip-text text-transparent">
                 Aayusa
               </span>
-              <span className="block text-5xl md:text-6xl lg:text-7xl font-bold italic bg-linear-to-r from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent mt-1">
+              <span className="block text-5xl md:text-6xl lg:text-7xl font-bold italic tracking-tight bg-linear-to-r from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent mt-1">
                 Nyaupane
               </span>
             </h1>
@@ -123,7 +122,7 @@ const Hero = () => {
             variants={fadeUp}
             className="flex items-center gap-3 mb-6"
           >
-            <div className="h-px w-10 bg-cyan-500/60" />
+            <div className="h-px w-10 bg-slate-600/60" />
             <div className="h-px flex-1 bg-slate-700/60" />
           </motion.div>
 
@@ -138,44 +137,40 @@ const Hero = () => {
 
           {/* CTAs */}
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mb-8">
-            <motion.a
-              href="#projects"
-              whileHover={{
-                scale: 1.03,
-                boxShadow: "0 0 28px rgba(34,211,238,0.25)",
-              }}
-              whileTap={{ scale: 0.97 }}
-              className="px-7 py-3 rounded-full bg-cyan-500 text-slate-900 font-semibold text-sm tracking-wide transition-colors duration-200 hover:bg-cyan-400"
+            <motion.button
+              type="button"
+              variants={fadeUp}
+              onClick={() => scrollToSection("projects")}
+              className="w-full sm:w-auto text-center px-8 py-3 rounded-full bg-cyan-500 text-slate-900 font-semibold text-sm tracking-wide transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-cyan-400 active:scale-95"
             >
               View Projects
-            </motion.a>
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="px-7 py-3 rounded-full border border-slate-600 text-slate-300 font-medium text-sm tracking-wide hover:border-cyan-500/50 hover:text-white transition-colors duration-200"
+            </motion.button>
+            <motion.button
+              type="button"
+              variants={fadeUp}
+              onClick={() => scrollToSection("contact")}
+              className="w-full sm:w-auto text-center px-8 py-3 rounded-full border border-slate-600 text-slate-300 font-medium text-sm tracking-wide transition-all duration-300 ease-out hover:-translate-y-1 hover:border-slate-400 hover:text-white active:scale-95"
             >
               Get in Touch
-            </motion.a>
+            </motion.button>
           </motion.div>
 
           {/* Social Links */}
-          <motion.div variants={fadeUp} className="flex items-center gap-3">
+          <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3">
             <span className="text-slate-600 text-xs tracking-widest uppercase mr-1">
               Find me on
             </span>
             <div className="h-px w-6 bg-slate-700" />
             <div className="flex items-center gap-2">
-              {socialLinks.map(({ icon: Icon, href, label, color }) => (
+              {socialLinks.map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={label}
                   href={href}
                   aria-label={label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.15, y: -2 }}
                   whileTap={{ scale: 0.92 }}
-                  className={`w-10 h-10 rounded-full border border-slate-700/70 bg-slate-800/60 flex items-center justify-center text-slate-500 transition-all duration-200 ${color}`}
+                  className="w-10 h-10 rounded-full border border-slate-700/70 bg-slate-800/60 flex items-center justify-center text-slate-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:text-white hover:border-white/40 hover:bg-slate-700/60"
                 >
                   <Icon size={17} strokeWidth={1.7} />
                 </motion.a>
@@ -195,7 +190,7 @@ const Hero = () => {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-4 rounded-full border border-dashed border-cyan-500/15"
+              className="absolute -inset-4 rounded-full border border-dashed border-white/10"
             />
             <motion.div
               animate={{ rotate: -360 }}
@@ -210,12 +205,6 @@ const Hero = () => {
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               className="absolute inset-0 bg-cyan-500 blur-[80px]"
             />
-            <div className="absolute -top-3 -right-3 z-20 px-2.5 py-1 rounded-md bg-slate-800 border border-cyan-500/30 text-cyan-400 text-[10px] font-mono tracking-wider shadow-lg">
-              &lt;dev /&gt;
-            </div>
-            <div className="absolute -bottom-3 -left-3 z-20 px-2.5 py-1 rounded-md bg-slate-800 border border-slate-600/50 text-slate-400 text-[10px] font-mono tracking-wider shadow-lg">
-              UI · UX
-            </div>
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1, borderRadius: seamlessMorph }}
@@ -254,11 +243,11 @@ const Hero = () => {
         </span>
 
         {/* Mouse outline */}
-        <div className="w-8 h-14 rounded-full border-2 border-cyan-500/50 flex justify-center items-start pt-2.5">
+        <div className="w-8 h-14 rounded-full border-2 border-white/15 flex justify-center items-start pt-2.5">
           <motion.div
             animate={{ y: [0, 14, 0], opacity: [1, 0, 1] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="w-1.5 h-3 rounded-full bg-cyan-400"
+            className="w-1.5 h-3 rounded-full bg-slate-400"
           />
         </div>
 
@@ -275,7 +264,7 @@ const Hero = () => {
                 delay,
               }}
               style={{ width: `${20 - i * 4}px`, height: `${20 - i * 4}px` }}
-              className="border-r-2 border-b-2 border-cyan-400/80 rotate-45"
+              className="border-r-2 border-b-2 border-slate-400/60 rotate-45"
             />
           ))}
         </div>
