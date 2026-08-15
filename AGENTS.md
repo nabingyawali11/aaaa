@@ -48,7 +48,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - Section headings navy **`#1e3a8a`** — no white title boxes.
 - Cards: `bg-white/70 border-pink-200/50 shadow-xl` with pink-tinted shadows; the Letter card is transparent glassmorphism (`bg-white/30 backdrop-blur-xl`).
 - MemoryGallery is **navy/blue themed** (arrows/dots/glow in `#1e3a8a`/blue) even though the rest of MissPage is pink.
-- MissPage section order: **Hero → CandleCake → Story → Memories → Letter → Final CTA**; the Letter + Final CTA share a full-bleed `cartoon2` backdrop (opacity-30, `object-cover`, white vertical gradient merge).
+- MissPage section order: **Hero → CandleCake → Story → Memories → Letter → MissLetter → Final CTA**; the Letter + MissLetter + Final CTA share a full-bleed `cartoon2` backdrop (opacity-30, `object-cover`, white vertical gradient merge). MissPage scrolls to top (hero) on mount.
 - Dark amber theme still used on CountdownPage, HappyBirthday gate, and the post-blow wish card in CandleCake (`bg-slate-900/80 border-amber-500/20`).
 
 ## Component Conventions (src/components)

@@ -58,6 +58,10 @@ const MissPage = () => {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const openGallery = () => {
     if (sessionStorage.getItem("aayusa_auth") === "true") {
       navigate("/gallery");
@@ -399,6 +403,8 @@ const MissPage = () => {
           </motion.div>
         </section>
 
+        <MissLetter />
+
         <section className="relative z-10 mx-auto max-w-3xl px-6 py-28 text-center sm:px-8">
           <div className="relative mx-auto max-w-3xl text-center">
             <motion.div
@@ -432,8 +438,6 @@ const MissPage = () => {
             </motion.div>
           </div>
         </section>
-
-        <MissLetter />
       </div>
 
       {/* Gallery password gate modal */}
