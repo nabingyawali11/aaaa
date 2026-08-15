@@ -17,7 +17,7 @@ export const BIRTH_DATE_GREGORIAN = new Date(2006, 7, 16);
 
 export function getNextBirthday() {
   const now = new Date();
-  const next = new Date(now.getFullYear(), BIRTH_DATE_GREGORIAN.getMonth(), BIRTH_DATE_GREGORIAN.getDate());
+  const next = new Date(now.getFullYear(), BIRTH_DATE_GREGORIAN.getMonth(), BIRTH_DATE_GREGORIAN.getDate(), 22, 1, 0);
   if (next.getTime() < now.getTime()) {
     next.setFullYear(next.getFullYear() + 1);
   }

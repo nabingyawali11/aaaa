@@ -470,10 +470,6 @@ VERIFICATION:
 - happy-birthday-song.mp3 appears in dist/assets (hashed build artifact)
 - Pushed to https://github.com/nabingyawali11/aaaa.git (branch main)
 
-================================================================================
-                              END OF HISTORY
-================================================================================
-
                         FINAL DOC SYNC - AUG 12, 2026
 ================================================================================
 
@@ -493,6 +489,127 @@ brought fully up to date:
 VERIFICATION:
 - Docs only; no code/build impact.
 - Pushed to https://github.com/nabingyawali11/aaaa.git (branch main).
+
+================================================================================
+                              END OF HISTORY
+================================================================================
+
+================================================================================
+                  MEMORY PHOTO + COPY REFINEMENT - AUG 15, 2026
+================================================================================
+
+SCOPE:
+Refreshed the birthday memory photos and refined the OriginStory / chapter-1
+copy ahead of the secret-realm work.
+
+WORK COMPLETED:
+
+1. MEMORY PHOTOS (src/data/birthday.js)
+   - cloudPhoto4 URL replaced with a newer upload
+     (IMG_20260808_003312_591 on res.cloudinary.com/dbckheyqm)
+   - cloudPhoto6 replaced with a newer screenshot
+     (Screenshot_20260813-141656)
+
+2. BIRTHDAY COPY REFINEMENT
+   - storyChapters[0] body rewritten to match the OriginStory narrative
+     (CodeFest 2025 stage lights, helping Arun & Sushant Dai behind the
+     scenes, the "chatpat" anecdote, group-photo destiny)
+   - OriginStory.jsx card body expanded with the same refined narrative
+     (nervous introvert story, two full days + late night of pre-event setup)
+
+VERIFICATION:
+- npm run build passes clean.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as 2802fc7.
+
+================================================================================
+         FEELING GATE + SOMETHING TO TELL YOU - AUG 15, 2026
+================================================================================
+
+SCOPE:
+Added a third secret experience: a "FeelingGate" password gate (password
+iloveyou@miss04) that unlocks a dark "Something To Tell You" confession page.
+Every keystroke and submit attempt is logged to a Neon Postgres database via a
+new serverless function, with a dev-server middleware so logging also works
+under npm run dev.
+
+WORK COMPLETED:
+
+1. FEELING GATE (src/components/FeelingGate.jsx - NEW)
+   - Dark slate + pink glow full-screen password gate
+   - Password iloveyou@miss04; sessionStorage key aayusa_feelings
+   - Correct password stores the flag and navigates to /something-to-tell-you;
+     wrong attempts clear the input and show an error
+   - Hints box with two cryptic clues; "keep this website our little secret"
+   - Every keystroke + submission POSTed to /api/log-attempt
+   - Rendered in two places:
+     * Inside MissPage at the very bottom (after the Final CTA) - no autofocus
+     * Directly at the /feelings route - autofocus input
+
+2. SOMETHING TO TELL YOU (src/components/birthday/SomethingToTellYou.jsx - NEW)
+   - Dark slate + pink "confession" realm: Hero -> The Confession ->
+     Three Promises -> Final CTA, with floating hearts
+   - Signed "Your Caring Person · Tech Lead"
+   - Routed at /something-to-tell-you and /test2 (debug)
+
+3. ATTEMPT LOGGING (api/log-attempt.js - NEW)
+   - Serverless Postgres function using pg; reads DATABASE_URL (Neon)
+   - POST only; CORS headers; auto-creates access_logs + submitted_attempts
+   - Writes keystrokes and submissions with IP + user-agent
+   - vite.config.js gains an api-log-attempt-dev middleware plugin so the
+     endpoint works in the dev server (loads DATABASE_URL from env)
+   - .env.example documents DATABASE_URL; package.json adds pg
+
+4. ROUTES (src/App.jsx)
+   - /feelings -> FeelingGate (autoFocusInput)
+   - /something-to-tell-you -> SomethingToTellYou
+   - /test2 -> SomethingToTellYou (debug)
+
+VERIFICATION:
+- npm run build passes clean.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as 67f62aa.
+
+================================================================================
+                    MISS PAGE SCROLL-JUMP FIX - AUG 15, 2026
+================================================================================
+
+SCOPE:
+Fixed MissPage auto-scrolling to the bottom on mount. Because FeelingGate is
+embedded at the bottom of MissPage, its autofocused input caused the page to
+jump straight down when the realm opened.
+
+WORK COMPLETED:
+1. FeelingGate.jsx now takes an autoFocusInput prop
+   - /feelings route passes autoFocusInput (input autofocuses there)
+   - MissPage-embedded <FeelingGate /> passes nothing (no autofocus), so the
+     page no longer jumps to the bottom on mount
+
+VERIFICATION:
+- npm run build passes clean.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as a18e057.
+
+================================================================================
+                          FINAL DOC SYNC - AUG 15, 2026
+================================================================================
+
+After the secret-realm work, all three docs were audited against the codebase
+and brought fully up to date:
+
+- AGENTS.md: routing table gains /feelings, /something-to-tell-you and /test2;
+  Tech Stack documents api/log-attempt.js (pg, Neon, DATABASE_URL) plus the dev
+  middleware; Component Conventions gains FeelingGate.jsx and
+  birthday/SomethingToTellYou.jsx plus the embedded-FeelingGate MissPage note;
+  Code Constraints preserve the secret-realm flow and the dev logging endpoint.
+- PROJECT_OVERVIEW.md: intro, routing table, components, API/backend,
+  package.json deps (pg, react-scroll, @types/react, @types/react-dom) and
+  .env (DATABASE_URL) updated; MissPage back-link/embedded-gate behavior noted;
+  Navbar order, Home rootMargin, hero image (me/5.jpg) and recent commits
+  (a18e057, 67f62aa, 2802fc7, 0236981) refreshed.
+- Chat history: new AUG 15, 2026 sections appended; stray duplicated
+  END OF HISTORY block removed.
+
+VERIFICATION:
+- Docs only; no code/build impact.
+- Not yet pushed; commit when asked.
 
 ================================================================================
                               END OF HISTORY

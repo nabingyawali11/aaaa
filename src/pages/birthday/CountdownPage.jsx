@@ -117,16 +117,6 @@ const CountdownPage = () => {
         {isPlaying ? <Music2 size={20} /> : <Music size={20} />}
       </button>
 
-      {/* Back link */}
-      <div className="absolute top-8 left-8 z-20">
-        <a
-          href="https://aayusaneupane.com.np/"
-          className="rounded-full border border-white/10 px-5 py-2 text-xs font-medium tracking-wide text-slate-400 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/30 hover:text-white"
-        >
-          ← Back
-        </a>
-      </div>
-
       {/* Main card */}
       <div className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 py-20 sm:px-8">
         <motion.div
