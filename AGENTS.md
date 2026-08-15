@@ -1,7 +1,7 @@
 # AGENTS.md — Aayusa Portfolio & Birthday Surprise Site
 
 ## Project Overview
-A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to GitHub Pages) that also hosts a hidden **birthday surprise experience**: a countdown gate at `/happybirthday/ankita` that unlocks into the lily-themed "realm" `/happybirthday/ankita/miss`. The home page is protected by a client-side `PasswordGate`; the gallery is public at the route level but entry is gated by a password modal that only opens when clicking the "Explore Full Photo Garden 🌻" button on MissPage. A further **secret realm** (`FeelingGate` → `/something-to-tell-you`) is embedded at the bottom of MissPage and also routed directly at `/feelings`; its unlock attempts are logged to a Neon Postgres database via `api/log-attempt.js`.
+A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to GitHub Pages) that also hosts a hidden **birthday surprise experience**: a countdown gate at `/happybirthday/ankita` that unlocks into the lily-themed "realm" `/happybirthday/ankita/miss`. The home page is protected by a client-side `PasswordGate`; the gallery is public at the route level but entry is gated by a password modal that only opens when clicking the "Explore Full Photo Garden 🌻" button on MissPage. A further **secret realm** (`FeelingGate` → `/something-to-tell-you`) is routed directly at `/feelings`; its unlock attempts are logged to a Neon Postgres database via `api/log-attempt.js`.
 
 ## Commands
 - `npm run dev` — start the dev server (`http://localhost:5173`).
@@ -22,7 +22,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 | `/happybirthday` | `CountdownPage` | Countdown to Aug 16, 10:01 PM (no back button); reveal button only after reaching zero (no preview button) |
 | `/test3` | `CountdownPage` | Same CountdownPage with `forceReveal` — shows ONLY the post-zero reveal (debug/direct-access route) |
 | `/happybirthday/ankita` | `HappyBirthday` | Countdown gate → "Happy Birthday to you, Aayusa!" + button to MissPage |
-| `/happybirthday/ankita/miss` | `MissPage` | Full lily-themed realm (hero photo frame, cake, story, memories, letter, CTAs) + embedded `FeelingGate`; "← Back to Countdown" → `/happybirthday/ankita`, "Back Home" → `https://aayusaneupane.com.np/` |
+| `/happybirthday/ankita/miss` | `MissPage` | Full lily-themed realm (hero photo frame, cake, story, memories, letter, CTAs); "← Back to Countdown" → `/happybirthday/ankita`, "Back Home" → `https://aayusaneupane.com.np/` |
 | `/test` | `MissPage` | Same MissPage (debug/direct-access route) |
 | `/feelings` | `FeelingGate` | Secret-realm password gate (password `iloveyou@miss04`, storage `aayusa_feelings`, `autoFocusInput`); unlocks → `/something-to-tell-you` |
 | `/something-to-tell-you` | `SomethingToTellYou` | The "confession" page — dark realm reached after cracking the FeelingGate |
@@ -32,7 +32,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 
 **Keep the two-route MissPage flow intact:** `HappyBirthday` (gate) → `MissPage` (realm). Do not expose MissPage buttons before the countdown hits zero.
 
-**Keep the secret-realm flow intact:** `FeelingGate` (password `iloveyou@miss04`, `sessionStorage` key `aayusa_feelings`) → `/something-to-tell-you`. `FeelingGate` autofocuses its input ONLY when rendered via `/feelings` (`autoFocusInput` prop); the MissPage-embedded instance must not autofocus (fixes the page jumping to the bottom on mount).
+**Keep the secret-realm flow intact:** `FeelingGate` (password `iloveyou@miss04`, `sessionStorage` key `aayusa_feelings`) → `/something-to-tell-you`. `FeelingGate` autofocuses its input only when rendered via `/feelings` (`autoFocusInput` prop); it is NOT rendered on MissPage.
 
 ## Design System
 
@@ -55,11 +55,11 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - **birthday/CandleCake.jsx** — 3-tier SVG cake, mic blow-detection + "Tap to Blow" fallback, 4-song picker popup (`src/assets/song/hbd/`, default = `3hbd.mp3`), floating mini-player, confetti + Web Audio chime, dark amber wish card after blowing. **Auto-requests mic permission ~400ms after mount**; "Tap to Blow" only renders while NOT listening (`micState !== "listening"`).
 - **birthday/OriginStory.jsx** — Featured "01 · Two Worlds, One Event" story card, styled exactly like the generic chapter cards; highlighted `CodeFest 2025` (rose) and `destiny` (navy).
 - **birthday/MemoryGallery.jsx** — 3D coverflow carousel; cards centered with `y: "-50%"`; controls BELOW the card (`relative z-30 mt-8`); navy/blue theme; aspect-ratio 4/5; click center to open quote modal.
-- **FeelingGate.jsx** — Secret-realm password gate (password `iloveyou@miss04`, `sessionStorage` key `aayusa_feelings`) that logs every keystroke + submission to `/api/log-attempt` and unlocks `/something-to-tell-you`. Rendered inside MissPage (bottom, NO autofocus) and at `/feelings` (with `autoFocusInput`).
+- **FeelingGate.jsx** — Secret-realm password gate (password `iloveyou@miss04`, `sessionStorage` key `aayusa_feelings`) that logs every keystroke + submission to `/api/log-attempt` and unlocks `/something-to-tell-you`. Rendered only at `/feelings` (with `autoFocusInput`); NOT embedded in MissPage.
 - **birthday/SomethingToTellYou.jsx** — Dark slate "confession" page (big headline + letter-writing section) with floating hearts; the letter is saved to localStorage and POSTed to `/api/save-letter` (Neon `letters` table); routed at `/something-to-tell-you` and `/test2`.
-- **birthday/MissLetter.jsx** — Pink lily-themed letter-writing section on MissPage (placed before the embedded `<FeelingGate />`); the reply is saved to localStorage (`aayusa_birthday_letter`) and POSTed to `/api/save-birthday-letter` (Neon `birthday_letters` table).
+- **birthday/MissLetter.jsx** — Pink lily-themed letter-writing section on MissPage; the reply is saved to localStorage (`aayusa_birthday_letter`) and POSTed to `/api/save-birthday-letter` (Neon `birthday_letters` table).
 - **PasswordGate.jsx** — `sessionStorage` key `aayusa_auth`, password `20820804`. Used on `/` + `*` fallback only; the gallery gate is a pink-themed modal inside `MissPage.jsx` (`openGallery` / `submitGate`) reusing the same key/password.
-- MissPage hero: full-screen 12-col grid; right column = tilted white polaroid photo frame (washi-tape corners, caption "Our First meet and first duo photograph together 🌸") crossfading `cartoon2`/`cartoon1` every 4s. Top-left link = "← Back to Countdown" → `/happybirthday/ankita`; the external "Back Home" → `https://aayusaneupane.com.np/` lives in the Final CTA. `<FeelingGate />` is embedded at the very bottom (after the Final CTA).
+- MissPage hero: full-screen 12-col grid; right column = tilted white polaroid photo frame (washi-tape corners, caption "Our First meet and first duo photograph together 🌸") crossfading `cartoon2`/`cartoon1` every 4s. Top-left link = "← Back to Countdown" → `/happybirthday/ankita`; the external "Back Home" → `https://aayusaneupane.com.np/` lives in the Final CTA. The embedded `<FeelingGate />` has been removed from MissPage.
 - Do NOT re-add `SurpriseGift.jsx` / `SunflowerBouquet.jsx` (deleted) or the sunflower SVG asset-set usage.
 
 ## Data & Assets

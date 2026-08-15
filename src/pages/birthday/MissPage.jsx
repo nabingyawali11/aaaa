@@ -5,7 +5,6 @@ import { Music, Music2, Flower2, Heart, Sparkles, ArrowRight, X } from "lucide-r
 import CandleCake from "../../components/birthday/CandleCake";
 import MemoryGallery from "../../components/birthday/MemoryGallery";
 import OriginStory from "../../components/birthday/OriginStory";
-import FeelingGate from "../../components/FeelingGate";
 import MissLetter from "../../components/birthday/MissLetter";
 import { storyChapters, storyByline, wishLetter } from "../../data/birthday";
 import happyBirthdaySong from "../../assets/song/happy-birthday-song.mp3";
@@ -435,8 +434,6 @@ const MissPage = () => {
         </section>
 
         <MissLetter />
-
-        <FeelingGate />
       </div>
 
       {/* Gallery password gate modal */}
