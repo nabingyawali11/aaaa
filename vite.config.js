@@ -20,7 +20,29 @@ export default defineConfig(({ mode }) => {
       : null;
 
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      {
+        name: "api-log-attempt-dev",
+        configureServer(server) {
+          server.middlewares.use("/api/log-attempt", (req, res) => {
+            import("./api/log-attempt.js")
+              .then((module) => {
+                if (!process.env.DATABASE_URL) {
+                  process.env.DATABASE_URL = env.DATABASE_URL || "";
+                }
+                module.default(req, res);
+              })
+              .catch((error) => {
+                res.statusCode = 500;
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify({ error: error.message }));
+              });
+          });
+        },
+      },
+    ],
     server: {
       proxy: {
         "/api/cloudinary-search": {

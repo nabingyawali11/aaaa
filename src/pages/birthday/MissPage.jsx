@@ -5,6 +5,7 @@ import { Music, Music2, Flower2, Heart, Sparkles, ArrowRight, X } from "lucide-r
 import CandleCake from "../../components/birthday/CandleCake";
 import MemoryGallery from "../../components/birthday/MemoryGallery";
 import OriginStory from "../../components/birthday/OriginStory";
+import FeelingGate from "../../components/FeelingGate";
 import { storyChapters, storyByline, wishLetter } from "../../data/birthday";
 import happyBirthdaySong from "../../assets/song/happy-birthday-song.mp3";
 import heroBackdrop from "../../assets/cartoon2.png";
@@ -368,7 +369,7 @@ const MissPage = () => {
         <section id="letter" className="relative z-10 mx-auto max-w-3xl scroll-mt-24 px-6 py-20 sm:px-8">
           <SectionHeading
             kicker="A Letter"
-            title="Written, just for her"
+            title="Written, just for you"
             subtitle="Every word below is true, and none of it is said lightly."
           />
           <motion.div
@@ -431,6 +432,8 @@ const MissPage = () => {
             </motion.div>
           </div>
         </section>
+
+        <FeelingGate />
       </div>
 
       {/* Gallery password gate modal */}
