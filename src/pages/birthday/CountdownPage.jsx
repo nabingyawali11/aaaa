@@ -38,11 +38,11 @@ const TimeBox = ({ value, label }) => (
   </div>
 );
 
-const CountdownPage = () => {
+const CountdownPage = ({ forceReveal = false }) => {
   const navigate = useNavigate();
   const [target, setTarget] = useState(() => getNextBirthday());
   const [timeLeft, setTimeLeft] = useState(() => getNextBirthday() - Date.now());
-  const [reached, setReached] = useState(false);
+  const [reached, setReached] = useState(forceReveal);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
@@ -79,7 +79,7 @@ const CountdownPage = () => {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play().catch(() => { });
       setIsPlaying(true);
     }
   };
@@ -129,26 +129,30 @@ const CountdownPage = () => {
             <Sparkles size={32} className="text-amber-300" />
           </div>
 
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-amber-300/90">
-            Something special is blooming
-          </p>
-          <h1 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
-            Counting down to Ankita Ji's 20th Birthday 🎂
-          </h1>
-          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-400">
-            The garden is counting down to the day a little more sunshine
-            enters the world.
-          </p>
+          {!reached && (
+            <>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-amber-300/90">
+                Something special is blooming
+              </p>
+              <h1 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
+                Counting down to Ankita Ji's 20th Birthday 🎂
+              </h1>
+              <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-400">
+                The garden is counting down to the day a little more sunshine
+                enters the world.
+              </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            <TimeBox value={days} label="Days" />
-            <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
-            <TimeBox value={hours} label="Hours" />
-            <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
-            <TimeBox value={minutes} label="Minutes" />
-            <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
-            <TimeBox value={seconds} label="Seconds" />
-          </div>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                <TimeBox value={days} label="Days" />
+                <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
+                <TimeBox value={hours} label="Hours" />
+                <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
+                <TimeBox value={minutes} label="Minutes" />
+                <span className="text-2xl font-bold text-amber-300/60 sm:text-3xl">:</span>
+                <TimeBox value={seconds} label="Seconds" />
+              </div>
+            </>
+          )}
 
           {/* Reveal / unlock */}
           <AnimatePresence mode="wait">
@@ -166,11 +170,11 @@ const CountdownPage = () => {
                   </span>
                 </div>
                 <p className="mb-2 text-base leading-relaxed text-slate-300">
-                  Happy Birthday, Ankita Ji! Today she turns 20! 🌸
+                  Happy Birthday Aayusa Neupane! Today you turns 20! 🌸
                 </p>
                 <p className="mb-6 text-sm leading-relaxed text-slate-400">
                   A special surprise website crafted with love by your Caring
-                  Person · Tech Lead.
+                  Person ·
                 </p>
                 <button
                   type="button"

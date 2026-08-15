@@ -34,6 +34,7 @@ function App() {
         <Route path="/happybirthday/ankita/miss" element={<MissPage />} />
         <Route path="/test" element={<MissPage />} />
         <Route path="/test2" element={<SomethingToTellYou />} />
+        <Route path="/test3" element={<CountdownPage forceReveal />} />
         <Route path="/something-to-tell-you" element={<SomethingToTellYou />} />
         <Route path="/happybirthday" element={<CountdownPage />} />
         <Route path="/garden/hidden-bloom-0431" element={<Upload />} />
