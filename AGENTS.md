@@ -20,6 +20,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 | `/` | Home | `PasswordGate` (password `20820804`) + `MusicPlayer` |
 | `/gallery` | Gallery | Public route — entry gated only by the "Explore Full Photo Garden 🌻" modal on MissPage |
 | `/happybirthday` | `CountdownPage` | Countdown to Aug 16, 10:01 PM (no back button); reveal button only after reaching zero (no preview button) |
+| `/test3` | `CountdownPage` | Same CountdownPage with `forceReveal` — shows ONLY the post-zero reveal (debug/direct-access route) |
 | `/happybirthday/ankita` | `HappyBirthday` | Countdown gate → "Happy Birthday to you, Aayusa!" + button to MissPage |
 | `/happybirthday/ankita/miss` | `MissPage` | Full lily-themed realm (hero photo frame, cake, story, memories, letter, CTAs) + embedded `FeelingGate`; "← Back to Countdown" → `/happybirthday/ankita`, "Back Home" → `https://aayusaneupane.com.np/` |
 | `/test` | `MissPage` | Same MissPage (debug/direct-access route) |
