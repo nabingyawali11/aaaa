@@ -22,7 +22,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 | `/happybirthday` | `CountdownPage` | Countdown to Aug 16, 10:01 PM (no back button); reveal button only after reaching zero (no preview button) |
 | `/test3` | `CountdownPage` | Same CountdownPage with `forceReveal` — shows ONLY the post-zero reveal (debug/direct-access route) |
 | `/happybirthday/ankita` | `HappyBirthday` | Countdown gate → "Happy Birthday to you, Aayusa!" + button to MissPage |
-| `/happybirthday/ankita/miss` | `MissPage` | Full lily-themed realm (hero photo frame, cake, story, memories, letter, CTAs); "← Back to Countdown" → `/happybirthday/ankita`, "Back Home" → `https://aayusaneupane.com.np/` |
+| `/happybirthday/ankita/miss` | `MissPage` | Full lily-themed realm (hero photo frame, cake, story, memories, duo photo collection, letter, CTAs); "← Back to Countdown" → `/happybirthday/ankita`, "Back Home" → `https://aayusaneupane.com.np/` |
 | `/test` | `MissPage` | Same MissPage (debug/direct-access route) |
 | `/feelings` | `FeelingGate` | Secret-realm password gate (password `iloveyou@miss04`, storage `aayusa_feelings`, `autoFocusInput`); unlocks → `/something-to-tell-you` |
 | `/something-to-tell-you` | `SomethingToTellYou` | The "confession" page — dark realm reached after cracking the FeelingGate |
@@ -48,13 +48,14 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - Section headings navy **`#1e3a8a`** — no white title boxes.
 - Cards: `bg-white/70 border-pink-200/50 shadow-xl` with pink-tinted shadows; the Letter card is transparent glassmorphism (`bg-white/30 backdrop-blur-xl`).
 - MemoryGallery is **navy/blue themed** (arrows/dots/glow in `#1e3a8a`/blue) even though the rest of MissPage is pink.
-- MissPage section order: **Hero → CandleCake → Story → Memories → Letter → MissLetter → Final CTA**; the Letter + MissLetter + Final CTA share a full-bleed `cartoon2` backdrop (opacity-30, `object-cover`, white vertical gradient merge). MissPage scrolls to top (hero) on mount.
+- MissPage section order: **Hero → CandleCake → Story → Memories → DuoPhotosSection → Letter → MissLetter → Final CTA**; the Letter + MissLetter + Final CTA share a full-bleed `cartoon2` backdrop (opacity-30, `object-cover`, white vertical gradient merge), with `DuoPhotosSection` sitting between MemoryGallery and that backdrop. MissPage scrolls to top (hero) on mount.
 - Dark amber theme still used on CountdownPage, HappyBirthday gate, and the post-blow wish card in CandleCake (`bg-slate-900/80 border-amber-500/20`).
 
 ## Component Conventions (src/components)
 - **birthday/CandleCake.jsx** — 3-tier SVG cake, mic blow-detection + "Tap to Blow" fallback, 4-song picker popup (`src/assets/song/hbd/`, default = `3hbd.mp3`), floating mini-player, confetti + Web Audio chime, dark amber wish card after blowing. **Auto-requests mic permission ~400ms after mount**; "Tap to Blow" only renders while NOT listening (`micState !== "listening"`).
 - **birthday/OriginStory.jsx** — Featured "01 · Two Worlds, One Event" story card, styled exactly like the generic chapter cards; highlighted `CodeFest 2025` (rose) and `destiny` (navy).
 - **birthday/MemoryGallery.jsx** — 3D coverflow carousel; cards centered with `y: "-50%"`; controls BELOW the card (`relative z-30 mt-8`); navy/blue theme; aspect-ratio 4/5; click center to open quote modal.
+- **birthday/DuoPhotosSection.jsx** — Single navy/blue gradient glass card (`rounded-3xl`, backdrop-blur, hover glow) rendering one photo at a time from `src/assets/duo/`; left/right arrow buttons cycle all 9 photos (always visible on mobile, hover-reveal on `md+`), keyboard ArrowLeft/ArrowRight also navigate; Original / Cartoon V1 / Cartoon V2 selector chips jump within the current collection, pagination dots jump between collections; clicking the photo opens a navy popup modal (Esc/backdrop closes); badges distinguish "Original Memories" (sky) vs "Cartoon Edition ✨" (pink); section heading is sunflower yellow (`amber-500`); portrait photos render `aspect-[4/5]`, landscape `img3`/cartoons auto-switch to `aspect-[4/3]` via an `isLandscape` flag.
 - **FeelingGate.jsx** — Secret-realm password gate (password `iloveyou@miss04`, `sessionStorage` key `aayusa_feelings`) that logs every keystroke + submission to `/api/log-attempt` and unlocks `/something-to-tell-you`. Rendered only at `/feelings` (with `autoFocusInput`); NOT embedded in MissPage.
 - **birthday/SomethingToTellYou.jsx** — Dark slate "confession" page (big headline + letter-writing section) with floating hearts; the letter is saved to localStorage and POSTed to `/api/save-letter` (Neon `letters` table); routed at `/something-to-tell-you` and `/test2`.
 - **birthday/MissLetter.jsx** — Pink lily-themed letter-writing section on MissPage; the reply is saved to localStorage (`aayusa_birthday_letter`) and POSTed to `/api/save-birthday-letter` (Neon `birthday_letters` table).
@@ -66,6 +67,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - **src/data/birthday.js** — birthday dates (BS/Gregorian), `getNextBirthday()` (returns the next Aug 16 at **10:01 PM**), `getBirthdayAge()`, `storyChapters` (chapter 1 content lives in `OriginStory`; the generic loop renders `storyChapters.slice(1)`), `memoryPhotos` (1–3 local, 4–6 Cloudinary-hosted), `wishLetter`, `CHIME_NOTES`.
 - **Identity strings:** use "Your Caring Person · Tech Lead" (never the developer's personal name).
 - **src/assets/lily/** — 1–7.png carousel buttons; **src/assets/song/hbd/** — 1hbd–4hbd.mp3.
+- **src/assets/duo/** — `img1–3.jpg` original duo photos + `img1–3-cartoon1/2.png` cartoon editions (img1/img2 portrait, img3 landscape) used ONLY by `DuoPhotosSection`.
 - **src/assets/song/happy-birthday-song.mp3** — ambient music on CountdownPage + MissPage (imported as `happyBirthdaySong`); `song1.mp3` also kept in the folder (re-added 2026-08-12) but is NOT referenced in code.
 - **src/assets/cartoon1.png / cartoon2.png** — crossfading hero-frame portraits; `cartoon2` also the Letter+Final-CTA backdrop (`hero-backdrop.png` is a copy of `cartoon2.png`).
 

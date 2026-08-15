@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Music, Music2, Flower2, Heart, Sparkles, ArrowRight, X } from "lucide-react";
 import CandleCake from "../../components/birthday/CandleCake";
 import MemoryGallery from "../../components/birthday/MemoryGallery";
+import DuoPhotosSection from "../../components/birthday/DuoPhotosSection";
 import OriginStory from "../../components/birthday/OriginStory";
 import MissLetter from "../../components/birthday/MissLetter";
 import { storyChapters, storyByline, wishLetter } from "../../data/birthday";
@@ -358,6 +359,9 @@ const MissPage = () => {
 
       {/* Memories */}
       <MemoryGallery />
+
+      {/* Duo Photo Collection */}
+      <DuoPhotosSection />
 
       {/* Letter + Final CTA — shared cartoon2 backdrop */}
       <div className="relative overflow-hidden">
