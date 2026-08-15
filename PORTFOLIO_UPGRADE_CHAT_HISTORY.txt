@@ -490,60 +490,6 @@ VERIFICATION:
 - Docs only; no code/build impact.
 - Pushed to https://github.com/nabingyawali11/aaaa.git (branch main).
 
-================================================================================
-            COUNTDOWN UNLOCK TIME + BACK LINK REMOVAL - AUG 16, 2026
-================================================================================
-
-SCOPE:
-Adjusted the birthday countdown target time and removed the back link from
-the CountdownPage at /happybirthday.
-
-WORK COMPLETED:
-
-1. COUNTDOWN UNLOCK TIME (src/data/birthday.js)
-   - getNextBirthday() now returns the next Aug 16 at 10:01 PM (22:01)
-     instead of midnight; applies to both the /happybirthday CountdownPage
-     and the /happybirthday/ankita HappyBirthday gate.
-
-2. BACK LINK REMOVED (src/pages/birthday/CountdownPage.jsx)
-   - Removed the "<- Back" link (https://aayusaneupane.com.np/) from the
-     /happybirthday countdown page; no way to leave until the countdown
-     ends.
-
-VERIFICATION:
-- npm run build passes clean (pre-existing chunk-size warning only).
-
-================================================================================
-            COUNTDOWN REVEAL PREVIEW ROUTE (/test3) - AUG 16, 2026
-================================================================================
-
-SCOPE:
-Added a debug route that previews ONLY what happens after the countdown
-reaches zero, plus the post-zero reveal-only rendering on the real page.
-
-WORK COMPLETED:
-
-1. FORCE REVEAL (src/pages/birthday/CountdownPage.jsx)
-   - CountdownPage now takes a forceReveal prop; when true the page mounts
-     already in the "reached" state
-   - The countdown heading, intro and ticking time boxes are now hidden
-     whenever reached is true, so the card shows ONLY the reveal
-     ("20 Years" + "Happy Birthday, Ankita Ji! ..." + "Enter Ankita Ji
-      Realm" button)
-
-2. ROUTE (src/App.jsx)
-   - /test3 -> CountdownPage with forceReveal (debug/direct-access route)
-
-VERIFICATION:
-- npm run build passes clean (pre-existing chunk-size warning only).
-- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as
-  e34618e.
-
-================================================================================
-                              END OF HISTORY
-================================================================================
-
-================================================================================
                   MEMORY PHOTO + COPY REFINEMENT - AUG 15, 2026
 ================================================================================
 
@@ -658,7 +604,7 @@ and brought fully up to date:
 
 VERIFICATION:
 - Docs only; no code/build impact.
-- Not yet pushed; commit when asked.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main).
 
 ================================================================================
             COUNTDOWN UNLOCK TIME + BACK LINK REMOVAL - AUG 16, 2026
@@ -708,6 +654,101 @@ VERIFICATION:
 - npm run build passes clean (pre-existing chunk-size warning only).
 - Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as
   e34618e.
+
+===============================================================================
+          SOMETHING TO TELL YOU LETTER-WRITING SECTION - AUG 16, 2026
+===============================================================================
+
+SCOPE:
+Added a letter-writing section to the dark SomethingToTellYou confession page.
+
+WORK COMPLETED:
+
+1. LETTER WRITING (src/components/birthday/SomethingToTellYou.jsx)
+   - Added a letter-writing section (textarea + save button) to the page
+   - Letter is saved to localStorage and POSTed to /api/save-letter
+
+VERIFICATION:
+- npm run build passes clean.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as
+  0484890.
+
+===============================================================================
+             SAVE LETTERS TO NEON POSTGRES - AUG 16, 2026
+===============================================================================
+
+SCOPE:
+Persisted the letters written on SomethingToTellYou and the MissPage reply
+section to Neon Postgres via two new serverless functions with dev middleware.
+
+WORK COMPLETED:
+
+1. SAVE LETTER (api/save-letter.js - NEW)
+   - Serverless Postgres function (pg, Neon, DATABASE_URL)
+   - POST /api/save-letter with { letter } -> writes to the letters table
+     (auto-created) with IP + user-agent
+   - vite.config.js gains an api-save-letter-dev middleware plugin so the
+     endpoint works in the dev server
+
+2. SAVE BIRTHDAY LETTER (api/save-birthday-letter.js - NEW)
+   - Serverless Postgres function (pg, Neon, DATABASE_URL)
+   - POST /api/save-birthday-letter with { letter } -> writes to the
+     birthday_letters table (auto-created) with IP + user-agent
+   - vite.config.js gains an api-save-birthday-letter-dev middleware plugin
+
+3. MISS LETTER (src/components/birthday/MissLetter.jsx - NEW)
+   - Pink lily-themed letter-writing section on MissPage
+   - Reply saved to localStorage (aayusa_birthday_letter) and POSTed to
+     /api/save-birthday-letter
+
+VERIFICATION:
+- npm run build passes clean.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as
+  26b78b3.
+
+===============================================================================
+          REMOVE EMBEDDED FEELING GATE FROM MISS PAGE - AUG 16, 2026
+===============================================================================
+
+SCOPE:
+Removed the "SECRET REALM" FeelingGate block from the bottom of MissPage so
+the secret realm now lives only behind the /feelings route.
+
+WORK COMPLETED:
+
+1. MISS PAGE CLEANUP (src/pages/birthday/MissPage.jsx)
+   - Removed the imported <FeelingGate /> from the bottom of the page
+   - FeelingGate remains routed only at /feelings (with autoFocusInput)
+   - AGENTS.md updated: FeelingGate is NOT rendered on MissPage
+
+VERIFICATION:
+- npm run build passes clean.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as
+  36ecf23.
+
+===============================================================================
+            REORDER MISS PAGE SECTIONS + SCROLL TO TOP - AUG 16, 2026
+===============================================================================
+
+SCOPE:
+Swapped the last two sections of MissPage and made the page open at the hero
+instead of a scrolled-down position when entered.
+
+WORK COMPLETED:
+
+1. SECTION ORDER SWAP (src/pages/birthday/MissPage.jsx)
+   - Last two sections swapped: MissLetter now renders before the Final CTA
+   - New order: Hero -> CandleCake -> Story -> Memories -> Letter ->
+     MissLetter -> Final CTA
+
+2. SCROLL TO TOP ON MOUNT (src/pages/birthday/MissPage.jsx)
+   - Added a window.scrollTo(0, 0) effect on mount so the page always opens
+     at the hero section
+
+VERIFICATION:
+- npm run build passes clean.
+- Pushed to https://github.com/nabingyawali11/aaaa.git (branch main) as
+  600a6ea.
 
 ================================================================================
                               END OF HISTORY
