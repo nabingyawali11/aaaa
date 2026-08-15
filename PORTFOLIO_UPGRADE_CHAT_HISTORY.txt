@@ -491,6 +491,29 @@ VERIFICATION:
 - Pushed to https://github.com/nabingyawali11/aaaa.git (branch main).
 
 ================================================================================
+            COUNTDOWN UNLOCK TIME + BACK LINK REMOVAL - AUG 16, 2026
+================================================================================
+
+SCOPE:
+Adjusted the birthday countdown target time and removed the back link from
+the CountdownPage at /happybirthday.
+
+WORK COMPLETED:
+
+1. COUNTDOWN UNLOCK TIME (src/data/birthday.js)
+   - getNextBirthday() now returns the next Aug 16 at 10:01 PM (22:01)
+     instead of midnight; applies to both the /happybirthday CountdownPage
+     and the /happybirthday/ankita HappyBirthday gate.
+
+2. BACK LINK REMOVED (src/pages/birthday/CountdownPage.jsx)
+   - Removed the "<- Back" link (https://aayusaneupane.com.np/) from the
+     /happybirthday countdown page; no way to leave until the countdown
+     ends.
+
+VERIFICATION:
+- npm run build passes clean (pre-existing chunk-size warning only).
+
+================================================================================
                               END OF HISTORY
 ================================================================================
 
@@ -610,6 +633,29 @@ and brought fully up to date:
 VERIFICATION:
 - Docs only; no code/build impact.
 - Not yet pushed; commit when asked.
+
+================================================================================
+            COUNTDOWN UNLOCK TIME + BACK LINK REMOVAL - AUG 16, 2026
+================================================================================
+
+SCOPE:
+Adjusted the birthday countdown target time and removed the back link from
+the CountdownPage at /happybirthday.
+
+WORK COMPLETED:
+
+1. COUNTDOWN UNLOCK TIME (src/data/birthday.js)
+   - getNextBirthday() now returns the next Aug 16 at 10:01 PM (22:01)
+     instead of midnight; applies to both the /happybirthday CountdownPage
+     and the /happybirthday/ankita HappyBirthday gate.
+
+2. BACK LINK REMOVED (src/pages/birthday/CountdownPage.jsx)
+   - Removed the "<- Back" link (https://aayusaneupane.com.np/) from the
+     /happybirthday countdown page; no way to leave until the countdown
+     ends.
+
+VERIFICATION:
+- npm run build passes clean (pre-existing chunk-size warning only).
 
 ================================================================================
                               END OF HISTORY

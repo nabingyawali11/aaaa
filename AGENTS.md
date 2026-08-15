@@ -19,7 +19,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 |-------|------|-------|
 | `/` | Home | `PasswordGate` (password `20820804`) + `MusicPlayer` |
 | `/gallery` | Gallery | Public route — entry gated only by the "Explore Full Photo Garden 🌻" modal on MissPage |
-| `/happybirthday` | `CountdownPage` | Countdown; reveal button only after reaching zero (no preview button); "← Back" → `https://aayusaneupane.com.np/` |
+| `/happybirthday` | `CountdownPage` | Countdown to Aug 16, 10:01 PM (no back button); reveal button only after reaching zero (no preview button) |
 | `/happybirthday/ankita` | `HappyBirthday` | Countdown gate → "Happy Birthday to you, Aayusa!" + button to MissPage |
 | `/happybirthday/ankita/miss` | `MissPage` | Full lily-themed realm (hero photo frame, cake, story, memories, letter, CTAs) + embedded `FeelingGate`; "← Back to Countdown" → `/happybirthday/ankita`, "Back Home" → `https://aayusaneupane.com.np/` |
 | `/test` | `MissPage` | Same MissPage (debug/direct-access route) |
@@ -61,7 +61,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - Do NOT re-add `SurpriseGift.jsx` / `SunflowerBouquet.jsx` (deleted) or the sunflower SVG asset-set usage.
 
 ## Data & Assets
-- **src/data/birthday.js** — birthday dates (BS/Gregorian), `getNextBirthday()`, `getBirthdayAge()`, `storyChapters` (chapter 1 content lives in `OriginStory`; the generic loop renders `storyChapters.slice(1)`), `memoryPhotos` (1–3 local, 4–6 Cloudinary-hosted), `wishLetter`, `CHIME_NOTES`.
+- **src/data/birthday.js** — birthday dates (BS/Gregorian), `getNextBirthday()` (returns the next Aug 16 at **10:01 PM**), `getBirthdayAge()`, `storyChapters` (chapter 1 content lives in `OriginStory`; the generic loop renders `storyChapters.slice(1)`), `memoryPhotos` (1–3 local, 4–6 Cloudinary-hosted), `wishLetter`, `CHIME_NOTES`.
 - **Identity strings:** use "Your Caring Person · Tech Lead" (never the developer's personal name).
 - **src/assets/lily/** — 1–7.png carousel buttons; **src/assets/song/hbd/** — 1hbd–4hbd.mp3.
 - **src/assets/song/happy-birthday-song.mp3** — ambient music on CountdownPage + MissPage (imported as `happyBirthdaySong`); `song1.mp3` also kept in the folder (re-added 2026-08-12) but is NOT referenced in code.
