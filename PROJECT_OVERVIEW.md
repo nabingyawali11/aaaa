@@ -110,4 +110,4 @@ A single-page portfolio app for **Aayusa Nyaupane**, a FullStack Developer from 
 - MissPage navigation: top-left "← Back to Countdown" → `/happybirthday/ankita`; the "Back Home" button (Final CTA) → `https://aayusaneupane.com.np/`; the gallery gate unlock ("Explore Full Photo Garden 🌻") navigates to `/gallery` after the password.
 - `storyChapters[0]` in `birthday.js` still carries the introvert/extrovert `contrast` blocks, but since the generic loop renders `storyChapters.slice(1)`, those contrast boxes are no longer displayed (OriginStory replaces chapter 1).
 - ESLint has pre-existing repo-wide errors (no Node globals in eslint config → `process`/`Buffer` flags; core rule not counting `motion.div` JSX usage). Build passes clean.
-- Deployed/pushed to `https://github.com/nabingyawali11/aaaa.git` (branch `main`); recent commits: `600a6ea`, `36ecf23`, `6110d95`, `e34618e`, `26b78b3`, `0484890`.
+- Deployed/pushed to `https://github.com/nabingyawali11/aaaa.git` (branch `main`); recent commits: `cd46c7a`, `600a6ea`, `36ecf23`, `6110d95`, `e34618e`, `26b78b3`, `0484890`.
