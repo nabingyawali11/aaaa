@@ -29,7 +29,7 @@ function App() {
           }
         />
         <Route path="/gallery" element={<Gallery />} />
-        <Route path="/feelings" element={<FeelingGate />} />
+        <Route path="/feelings" element={<FeelingGate autoFocusInput />} />
         <Route path="/happybirthday/ankita" element={<HappyBirthday />} />
         <Route path="/happybirthday/ankita/miss" element={<MissPage />} />
         <Route path="/test" element={<MissPage />} />

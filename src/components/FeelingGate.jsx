@@ -32,7 +32,7 @@ function logSubmission(value, isCorrect) {
   }
 }
 
-function FeelingGate() {
+function FeelingGate({ autoFocusInput }) {
   const [input, setInput] = useState("");
   const [show, setShow] = useState(false);
   const [error, setError] = useState(false);
@@ -133,7 +133,7 @@ function FeelingGate() {
               value={input}
               onChange={handleChange}
               placeholder="Enter the password"
-              autoFocus
+              autoFocus={autoFocusInput}
               autoComplete="off"
               className="w-full rounded-xl border border-pink-500/30 bg-slate-950/60 px-4 py-3.5 pr-12 text-base text-white placeholder-slate-500 outline-none transition focus:border-pink-500 focus:ring-2 focus:ring-pink-500/30"
             />
