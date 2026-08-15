@@ -12,7 +12,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - **Framework:** React 19 + Vite 8 + React Router v7 (HashRouter).
 - **Styling:** Tailwind CSS v4 (`@tailwindcss/vite`), `clsx` + `tailwind-merge` (`cn` helper).
 - **Animations:** Framer Motion, `@iconify/react`, `lucide-react`.
-- **Backend:** Cloudinary (gallery search + uploads) via serverless `api/cloudinary-search.js`; **attempt logging** via `api/log-attempt.js` (Postgres `pg`, Neon, `DATABASE_URL`) — wired into the dev server by a middleware plugin in `vite.config.js`.
+- **Backend:** Cloudinary (gallery search + uploads) via serverless `api/cloudinary-search.js`; **attempt logging** via `api/log-attempt.js` (Postgres `pg`, Neon, `DATABASE_URL`) and **letter saving** via `api/save-letter.js` — both wired into the dev server by middleware plugins in `vite.config.js`.
 
 ## Routing (src/App.jsx)
 | Route | Page | Notes |
@@ -55,7 +55,8 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - **birthday/OriginStory.jsx** — Featured "01 · Two Worlds, One Event" story card, styled exactly like the generic chapter cards; highlighted `CodeFest 2025` (rose) and `destiny` (navy).
 - **birthday/MemoryGallery.jsx** — 3D coverflow carousel; cards centered with `y: "-50%"`; controls BELOW the card (`relative z-30 mt-8`); navy/blue theme; aspect-ratio 4/5; click center to open quote modal.
 - **FeelingGate.jsx** — Secret-realm password gate (password `iloveyou@miss04`, `sessionStorage` key `aayusa_feelings`) that logs every keystroke + submission to `/api/log-attempt` and unlocks `/something-to-tell-you`. Rendered inside MissPage (bottom, NO autofocus) and at `/feelings` (with `autoFocusInput`).
-- **birthday/SomethingToTellYou.jsx** — Dark slate "confession" page (Hero → The Confession → Three Promises → Final CTA) with floating hearts; routed at `/something-to-tell-you` and `/test2`.
+- **birthday/SomethingToTellYou.jsx** — Dark slate "confession" page (big headline + letter-writing section) with floating hearts; the letter is saved to localStorage and POSTed to `/api/save-letter` (Neon `letters` table); routed at `/something-to-tell-you` and `/test2`.
+- **birthday/MissLetter.jsx** — Pink lily-themed letter-writing section on MissPage (placed before the embedded `<FeelingGate />`); the reply is saved to localStorage (`aayusa_birthday_letter`) and POSTed to `/api/save-birthday-letter` (Neon `birthday_letters` table).
 - **PasswordGate.jsx** — `sessionStorage` key `aayusa_auth`, password `20820804`. Used on `/` + `*` fallback only; the gallery gate is a pink-themed modal inside `MissPage.jsx` (`openGallery` / `submitGate`) reusing the same key/password.
 - MissPage hero: full-screen 12-col grid; right column = tilted white polaroid photo frame (washi-tape corners, caption "Our First meet and first duo photograph together 🌸") crossfading `cartoon2`/`cartoon1` every 4s. Top-left link = "← Back to Countdown" → `/happybirthday/ankita`; the external "Back Home" → `https://aayusaneupane.com.np/` lives in the Final CTA. `<FeelingGate />` is embedded at the very bottom (after the Final CTA).
 - Do NOT re-add `SurpriseGift.jsx` / `SunflowerBouquet.jsx` (deleted) or the sunflower SVG asset-set usage.
@@ -70,7 +71,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 ## Code Constraints
 - Keep `IntersectionObserver` scroll-spy logic intact on `Home.jsx`.
 - Do NOT re-wrap `/gallery` in `PasswordGate` at the route level — the gate is the on-click modal in MissPage.
-- Keep the `FeelingGate` → `/something-to-tell-you` flow intact (password `iloveyou@miss04`, `sessionStorage` `aayusa_feelings`) and keep the `api/log-attempt.js` dev middleware in `vite.config.js` (removing it breaks attempt logging in dev).
+- Keep the `FeelingGate` → `/something-to-tell-you` flow intact (password `iloveyou@miss04`, `sessionStorage` `aayusa_feelings`) and keep the `api/log-attempt.js` + `api/save-letter.js` + `api/save-birthday-letter.js` dev middleware in `vite.config.js` (removing them breaks attempt/letter saving in dev).
 - No comments in code unless requested; follow existing component patterns.
 
 ## Git / GitHub

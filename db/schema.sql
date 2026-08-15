@@ -20,3 +20,21 @@ CREATE TABLE IF NOT EXISTS submitted_attempts (
   user_agent TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Letters written on the /something-to-tell-you page
+CREATE TABLE IF NOT EXISTS letters (
+  id SERIAL PRIMARY KEY,
+  content TEXT NOT NULL,
+  ip VARCHAR(100),
+  user_agent TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Letters written on the MissPage reply section
+CREATE TABLE IF NOT EXISTS birthday_letters (
+  id SERIAL PRIMARY KEY,
+  content TEXT NOT NULL,
+  ip VARCHAR(100),
+  user_agent TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

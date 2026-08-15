@@ -3,10 +3,6 @@ import { motion } from "framer-motion";
 import {
   Heart,
   Sparkles,
-  ShieldCheck,
-  MessageCircle,
-  Star,
-  Lock,
   ChevronDown,
   PenLine,
   Send,
@@ -42,24 +38,6 @@ const SectionHeading = ({ kicker, title, subtitle }) => (
   </motion.div>
 );
 
-const promises = [
-  {
-    icon: ShieldCheck,
-    title: "Honesty",
-    body: "No filters, no pretending. Whatever this page holds is the truest version of me — the one I kept hidden for too long.",
-  },
-  {
-    icon: MessageCircle,
-    title: "Trust",
-    body: "You gave me something rare — a place to open up without fear. This space is mine to return that gift to you.",
-  },
-  {
-    icon: Star,
-    title: "Feelings",
-    body: "Somewhere between the stage lights and the late-night calls, my feelings stopped being a secret. This page is the confession.",
-  },
-];
-
 const LETTER_STORAGE_KEY = "aayusa_letter";
 
 function LetterWriter() {
@@ -71,15 +49,34 @@ function LetterWriter() {
     }
   });
   const [sealed, setSealed] = useState(() => letter.length > 0);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
-  const sealLetter = (e) => {
+  const sealLetter = async (e) => {
     e.preventDefault();
     const trimmed = letter.trim();
     if (!trimmed) return;
     try {
       window.localStorage.setItem(LETTER_STORAGE_KEY, trimmed);
     } catch {}
-    setSealed(true);
+    setSaving(true);
+    setSaveError("");
+    try {
+      const response = await fetch("/api/save-letter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ letter: trimmed }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || "Could not save your letter");
+      }
+      setSealed(true);
+    } catch (error) {
+      setSaveError(error.message || "Could not save your letter");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const rewrite = () => setSealed(false);
@@ -119,8 +116,8 @@ function LetterWriter() {
             </motion.span>
             <p className="text-lg font-bold text-white">Sealed with care 💌</p>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-400">
-              Your letter is kept safe on this device — only you can ever
-              rewrite it. I can't wait to read it.
+              Your letter is safely kept on this device and sent to me — only
+              you can ever rewrite it. I can't wait to read it.
             </p>
             <button
               type="button"
@@ -141,16 +138,20 @@ function LetterWriter() {
               className="min-h-[240px] w-full resize-y rounded-2xl border border-white/10 bg-slate-900/60 p-5 text-base leading-relaxed text-slate-200 placeholder:text-slate-500 transition-colors duration-300 ease-out focus:border-pink-400/50 focus:outline-none focus:ring-2 focus:ring-pink-500/20"
             />
             <div className="mt-3 flex items-center justify-between gap-4">
-              <span className="text-xs tabular-nums text-slate-500">
-                {letter.length}/2000
-              </span>
+              {saveError ? (
+                <span className="text-xs text-rose-400">{saveError}</span>
+              ) : (
+                <span className="text-xs tabular-nums text-slate-500">
+                  {letter.length}/2000
+                </span>
+              )}
               <button
                 type="submit"
-                disabled={!letter.trim()}
+                disabled={!letter.trim() || saving}
                 className="inline-flex items-center gap-2 rounded-full bg-pink-500 px-7 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-pink-400 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
               >
-                <Send size={16} />
-                Seal & Send
+                <Send size={16} className={saving ? "animate-pulse" : ""} />
+                {saving ? "Sealing..." : "Seal & Send"}
               </button>
             </div>
           </>
@@ -208,10 +209,10 @@ function SomethingToTellYou({ children }) {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.8, ease: "easeOut" }}
-            className="text-5xl font-black leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl"
+            className="text-4xl font-black leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl"
           >
-            I have something to tell you
-            <span className="text-pink-500">.</span>
+            What do you think that special thing I am going to tell
+            <span className="text-pink-500">?</span>
           </motion.h1>
 
           <motion.div
@@ -221,13 +222,8 @@ function SomethingToTellYou({ children }) {
             className="mx-auto max-w-2xl text-base leading-relaxed text-slate-300/90 sm:text-lg"
           >
             <p>
-              For months I've carried words I couldn't say out loud — building
-              gates and gardens to tell them to you. You made it past the lock,
-              so now you deserve the rest.
-            </p>
-            <p className="mt-4 text-sm text-slate-400">
-              Scroll slowly, read with your heart — this page was made for you
-              and no one else.
+              You made it past the lock — so before I tell you, I want to know
+              what you think it could be.
             </p>
           </motion.div>
 
@@ -245,7 +241,7 @@ function SomethingToTellYou({ children }) {
           <motion.button
             type="button"
             onClick={() =>
-              document.getElementById("confession")?.scrollIntoView({ behavior: "smooth" })
+              document.getElementById("letter")?.scrollIntoView({ behavior: "smooth" })
             }
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -256,102 +252,6 @@ function SomethingToTellYou({ children }) {
             <ChevronDown size={22} />
           </motion.button>
         </div>
-      </section>
-
-      {/* Confession */}
-      <section id="confession" className="relative z-10 mx-auto max-w-3xl px-6 py-24 sm:px-8">
-        <SectionHeading
-          kicker="The Confession"
-          title="The Words I Kept Locked Away"
-          subtitle="You cracked the code, so here it is — everything I couldn't say to your face."
-        />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="space-y-5 rounded-3xl border border-pink-500/20 bg-white/5 p-8 text-base leading-[1.9] text-slate-300/90 backdrop-blur-xl sm:p-10"
-        >
-          <p>
-            If you're reading this, you cracked the code — and that alone means
-            more to me than I can put into words. I've been carrying this in my
-            chest since that night under the stage lights of CodeFest 2025.
-          </p>
-          <p>
-            The small talk was never the point. The late-night calls, the
-            stories we traded, the way you made an introvert forget he was one —
-            they all led me here. I never knew how to say it out loud, so I
-            built this gate instead.
-          </p>
-          <p>
-            Thank you for being the reason I finally felt safe to open up.
-            Whatever happens next, I just wanted you to know — of all the people
-            I could have chosen to share this space with, it was always going to
-            be you.
-          </p>
-          <div className="flex items-center gap-3 pt-2 text-pink-400">
-            <Lock size={16} />
-            <p className="text-sm font-semibold">
-              — Your Caring Person · Tech Lead 🌻
-            </p>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Promises */}
-      <section className="relative z-10 mx-auto max-w-6xl px-6 py-24 sm:px-8">
-        <SectionHeading
-          kicker="What You'll Find Here"
-          title="Three promises I made to you"
-          subtitle="The things this little realm stands for — now that you're inside."
-        />
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {promises.map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.6, ease: "easeOut" }}
-              className="rounded-3xl border border-pink-500/20 bg-white/5 p-8 text-center backdrop-blur-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:border-pink-400/40"
-            >
-              <span className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-pink-400/30 bg-pink-500/10 text-pink-400">
-                <item.icon size={24} />
-              </span>
-              <h3 className="text-lg font-bold text-white">{item.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-400">
-                {item.body}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-pink-400">
-            One last thing
-          </p>
-          <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
-            Thank you for listening 🌸
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-slate-400">
-            You didn't just unlock a website — you unlocked something I've been
-            holding onto for a very long time. Whatever comes next, I'm glad it
-            started here, with you.
-          </p>
-          <div className="mx-auto mt-10 flex items-center justify-center gap-3 text-pink-400">
-            <span className="h-px w-12 bg-pink-500/40" />
-            <Heart size={20} className="animate-pulse" />
-            <span className="h-px w-12 bg-pink-500/40" />
-          </div>
-        </motion.div>
       </section>
 
       <LetterWriter />

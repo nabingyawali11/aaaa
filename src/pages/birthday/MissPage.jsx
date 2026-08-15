@@ -6,6 +6,7 @@ import CandleCake from "../../components/birthday/CandleCake";
 import MemoryGallery from "../../components/birthday/MemoryGallery";
 import OriginStory from "../../components/birthday/OriginStory";
 import FeelingGate from "../../components/FeelingGate";
+import MissLetter from "../../components/birthday/MissLetter";
 import { storyChapters, storyByline, wishLetter } from "../../data/birthday";
 import happyBirthdaySong from "../../assets/song/happy-birthday-song.mp3";
 import heroBackdrop from "../../assets/cartoon2.png";
@@ -432,6 +433,8 @@ const MissPage = () => {
             </motion.div>
           </div>
         </section>
+
+        <MissLetter />
 
         <FeelingGate />
       </div>
