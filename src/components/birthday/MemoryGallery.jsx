@@ -105,7 +105,7 @@ const MemoryGallery = () => {
           Memories
         </p>
         <h2 className="text-2xl font-black tracking-tight text-[#1e3a8a] sm:text-3xl">
-          Memories with Ankita Ji 📸
+          Memories of Your's 📸
         </h2>
         <p className="mt-3 text-[13px] leading-relaxed text-zinc-500">
           A few photographs, each holding a little more than pixels — swipe to
@@ -148,9 +148,8 @@ const MemoryGallery = () => {
                     if (isCenter) setOpen(true);
                   }}
                   whileTap={{ scale: isCenter ? 1.0 : 0.8 }}
-                  className={`pointer-events-auto absolute left-0 right-0 mx-auto touch-pan-y select-none overflow-hidden rounded-[1.75rem] border border-blue-100 bg-white ${
-                    isCenter ? "cursor-pointer" : "cursor-grab"
-                  }`}
+                  className={`pointer-events-auto absolute left-0 right-0 mx-auto touch-pan-y select-none overflow-hidden rounded-[1.75rem] border border-blue-100 bg-white ${isCenter ? "cursor-pointer" : "cursor-grab"
+                    }`}
                   style={{
                     top: "50%",
                     width: "70vw",
@@ -200,9 +199,8 @@ const MemoryGallery = () => {
               type="button"
               onClick={() => goTo(i)}
               aria-label={`Go to memory ${i + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ease-out ${
-                i === index ? "w-6 bg-[#1e3a8a]" : "w-2 bg-blue-200/70 hover:bg-blue-300"
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ease-out ${i === index ? "w-6 bg-[#1e3a8a]" : "w-2 bg-blue-200/70 hover:bg-blue-300"
+                }`}
             />
           ))}
         </div>

@@ -32,7 +32,7 @@ const OriginStory = () => {
           </span>
           . You were the vibrant host holding the whole crowd together, while I
           stood quietly behind the scenes helping Arun and Sushant Dai with the
-          video edits.
+          design and documents. I was so nuervous and introvet that I don't know what happen after both gone  outside and leave alone with other's in that day. I even don't know who gave me to eat a spoon of "chatpat" until you told.
         </p>
         <p>
           Two worlds, one event. Same room, different corners — yet across

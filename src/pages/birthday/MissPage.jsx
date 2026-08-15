@@ -147,125 +147,125 @@ const MissPage = () => {
         <div className="pointer-events-none absolute right-[8%] top-1/2 h-[420px] w-[420px] -translate-y-1/2 rounded-full bg-pink-200/40 blur-[110px]" />
 
         <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-8 lg:grid-cols-12">
-        <div className="relative z-20 w-full space-y-6 text-center md:text-left lg:col-span-6">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="w-full text-center md:text-left"
-          >
+          <div className="relative z-20 w-full space-y-6 text-center md:text-left lg:col-span-6">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-pink-200/50 bg-pink-100/60 shadow-[0_0_30px_-8px_rgba(236,72,153,0.3)] md:mx-0 mx-auto"
-            >
-              <Sparkles size={32} className="text-pink-500" />
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500"
-            >
-              A birthday surprise, just for you
-            </motion.p>
-
-            <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.8, ease: "easeOut" }}
-              className="text-4xl font-bold leading-tight tracking-tight text-pink-600 sm:text-5xl lg:text-6xl"
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="w-full text-center md:text-left"
             >
-              Happy Birthday, <br className="hidden sm:inline" />
-              <span className="inline-block text-sky-500 drop-shadow-sm">Ankita Ji! 🌸</span>
-            </motion.h1>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-pink-200/50 bg-pink-100/60 shadow-[0_0_30px_-8px_rgba(236,72,153,0.3)] md:mx-0 mx-auto"
+              >
+                <Sparkles size={32} className="text-pink-500" />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
-              className="mt-5 inline-block rounded-full border border-pink-200/50 bg-pink-100/70 px-6 py-2 text-sm font-semibold text-pink-600 backdrop-blur-md"
-            >
-              Welcome to your 20s! ✨
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500"
+              >
+                A birthday surprise, just for you
+              </motion.p>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.8, ease: "easeOut" }}
+                className="text-4xl font-bold leading-tight tracking-tight text-pink-600 sm:text-5xl lg:text-6xl"
+              >
+                Happy Birthday, <br className="hidden sm:inline" />
+                <span className="inline-block text-sky-500 drop-shadow-sm">Ankita Ji! 🌸</span>
+              </motion.h1>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
+                className="mt-5 inline-block rounded-full border border-pink-200/50 bg-pink-100/70 px-6 py-2 text-sm font-semibold text-pink-600 backdrop-blur-md"
+              >
+                Welcome to your 20s! ✨
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.65, duration: 0.7, ease: "easeOut" }}
+                className="mt-8 text-base leading-relaxed text-zinc-700"
+              >
+                Hi Neupnae Miss! I'm one of your's friend which you tag name as your <span className="font-bold text-pink-600">bestfriend</span> — I created this surprise website just for you to
+                celebrate your 20th birthday and honor all the unforgettable
+                memories we share.
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.9, duration: 0.6 }}
+                className="mt-8 flex flex-col items-center gap-3 sm:flex-row md:justify-start"
+              >
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("cake")?.scrollIntoView({ behavior: "smooth" })}
+                  className="rounded-full bg-pink-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-400"
+                >
+                  Blow the Candle 🎂
+                </button>
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("story")?.scrollIntoView({ behavior: "smooth" })}
+                  className="rounded-full border border-pink-200/50 bg-white/70 px-8 py-4 text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-pink-400 hover:text-pink-600"
+                >
+                  Our Story 📖
+                </button>
+              </motion.div>
             </motion.div>
+          </div>
 
+          {/* Right — physical photo frame */}
+          <div className="z-10 flex h-full items-center justify-center lg:col-span-6">
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.65, duration: 0.7, ease: "easeOut" }}
-              className="mt-8 text-base leading-relaxed text-zinc-700"
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[430px]"
             >
-              Hi Ankita Ji! I'm one of your's friend which you tag name as your <span className="font-bold text-pink-600">bestfriend</span> — I created this surprise website just for you to
-              celebrate your 20th birthday and honor all the unforgettable
-              memories we share.
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-              className="mt-8 flex flex-col items-center gap-3 sm:flex-row md:justify-start"
-            >
-              <button
-                type="button"
-                onClick={() => document.getElementById("cake")?.scrollIntoView({ behavior: "smooth" })}
-                className="rounded-full bg-pink-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-400"
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="relative -rotate-1 rounded-md bg-white p-3 pb-12 shadow-[0_40px_80px_-20px_rgba(244,114,182,0.35)] ring-1 ring-pink-200/70 sm:p-4 sm:pb-14"
               >
-                Blow the Candle 🎂
-              </button>
-              <button
-                type="button"
-                onClick={() => document.getElementById("story")?.scrollIntoView({ behavior: "smooth" })}
-                className="rounded-full border border-pink-200/50 bg-white/70 px-8 py-4 text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-pink-400 hover:text-pink-600"
-              >
-                Our Story 📖
-              </button>
+                {/* Washi tape corners */}
+                <div className="pointer-events-none absolute -top-3 left-1/2 z-20 h-7 w-24 -translate-x-1/2 rotate-2 rounded-sm bg-sky-200/70 shadow-sm" />
+                <div className="pointer-events-none absolute -top-2 left-5 z-20 h-6 w-16 -rotate-12 rounded-sm bg-pink-200/80 shadow-sm" />
+
+                {/* Inner mat + photo */}
+                <div className="relative h-[44vh] max-h-[560px] min-h-[260px] overflow-hidden rounded-sm border border-pink-100/80 bg-pink-50/40 sm:h-[52vh] sm:max-h-[600px]">
+                  <AnimatePresence initial={false}>
+                    <motion.img
+                      key={frameIndex}
+                      src={FRAME_IMAGES[frameIndex]}
+                      alt="Cartoon portrait for Ankita Ji"
+                      className="absolute inset-x-0 top-3 h-full w-full object-contain"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1.2, ease: "easeInOut" }}
+                    />
+                  </AnimatePresence>
+                </div>
+
+                {/* Caption */}
+                <p className="mt-3 text-center font-serif text-sm italic text-zinc-500 sm:mt-4 sm:text-base">
+                  Our First meet and first duo photograph together 🌸
+                </p>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Right — physical photo frame */}
-        <div className="z-10 flex h-full items-center justify-center lg:col-span-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[430px]"
-          >
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative -rotate-1 rounded-md bg-white p-3 pb-12 shadow-[0_40px_80px_-20px_rgba(244,114,182,0.35)] ring-1 ring-pink-200/70 sm:p-4 sm:pb-14"
-            >
-              {/* Washi tape corners */}
-              <div className="pointer-events-none absolute -top-3 left-1/2 z-20 h-7 w-24 -translate-x-1/2 rotate-2 rounded-sm bg-sky-200/70 shadow-sm" />
-              <div className="pointer-events-none absolute -top-2 left-5 z-20 h-6 w-16 -rotate-12 rounded-sm bg-pink-200/80 shadow-sm" />
-
-              {/* Inner mat + photo */}
-              <div className="relative h-[44vh] max-h-[560px] min-h-[260px] overflow-hidden rounded-sm border border-pink-100/80 bg-pink-50/40 sm:h-[52vh] sm:max-h-[600px]">
-                <AnimatePresence initial={false}>
-                  <motion.img
-                    key={frameIndex}
-                    src={FRAME_IMAGES[frameIndex]}
-                    alt="Cartoon portrait for Ankita Ji"
-                    className="absolute inset-x-0 top-3 h-full w-full object-contain"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1.2, ease: "easeInOut" }}
-                  />
-                </AnimatePresence>
-              </div>
-
-              {/* Caption */}
-              <p className="mt-3 text-center font-serif text-sm italic text-zinc-500 sm:mt-4 sm:text-base">
-                Our First meet and first duo photograph together 🌸
-              </p>
-            </motion.div>
-          </motion.div>
-        </div>
+          </div>
         </div>
       </section>
 
@@ -279,7 +279,7 @@ const MissPage = () => {
         <SectionHeading
           kicker="Our Story"
           title="Three chapters, one garden"
-          subtitle="A quiet editor, a vibrant host — and how two different worlds slowly became one."
+          subtitle="A intovert shy boy, a vibrant host — and how two different worlds slowly became one."
         />
         <motion.p
           initial={{ opacity: 0 }}
@@ -399,39 +399,39 @@ const MissPage = () => {
         </section>
 
         <section className="relative z-10 mx-auto max-w-3xl px-6 py-28 text-center sm:px-8">
-        <div className="relative mx-auto max-w-3xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
-              One more flower to visit
-            </p>
-            <h2 className="text-3xl font-black tracking-tight text-[#1e3a8a] sm:text-4xl">
-              The garden still has petals left
-            </h2>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <button
-                type="button"
-                onClick={openGallery}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-pink-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-400 sm:w-auto"
-              >
-                Explore Full Photo Garden 🌻
-                <ArrowRight size={16} />
-              </button>
-              <a
-                href="https://aayusaneupane.com.np/"
-                className="w-full rounded-full border border-pink-200/50 bg-white/70 px-8 py-4 text-center text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-pink-400 hover:text-pink-600 sm:w-auto"
-              >
-                Back Home
-              </a>
-            </div>
-          </motion.div>
-        </div>
+          <div className="relative mx-auto max-w-3xl text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+                One more flower to visit
+              </p>
+              <h2 className="text-3xl font-black tracking-tight text-[#1e3a8a] sm:text-4xl">
+                The garden still has petals left
+              </h2>
+              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={openGallery}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-pink-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-400 sm:w-auto"
+                >
+                  Explore Full Photo Garden 🌻
+                  <ArrowRight size={16} />
+                </button>
+                <a
+                  href="https://aayusaneupane.com.np/"
+                  className="w-full rounded-full border border-pink-200/50 bg-white/70 px-8 py-4 text-center text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-pink-400 hover:text-pink-600 sm:w-auto"
+                >
+                  Back Home
+                </a>
+              </div>
+            </motion.div>
+          </div>
         </section>
-        </div>
+      </div>
 
       {/* Gallery password gate modal */}
       <AnimatePresence>

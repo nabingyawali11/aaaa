@@ -8,7 +8,7 @@ const cloudPhoto4 =
 const cloudPhoto5 =
   "https://res.cloudinary.com/dbckheyqm/image/upload/v1783710926/IMG-20260103-WA0058_izhk11.jpg";
 const cloudPhoto6 =
-  "https://res.cloudinary.com/dbckheyqm/image/upload/v1786128706/IMG_20260808_003345_552_ohvsdj.jpg";
+  "https://res.cloudinary.com/dbckheyqm/image/upload/v1786128706/Screenshot_20260813-141656_ax7jjv.jpg";
 
 export const BIRTH_DATE_BS = { year: 2063, month: 4, day: 31 };
 
@@ -51,14 +51,14 @@ export const storyChapters = [
     number: "02",
     title: "Unexpected Connections",
     period: "After the event",
-    body: "What started as polite small talk after the event turned into daily messages, late-night phone calls, and sharing our past stories. As an introvert, I usually overthink talking to anyone — but with you, I never ran out of things to say. You made me feel safe enough to open up.",
+    body: "What started as polite some small talks in the event  after the event turned into daily messages, late-night phone calls, and sharing our past stories in very short period of time . As an introvert, I usually overthink talking to anyone — but with you, I never ran out of things to say. You made me feel safe enough to open up.",
   },
   {
     id: "haven",
     number: "03",
     title: "A Safe Haven",
     period: "Today",
-    body: "You opened up completely, and talking to you became effortless for me. What I value most is the trust and safety you gave me so generously — the kind of bond that makes every conversation with you feel like home.",
+    body: "You opened up completely to me in such a short amount of time. Why? What did you see in me? To this day, I still ask myself that and yet, talking to you became so effortless. What I value most is the trust and safety you gave me so generously a bond that makes every conversation feel like coming home. Truth is, before you, I was always the person who kept everything bottled up inside and never expressed my feelings easily. It was my very first time being that open with anyone.",
   },
 ];
 

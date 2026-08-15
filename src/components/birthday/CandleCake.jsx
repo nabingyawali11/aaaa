@@ -150,7 +150,7 @@ const CandleCake = () => {
       streamRef.current = null;
     }
     if (ctxRef.current && ctxRef.current.state !== "closed") {
-      ctxRef.current.close().catch(() => {});
+      ctxRef.current.close().catch(() => { });
       ctxRef.current = null;
     }
     analyserRef.current = null;
@@ -202,7 +202,7 @@ const CandleCake = () => {
       audio
         .play()
         .then(() => setIsPlaying(true))
-        .catch(() => {});
+        .catch(() => { });
     } else {
       audio.pause();
       setIsPlaying(false);
@@ -227,7 +227,7 @@ const CandleCake = () => {
       ctxRef.current && ctxRef.current.state !== "closed"
         ? ctxRef.current
         : new AudioContext();
-    if (ctx.state === "suspended") ctx.resume().catch(() => {});
+    if (ctx.state === "suspended") ctx.resume().catch(() => { });
     CHIME_NOTES.forEach(({ freq, start, duration }) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -327,7 +327,7 @@ const CandleCake = () => {
             Make a wish
           </p>
           <h2 className="text-3xl font-black tracking-tight text-[#1e3a8a] sm:text-4xl">
-            Make a Wish &amp; Blow the Candle, Ankita Ji! 🕯️
+            Make a Wish &amp; Blow the Candle! 🕯️
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-zinc-500">
             Allow your microphone, then gently blow into your phone — and watch
@@ -494,26 +494,23 @@ const CandleCake = () => {
                         setSelectedSong(i);
                         setSongModalOpen(false);
                       }}
-                      className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all duration-300 ease-out ${
-                        active
+                      className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all duration-300 ease-out ${active
                           ? "border-pink-400 bg-pink-500/15 shadow-[0_0_24px_-6px_rgba(236,72,153,0.4)]"
                           : "border-pink-100 bg-white hover:border-pink-300 hover:bg-pink-50/60"
-                      }`}
+                        }`}
                     >
                       <span
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-                          active
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${active
                             ? "bg-pink-500 text-white"
                             : "bg-pink-100 text-pink-400"
-                        }`}
+                          }`}
                       >
                         {song.id}
                       </span>
                       <span className="min-w-0">
                         <span
-                          className={`block truncate text-sm font-semibold ${
-                            active ? "text-pink-600" : "text-zinc-700"
-                          }`}
+                          className={`block truncate text-sm font-semibold ${active ? "text-pink-600" : "text-zinc-700"
+                            }`}
                         >
                           {song.title}
                         </span>
@@ -578,11 +575,10 @@ const CandleCake = () => {
                 type="button"
                 onClick={toggleMute}
                 aria-label={isMuted ? "Unmute" : "Mute"}
-                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ease-out hover:-translate-y-0.5 ${
-                  isMuted
+                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ease-out hover:-translate-y-0.5 ${isMuted
                     ? "border-pink-400/40 bg-pink-500/15 text-pink-600"
                     : "border-pink-200/50 bg-pink-50 text-pink-500 hover:bg-pink-100 hover:text-pink-600"
-                }`}
+                  }`}
               >
                 {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
               </button>
