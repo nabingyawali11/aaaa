@@ -10,12 +10,13 @@ import FeelingGate from "./components/FeelingGate";
 import SomethingToTellYou from "./components/birthday/SomethingToTellYou";
 import HappyBirthday from "./pages/HappyBirthday";
 import CountdownPage from "./pages/birthday/CountdownPage";
+import CountdownSettings from "./pages/birthday/CountdownSettings";
 import MissPage from "./pages/birthday/MissPage";
 
 function App() {
   return (
     <div className="bg-slate-950 text-slate-100 antialiased">
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <Routes>
         <Route
           path="/"
@@ -37,6 +38,8 @@ function App() {
         <Route path="/test3" element={<CountdownPage forceReveal />} />
         <Route path="/something-to-tell-you" element={<SomethingToTellYou />} />
         <Route path="/happybirthday" element={<CountdownPage />} />
+        <Route path="/countdown/set" element={<CountdownSettings />} />
+        <Route path="/coutdown/set" element={<CountdownSettings />} />
         <Route path="/garden/hidden-bloom-0431" element={<Upload />} />
         <Route
           path="*"

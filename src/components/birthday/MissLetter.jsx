@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { PenLine, Send, Check, Flower2 } from "lucide-react";
+import { useMissTheme } from "./MissTheme";
 
 const STORAGE_KEY = "aayusa_birthday_letter";
 
-const SectionHeading = ({ kicker, title, subtitle }) => (
+const SectionHeading = ({ theme, kicker, title, subtitle }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -12,10 +13,10 @@ const SectionHeading = ({ kicker, title, subtitle }) => (
     transition={{ duration: 0.6, ease: "easeOut" }}
     className="mx-auto mb-12 max-w-2xl text-center"
   >
-    <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+    <p className={`mb-3 text-xs font-semibold uppercase tracking-[0.35em] ${theme.headingKicker}`}>
       {kicker}
     </p>
-    <h2 className="text-3xl font-black tracking-tight text-[#1e3a8a] sm:text-4xl">
+    <h2 className={`text-3xl font-black tracking-tight ${theme.headingTitle} sm:text-4xl`}>
       {title}
     </h2>
     {subtitle && (
@@ -25,6 +26,7 @@ const SectionHeading = ({ kicker, title, subtitle }) => (
 );
 
 const MissLetter = () => {
+  const { theme } = useMissTheme();
   const [letter, setLetter] = useState(() => {
     try {
       return window.localStorage.getItem(STORAGE_KEY) || "";
@@ -68,6 +70,7 @@ const MissLetter = () => {
   return (
     <section id="reply-letter" className="relative z-10 mx-auto max-w-3xl scroll-mt-24 px-6 py-20 sm:px-8">
       <SectionHeading
+        theme={theme}
         kicker="One More Letter"
         title="Write your reply to me"
         subtitle="A page where your words become part of this garden — tell me what you couldn't say out loud."
@@ -79,9 +82,9 @@ const MissLetter = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="relative overflow-hidden rounded-[2rem] border border-pink-200/50 bg-white/30 p-8 shadow-[0_20px_60px_-20px_rgba(236,72,153,0.3)] backdrop-blur-xl sm:p-12"
+        className={`relative overflow-hidden rounded-[2rem] p-8 backdrop-blur-xl sm:p-12 ${theme.letterForm}`}
       >
-        <div className="mb-5 flex items-center gap-3 text-pink-500">
+        <div className={`mb-5 flex items-center gap-3 ${theme.letterSalutation}`}>
           <Flower2 size={20} />
           <p className="text-sm font-semibold uppercase tracking-[0.25em]">
             Dear Your Caring Person
@@ -94,7 +97,7 @@ const MissLetter = () => {
               initial={{ scale: 0.6, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", stiffness: 260, damping: 18 }}
-              className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-pink-200/50 bg-white/60 text-pink-500"
+              className={`mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full ${theme.letterCheck}`}
             >
               <Check size={28} />
             </motion.span>
@@ -106,7 +109,7 @@ const MissLetter = () => {
             <button
               type="button"
               onClick={rewrite}
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-pink-200/50 bg-white/60 px-6 py-3 text-sm font-semibold text-pink-600 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-pink-400 hover:text-pink-500"
+              className={`mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 ease-out hover:-translate-y-0.5 ${theme.letterEditBtn}`}
             >
               <PenLine size={16} />
               Edit my letter
@@ -119,7 +122,7 @@ const MissLetter = () => {
               onChange={(e) => setLetter(e.target.value)}
               maxLength={2000}
               placeholder="Write your reply here... no rushing, no editing. Just your heart on this page."
-              className="min-h-[240px] w-full resize-y rounded-2xl border border-pink-200/50 bg-white/60 p-5 text-base leading-relaxed text-zinc-700 placeholder:text-zinc-400 transition-colors duration-300 ease-out focus:border-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-400/30"
+              className={`min-h-[240px] w-full resize-y rounded-2xl p-5 text-base leading-relaxed text-zinc-700 placeholder:text-zinc-400 transition-colors duration-300 ease-out focus:outline-none focus:ring-2 ${theme.letterTextarea}`}
             />
             <div className="mt-3 flex items-center justify-between gap-4">
               {saveError ? (
@@ -132,7 +135,7 @@ const MissLetter = () => {
               <button
                 type="submit"
                 disabled={!letter.trim() || saving}
-                className="inline-flex items-center gap-2 rounded-full bg-pink-500 px-7 py-3 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-pink-400 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+                className={`inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 ${theme.primaryBtn}`}
               >
                 <Send size={16} className={saving ? "animate-pulse" : ""} />
                 {saving ? "Sealing..." : "Seal & Send"}

@@ -1,17 +1,19 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useMissTheme } from "./MissTheme";
 
 const OriginStory = () => {
+  const { theme } = useMissTheme();
   return (
     <motion.article
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="relative overflow-hidden rounded-[1.75rem] border border-pink-200/50 bg-white/70 p-8 shadow-xl backdrop-blur-md sm:p-10"
+      className={`relative overflow-hidden rounded-[1.75rem] p-8 backdrop-blur-md sm:p-10 ${theme.storyCard}`}
     >
       <div className="mb-4 flex items-center gap-4">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full border border-pink-200/50 bg-pink-100 text-sm font-bold text-pink-600">
+        <span className={`flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold ${theme.storyBadge}`}>
           01
         </span>
         <div>
@@ -27,7 +29,7 @@ const OriginStory = () => {
       <div className="max-w-3xl space-y-4 text-base leading-[1.75] text-zinc-600">
         <p>
           It all began under the stage lights of{" "}
-          <span className="font-semibold text-pink-600">
+          <span className={`font-semibold ${theme.originHighlight}`}>
             CodeFest 2025
           </span>
           . You were the vibrant host holding the whole crowd together, while I

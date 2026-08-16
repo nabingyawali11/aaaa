@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Mic, MicOff, Music, Pause, Play, Volume2, VolumeX, X, Heart, Sparkles } from "lucide-react";
 import { CHIME_NOTES } from "../../data/birthday";
+import { useMissTheme } from "./MissTheme";
 import song1 from "../../assets/song/hbd/1hbd.mp3";
 import song2 from "../../assets/song/hbd/2hbd.mp3";
 import song3 from "../../assets/song/hbd/3hbd.mp3";
@@ -127,6 +128,7 @@ const CakeSvg = ({ blown }) => (
 );
 
 const CandleCake = () => {
+  const { theme } = useMissTheme();
   const [micState, setMicState] = useState("idle"); // idle | listening | blown | denied
   const [blown, setBlown] = useState(false);
   const [selectedSong, setSelectedSong] = useState(DEFAULT_SONG_INDEX);
@@ -312,8 +314,8 @@ const CandleCake = () => {
   return (
     <section className="relative overflow-hidden px-6 py-16 sm:px-8 lg:px-10">
       {/* Soft pink + sky glows behind cake */}
-      <div className="pointer-events-none absolute left-1/2 top-16 h-96 w-96 -translate-x-1/2 rounded-full bg-pink-200/50 blur-[110px]" />
-      <div className="pointer-events-none absolute right-10 top-40 h-72 w-72 rounded-full bg-sky-200/40 blur-[100px]" />
+      <div className={`pointer-events-none absolute left-1/2 top-16 h-96 w-96 -translate-x-1/2 rounded-full blur-[110px] ${theme.cakeGlowA}`} />
+      <div className={`pointer-events-none absolute right-10 top-40 h-72 w-72 rounded-full blur-[100px] ${theme.cakeGlowB}`} />
 
       <div className="relative mx-auto max-w-5xl">
         <motion.div
@@ -323,10 +325,10 @@ const CandleCake = () => {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="text-center"
         >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+          <p className={`mb-3 text-xs font-semibold uppercase tracking-[0.35em] ${theme.headingKicker}`}>
             Make a wish
           </p>
-          <h2 className="text-3xl font-black tracking-tight text-[#1e3a8a] sm:text-4xl">
+          <h2 className={`text-3xl font-black tracking-tight sm:text-4xl ${theme.headingTitle}`}>
             Make a Wish &amp; Blow the Candle! 🕯️
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-zinc-500">
@@ -384,17 +386,17 @@ const CandleCake = () => {
             {micState === "listening" && (
               <div className="relative flex items-center gap-3">
                 <span className="relative flex h-4 w-4">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pink-400 opacity-75" />
-                  <span className="relative inline-flex h-4 w-4 rounded-full bg-pink-400" />
+                  <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${theme.cakeListeningDot}`} />
+                  <span className={`relative inline-flex h-4 w-4 rounded-full ${theme.cakeListeningDot}`} />
                 </span>
-                <span className="text-sm font-medium text-pink-600">
+                <span className={`text-sm font-medium ${theme.cakeListeningText}`}>
                   Listening... blow into your mic!
                 </span>
               </div>
             )}
 
             {micState === "denied" && (
-              <p className="max-w-sm text-center text-sm leading-relaxed text-pink-500">
+              <p className={`max-w-sm text-center text-sm leading-relaxed ${theme.cakeDeniedText}`}>
                 Microphone unavailable. No worries — tap the button below to
                 blow out the candle manually.
               </p>
@@ -405,7 +407,7 @@ const CandleCake = () => {
                 <button
                   type="button"
                   onClick={startListening}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-pink-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_-16px_rgba(236,72,153,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-400 sm:w-auto"
+                  className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 sm:w-auto ${theme.primaryBtn}`}
                 >
                   <Mic size={16} />
                   Turn on Mic to Blow Candle 🎤
@@ -416,7 +418,7 @@ const CandleCake = () => {
                 <button
                   type="button"
                   onClick={stopListening}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-pink-200/50 bg-white/70 px-8 py-4 text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-pink-400 hover:text-pink-600 sm:w-auto"
+                  className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 sm:w-auto ${theme.secondaryBtn}`}
                 >
                   <MicOff size={16} />
                   Stop Listening
@@ -427,7 +429,7 @@ const CandleCake = () => {
                 <button
                   type="button"
                   onClick={extinguish}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-pink-400/50 bg-pink-500/10 px-8 py-4 text-sm font-semibold text-pink-600 transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-pink-500/20 sm:w-auto"
+                  className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold transition-all duration-300 ease-out hover:-translate-y-1 sm:w-auto ${theme.cakeTapBtn}`}
                 >
                   Tap to Blow 🎂
                 </button>
@@ -448,7 +450,7 @@ const CandleCake = () => {
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <div
-              className="absolute inset-0 bg-pink-100/50 backdrop-blur-sm"
+              className={`absolute inset-0 backdrop-blur-sm ${theme.cakeModalBackdrop}`}
               onClick={() => setSongModalOpen(false)}
             />
             <motion.div
@@ -456,22 +458,22 @@ const CandleCake = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="relative w-full max-w-md overflow-hidden rounded-[1.75rem] border border-pink-200/50 bg-white/95 p-8 shadow-[0_40px_120px_-40px_rgba(236,72,153,0.3)] backdrop-blur-xl"
+              className={`relative w-full max-w-md overflow-hidden rounded-[1.75rem] p-8 backdrop-blur-xl ${theme.cakeModalCard}`}
             >
               <button
                 type="button"
                 onClick={() => setSongModalOpen(false)}
                 aria-label="Close song picker"
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-pink-200/50 bg-pink-50 text-zinc-500 transition-all duration-300 ease-out hover:bg-pink-100 hover:text-pink-600"
+                className={`absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 ease-out ${theme.cakeModalClose}`}
               >
                 <X size={16} />
               </button>
 
               <div className="text-center">
-                <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-pink-200/50 bg-pink-100 text-pink-500">
+                <span className={`mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full ${theme.cakeModalIconBox}`}>
                   <Music size={24} />
                 </span>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-pink-500">
+                <p className={`text-[11px] font-semibold uppercase tracking-[0.35em] ${theme.headingKicker}`}>
                   Pick your birthday song 🎵
                 </p>
                 <h3 className="mt-2 text-xl font-bold text-zinc-800">
@@ -495,21 +497,21 @@ const CandleCake = () => {
                         setSongModalOpen(false);
                       }}
                       className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all duration-300 ease-out ${active
-                          ? "border-pink-400 bg-pink-500/15 shadow-[0_0_24px_-6px_rgba(236,72,153,0.4)]"
-                          : "border-pink-100 bg-white hover:border-pink-300 hover:bg-pink-50/60"
+                          ? theme.cakeSongActive
+                          : theme.cakeSongInactive
                         }`}
                     >
                       <span
                         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${active
-                            ? "bg-pink-500 text-white"
-                            : "bg-pink-100 text-pink-400"
+                            ? theme.cakeSongNumActive
+                            : theme.cakeSongNumInactive
                           }`}
                       >
                         {song.id}
                       </span>
                       <span className="min-w-0">
                         <span
-                          className={`block truncate text-sm font-semibold ${active ? "text-pink-600" : "text-zinc-700"
+                          className={`block truncate text-sm font-semibold ${active ? theme.cakeSongTitleActive : "text-zinc-700"
                             }`}
                         >
                           {song.title}
@@ -526,7 +528,7 @@ const CandleCake = () => {
                   setSelectedSong(DEFAULT_SONG_INDEX);
                   setSongModalOpen(false);
                 }}
-                className="mt-6 w-full rounded-full border border-pink-200/50 bg-pink-50 px-6 py-3 text-sm font-semibold text-zinc-500 transition-all duration-300 ease-out hover:bg-pink-100 hover:text-pink-600"
+                className={`mt-6 w-full rounded-full px-6 py-3 text-sm font-semibold text-zinc-500 transition-all duration-300 ease-out ${theme.cakeDefaultBtn}`}
               >
                 Skip — use default (Nepali v3)
               </button>
@@ -545,7 +547,7 @@ const CandleCake = () => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="fixed bottom-6 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2"
           >
-            <div className="flex items-center gap-3 rounded-full border border-pink-200/50 bg-white/80 px-5 py-3 shadow-[0_20px_50px_-20px_rgba(236,72,153,0.3)] backdrop-blur-md">
+            <div className={`flex items-center gap-3 rounded-full px-5 py-3 backdrop-blur-md ${theme.cakePlayerBar}`}>
               <motion.span
                 animate={{ rotate: isPlaying ? 360 : 0 }}
                 transition={{ repeat: isPlaying ? Infinity : 0, duration: 3, ease: "linear" }}
@@ -576,8 +578,8 @@ const CandleCake = () => {
                 onClick={toggleMute}
                 aria-label={isMuted ? "Unmute" : "Mute"}
                 className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ease-out hover:-translate-y-0.5 ${isMuted
-                    ? "border-pink-400/40 bg-pink-500/15 text-pink-600"
-                    : "border-pink-200/50 bg-pink-50 text-pink-500 hover:bg-pink-100 hover:text-pink-600"
+                    ? theme.cakeMuteActive
+                    : theme.cakeMuteIdle
                   }`}
               >
                 {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -586,7 +588,7 @@ const CandleCake = () => {
                 type="button"
                 onClick={closePlayer}
                 aria-label="Close player"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-pink-200/50 bg-pink-50 text-pink-500 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-pink-100 hover:text-pink-600"
+                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-300 ease-out hover:-translate-y-0.5 ${theme.cakePlayerClose}`}
               >
                 <X size={16} />
               </button>

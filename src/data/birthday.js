@@ -1,6 +1,8 @@
 import photo1 from "../assets/me/1.webp";
 import photo2 from "../assets/me/2.webp";
 import photo3 from "../assets/me/3.webp";
+import photo6 from "../assets/me/6.jpg";
+import photo7 from "../assets/me/7.jpg";
 
 // Memories 4-6 are hosted on Cloudinary
 const cloudPhoto4 =
@@ -15,7 +17,33 @@ export const BIRTH_DATE_BS = { year: 2063, month: 4, day: 31 };
 // Validated conversion: 2063/04/31 BS (Shrawan 31) == August 16, 2006 AD
 export const BIRTH_DATE_GREGORIAN = new Date(2006, 7, 16);
 
+const COUNTDOWN_TARGET_KEY = "aayusa_countdown_target";
+
+// Custom countdown target (set from /countdown/set). Returns null when unset.
+export function getCustomCountdown() {
+  try {
+    const saved = window.localStorage.getItem(COUNTDOWN_TARGET_KEY);
+    if (!saved) return null;
+    const date = new Date(saved);
+    return Number.isNaN(date.getTime()) ? null : date;
+  } catch {
+    return null;
+  }
+}
+
+export function setCustomCountdown(date) {
+  try {
+    if (date) {
+      window.localStorage.setItem(COUNTDOWN_TARGET_KEY, date.toISOString());
+    } else {
+      window.localStorage.removeItem(COUNTDOWN_TARGET_KEY);
+    }
+  } catch {}
+}
+
 export function getNextBirthday() {
+  const custom = getCustomCountdown();
+  if (custom) return custom;
   const now = new Date();
   const next = new Date(now.getFullYear(), BIRTH_DATE_GREGORIAN.getMonth(), BIRTH_DATE_GREGORIAN.getDate(), 22, 1, 0);
   if (next.getTime() < now.getTime()) {
@@ -71,41 +99,65 @@ export const storyByline = {
 export const memoryPhotos = [
   {
     src: photo1,
-    quote: "There's a natural warmth in the way you light up a moment — no pretense, just a genuine, radiant soul.",
+    quote: "Are you powered by sunshine? Because you're literally glowing through my screen! ☀️🫣🌻",
   },
   {
     src: photo2,
-    quote: "The calm, gentle grace you hold so naturally is something truly rare and beautiful.",
+    quote: "Just a radiant soul making the world brighter without even trying. 🌸☀️",
   },
   {
     src: photo3,
-    quote: "Carrying culture with such effortless elegance — a soul as beautiful on the inside as the smile you wear.",
+    quote: "सधैं यसरी नै मुस्कुराइरहनु, तिम्रो हाँसोमा त छुट्टै जादू छ",
   },
   {
     src: cloudPhoto4,
-    quote: "Your kindness is visible in your eyes long before you speak a word — pure, gentle, and comforting.",
+    quote: "Kind eyes, sweet smile, warmest heart and 100% pure cute. ☺️🌸",
   },
   {
     src: cloudPhoto5,
-    quote: "Even in quiet, simple moments, your presence brings a subtle, unspoken joy.",
+    quote: "One gaze from you, and suddenly the whole world feels a little softer.",
   },
   {
     src: cloudPhoto6,
-    quote: "Grounded, graceful, and deeply kind — you make every space a little softer and every heart a little lighter.",
+    quote: "Warning: looking into those eyes for more than 3 seconds causes instant heart flutter. 💓👀",
+  },
+  {
+    src: photo6,
+    quote: "Already looking like a little boss before you grew up to rule my thoughts! 👑🤭",
+  },
+  {
+    src: photo7,
+    quote: "Proof that kindness and magic were there right from the start. 💫",
   },
 ];
 
 export const wishLetter = {
-  salutation: "Dear Ankita Ji (Madam Ji),",
+  title: "A Letter 📜🌻",
+  subtitle: "Written, just for you",
+  tagline: "Every word below is true, and none of it is said lightly. 🌻",
+  salutation: "Dear Ankita Miss (Madam Ji), 🌻✨",
   paragraphs: [
-    "As you step into your twenties, I want to start with a simple truth — the day the world welcomed you, it quietly became a little brighter, and it hasn't dimmed since. Your energy leaves rooms warmer and people happier, and I am endlessly grateful to have a front-row seat to your life.",
-    "Thank you for being the most amazing best friend I could ever ask for. Thank you for placing your trust in me, for the late-night talks that never felt long enough, and for making an introvert feel like the easiest person to talk to. That is your magic — you don't just bring people together, you make them feel safe.",
-    "As you enter this beautiful new decade, I wish you growth that matches your talent, success that surprises even you, happiness that never runs out, and a journey that grows softer and brighter with every step.",
-    "Stay exactly as you are — radiant, fearless, and impossibly kind. Today we celebrate you, and every day after, I feel lucky to know you.",
-    "Happy 20th Birthday, Ankita Ji! May your heart stay open to pure happiness, and may sadness never even cross your path. Keep that infectious, चुलबुली smile alive wherever you go, because the world is so much warmer with your laughter in it. May you conquer your dreams faster than ever and get everything your heart desires without ever getting hurt by anyone.",
-    "And remember — if there's ever anything on your mind that you can't share with anyone else, just give me a call, no matter the time or condition. I'll always be right here, ready to listen to everything you have to say.",
+    "As you step into your twenties, I want to start with a simple truth: the day the world welcomed you, it quietly became a little brighter, and it has not dimmed since. 🌻✨ Your energy leaves rooms warmer and people happier, and I am endlessly grateful to have a front row seat to your life. 🌟 You are already so special, and being born on 31 Shrawan at 10:01 PM makes you even more uniquely wonderful and surprising! 🎂✨",
+
+    "Thank you for being the most amazing person I could ever ask for. 💖🌻 Thank you for placing your trust in me, for the long talks and chats that never felt long enough ☕💬, and for making an introvert feel like the easiest person to talk to. 🌾 That is your magic ✨. You do not just bring people together, you make them feel safe. 🤗🌻",
+
+    "I do not write anything or tell anything like this much. 📝🌻 But you are the person who made me different from what I am today, compared to 1 year ago and before that. 🌱☀️",
+
+    "What you saw inside me when you came to talk to me is something I still think about and cannot fully figure out till now. 🤔💭 I am so glad you came into my life and helped me open up like this. 🌻 I do not know what will happen after this, but I want to thank you for everything. 🙏✨",
+
+    "If I have ever hurt you or spoken loudly during my heavy workload times, it was never my intention to hurt you in those situations. 🥺🌻 I am truly sorry for that. If you are ever hurt by anything from my side, or by anyone else, please tell me right in that moment. 🗣️ I am a dumb person who only realizes after some time and feels guilty later on. 😔❤️",
+
+    "You do not try to be anything extra, you are just you, and that is what makes you so special, lovely, and bright like a sunflower. 🌻✨💖",
+
+    "Stay exactly as you are, radiant like a sunflower, fearless, and impossibly kind. 🌻☀️ Today we celebrate you, and every day after, I feel lucky to know you.",
+
+    "Happy 20th Birthday, Ankita Ji! 🎂🎉🌻 May your heart stay open to pure happiness, and may sadness never even cross your path. Keep that infectious, चुलबुली smile alive wherever you go ☺️🌻✨, because the world is so much warmer with your laughter in it. 💖 May you conquer your dreams faster than ever and get everything your heart desires without ever getting hurt by anyone. 🚀👑🌻",
+
+    "In the outside world, you always smile, talk to everybody, and hide your sadness inside you... 🥺🌻🌾",
+
+    "And remember, if there is ever anything on your mind that you cannot share with anyone else, just give me a call 📞🌻, no matter the time or condition. ⏰ I will always be right here, ready to listen to everything you have to say. 🫂🌻✨",
   ],
-  signature: "Always here for you,\n— Your Caring Person (Tech Lead) 🌻",
+  signOff: "Always here for you,\n— Your's  Caring BestFriend Tech Lead- Shubham 🌸",
 };
 
 // Soft birthday chime: note name, frequency (Hz), start (sec), duration (sec)
