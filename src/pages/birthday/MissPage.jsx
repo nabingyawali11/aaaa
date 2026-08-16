@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { Music, Music2, Flower2, Heart, Sparkles, X } from "lucide-react";
+import { Music, Music2, Flower2, Heart, Sparkles, ArrowRight, X } from "lucide-react";
 import CandleCake from "../../components/birthday/CandleCake";
 import MemoryGallery from "../../components/birthday/MemoryGallery";
 import DuoPhotosSection from "../../components/birthday/DuoPhotosSection";
@@ -67,11 +67,19 @@ const MissPageContent = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const openGallery = () => {
+    if (sessionStorage.getItem("aayusa_auth") === "true") {
+      navigate("/welcometo20s");
+    } else {
+      setGalleryGateOpen(true);
+    }
+  };
+
   const submitGate = (e) => {
     e.preventDefault();
     if (gatePassword === "20820804") {
       sessionStorage.setItem("aayusa_auth", "true");
-      navigate("/gallery");
+      navigate("/welcometo20s");
     } else {
       setGateError(true);
       setGatePassword("");
@@ -430,6 +438,40 @@ const MissPageContent = () => {
         </section>
 
         <MissLetter />
+
+        <section className="relative z-10 mx-auto max-w-3xl px-6 py-28 text-center sm:px-8">
+          <div className="relative mx-auto max-w-3xl text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <p className={`mb-4 text-xs font-semibold uppercase tracking-[0.35em] ${theme.ctaKicker}`}>
+                One more flower to visit
+              </p>
+              <h2 className={`text-3xl font-black tracking-tight sm:text-4xl ${theme.ctaTitle}`}>
+                The garden still has petals left
+              </h2>
+              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={openGallery}
+                  className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-1 sm:w-auto ${theme.primaryBtn}`}
+                >
+                  Welcome to your 20s ✨
+                  <ArrowRight size={16} />
+                </button>
+                <a
+                  href="https://aayusaneupane.com.np/"
+                  className={`w-full rounded-full px-8 py-4 text-center text-sm font-medium text-zinc-500 transition-all duration-300 ease-out hover:-translate-y-1 sm:w-auto ${theme.secondaryBtn}`}
+                >
+                  Back Home
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </section>
       </div>
 
       {/* Gallery password gate modal */}

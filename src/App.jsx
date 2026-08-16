@@ -12,6 +12,7 @@ import HappyBirthday from "./pages/HappyBirthday";
 import CountdownPage from "./pages/birthday/CountdownPage";
 import CountdownSettings from "./pages/birthday/CountdownSettings";
 import MissPage from "./pages/birthday/MissPage";
+import WelcomeTo20s from "./pages/birthday/WelcomeTo20s";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/feelings" element={<FeelingGate autoFocusInput />} />
         <Route path="/happybirthday/ankita" element={<HappyBirthday />} />
         <Route path="/happybirthday/ankita/miss" element={<MissPage />} />
+        <Route path="/welcometo20s" element={<WelcomeTo20s />} />
         <Route path="/test" element={<MissPage />} />
         <Route path="/test2" element={<SomethingToTellYou />} />
         <Route path="/test3" element={<CountdownPage forceReveal />} />
