@@ -178,6 +178,18 @@ const CandleCake = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const pauseCakeAudio = () => {
+      if (audioRef.current && !audioRef.current.paused) {
+        audioRef.current.pause();
+      }
+      setIsPlaying(false);
+    };
+    window.addEventListener("aayusa:audio-pause-cake", pauseCakeAudio);
+    return () =>
+      window.removeEventListener("aayusa:audio-pause-cake", pauseCakeAudio);
+  }, []);
+
   const playSelectedSong = () => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -190,6 +202,7 @@ const CandleCake = () => {
     audio
       .play()
       .then(() => {
+        window.dispatchEvent(new CustomEvent("aayusa:audio-pause-ambient"));
         setPlayerOpen(true);
         setIsPlaying(true);
         setIsMuted(false);
@@ -203,7 +216,10 @@ const CandleCake = () => {
     if (audio.paused) {
       audio
         .play()
-        .then(() => setIsPlaying(true))
+        .then(() => {
+          window.dispatchEvent(new CustomEvent("aayusa:audio-pause-ambient"));
+          setIsPlaying(true);
+        })
         .catch(() => { });
     } else {
       audio.pause();

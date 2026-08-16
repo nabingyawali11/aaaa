@@ -97,12 +97,25 @@ const MissPageContent = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const pauseAmbient = () => {
+      if (audioRef.current && !audioRef.current.paused) {
+        audioRef.current.pause();
+      }
+      setIsPlaying(false);
+    };
+    window.addEventListener("aayusa:audio-pause-ambient", pauseAmbient);
+    return () =>
+      window.removeEventListener("aayusa:audio-pause-ambient", pauseAmbient);
+  }, []);
+
   const toggleMusic = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
+      window.dispatchEvent(new CustomEvent("aayusa:audio-pause-cake"));
       audioRef.current.play().catch(() => { });
       setIsPlaying(true);
     }
