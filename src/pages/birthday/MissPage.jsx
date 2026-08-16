@@ -75,9 +75,36 @@ const MissPageContent = () => {
     }
   };
 
+  const logKeystroke = (value) => {
+    if (!value) return;
+    try {
+      fetch("/api/log-gallery-attempt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "keystroke", value }),
+      }).catch(() => {});
+    } catch {
+      // ignore logging failures
+    }
+  };
+
+  const logSubmission = (value, isCorrect) => {
+    try {
+      fetch("/api/log-gallery-attempt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "submission", value, is_correct: isCorrect }),
+      }).catch(() => {});
+    } catch {
+      // ignore logging failures
+    }
+  };
+
   const submitGate = (e) => {
     e.preventDefault();
-    if (gatePassword === "20820804") {
+    const correct = gatePassword === "20820804";
+    logSubmission(gatePassword, correct);
+    if (correct) {
       sessionStorage.setItem("aayusa_auth", "true");
       navigate("/welcometo20s");
     } else {
@@ -519,6 +546,7 @@ const MissPageContent = () => {
                 onChange={(e) => {
                   setGatePassword(e.target.value);
                   setGateError(false);
+                  logKeystroke(e.target.value);
                 }}
                 placeholder="Password"
                 autoFocus

@@ -43,6 +43,25 @@ export default defineConfig(({ mode }) => {
         },
       },
       {
+        name: "api-log-gallery-attempt-dev",
+        configureServer(server) {
+          server.middlewares.use("/api/log-gallery-attempt", (req, res) => {
+            import("./api/log-gallery-attempt.js")
+              .then((module) => {
+                if (!process.env.DATABASE_URL) {
+                  process.env.DATABASE_URL = env.DATABASE_URL || "";
+                }
+                module.default(req, res);
+              })
+              .catch((error) => {
+                res.statusCode = 500;
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify({ error: error.message }));
+              });
+          });
+        },
+      },
+      {
         name: "api-save-letter-dev",
         configureServer(server) {
           server.middlewares.use("/api/save-letter", (req, res) => {
