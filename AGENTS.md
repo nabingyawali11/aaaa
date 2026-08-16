@@ -12,7 +12,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - **Framework:** React 19 + Vite 8 + React Router v7 (HashRouter).
 - **Styling:** Tailwind CSS v4 (`@tailwindcss/vite`), `clsx` + `tailwind-merge` (`cn` helper).
 - **Animations:** Framer Motion, `@iconify/react`, `lucide-react`.
-- **Backend:** Cloudinary (gallery search + uploads) via serverless `api/cloudinary-search.js`; **attempt logging** via `api/log-attempt.js` (Postgres `pg`, Neon, `DATABASE_URL`) and **letter saving** via `api/save-letter.js` — both wired into the dev server by middleware plugins in `vite.config.js`.
+- **Backend:** Cloudinary (gallery search + uploads) via serverless `api/cloudinary-search.js`; **attempt logging** via `api/log-attempt.js` (Postgres `pg`, Neon, `DATABASE_URL`), **letter saving** via `api/save-letter.js` / `api/save-birthday-letter.js`, and **shared countdown** via `api/get-countdown.js` + `api/set-countdown.js` — all wired into the dev server by middleware plugins in `vite.config.js`.
 
 ## Routing (src/App.jsx)
 | Route | Page | Notes |
@@ -28,6 +28,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 | `/something-to-tell-you` | `SomethingToTellYou` | The "confession" page — dark realm reached after cracking the FeelingGate |
 | `/test2` | `SomethingToTellYou` | Same page (debug/direct-access route) |
 | `/garden/hidden-bloom-0431` | Upload | Hidden photo upload |
+| `/countdown/set` | `CountdownSettings` | Secret setup page: sets the shared countdown target (Neon DB via `api/get-countdown.js` + `api/set-countdown.js`); applies on ALL devices |
 | `*` | Home | Fallback (gated) |
 
 **Keep the two-route MissPage flow intact:** `HappyBirthday` (gate) → `MissPage` (realm). Do not expose MissPage buttons before the countdown hits zero.
@@ -64,7 +65,7 @@ A personal portfolio for **Aayusa Nyaupane** (React 19 + Vite 8, deployed to Git
 - Do NOT re-add `SurpriseGift.jsx` / `SunflowerBouquet.jsx` (deleted) or the sunflower SVG asset-set usage.
 
 ## Data & Assets
-- **src/data/birthday.js** — birthday dates (BS/Gregorian), `getNextBirthday()` (returns the next Aug 16 at **10:01 PM**), `getBirthdayAge()`, `storyChapters` (chapter 1 content lives in `OriginStory`; the generic loop renders `storyChapters.slice(1)`), `memoryPhotos` (1–3 local, 4–6 Cloudinary-hosted), `wishLetter`, `CHIME_NOTES`.
+- **src/data/birthday.js** — birthday dates (BS/Gregorian), `getNextBirthday()` (returns the next Aug 16 at **10:01 PM**), `getBirthdayAge()`, shared countdown helpers `getCountdownTarget()` / `loadSharedCountdown()` / `saveSharedCountdown()` (Neon-backed, used by `/countdown/set` and both countdown pages), `storyChapters` (chapter 1 content lives in `OriginStory`; the generic loop renders `storyChapters.slice(1)`), `memoryPhotos` (1–3 local, 4–6 Cloudinary-hosted), `wishLetter`, `CHIME_NOTES`.
 - **Identity strings:** use "Your Caring Person · Tech Lead" (never the developer's personal name).
 - **src/assets/lily/** — 1–7.png carousel buttons; **src/assets/song/hbd/** — 1hbd–4hbd.mp3.
 - **src/assets/duo/** — `img1–3.jpg` original duo photos + `img1–3-cartoon1/2.png` cartoon editions (img1/img2 portrait, img3 landscape) used ONLY by `DuoPhotosSection`.

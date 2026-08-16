@@ -39,7 +39,6 @@ function App() {
         <Route path="/something-to-tell-you" element={<SomethingToTellYou />} />
         <Route path="/happybirthday" element={<CountdownPage />} />
         <Route path="/countdown/set" element={<CountdownSettings />} />
-        <Route path="/coutdown/set" element={<CountdownSettings />} />
         <Route path="/garden/hidden-bloom-0431" element={<Upload />} />
         <Route
           path="*"

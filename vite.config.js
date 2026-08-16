@@ -80,6 +80,44 @@ export default defineConfig(({ mode }) => {
           });
         },
       },
+      {
+        name: "api-get-countdown-dev",
+        configureServer(server) {
+          server.middlewares.use("/api/get-countdown", (req, res) => {
+            import("./api/get-countdown.js")
+              .then((module) => {
+                if (!process.env.DATABASE_URL) {
+                  process.env.DATABASE_URL = env.DATABASE_URL || "";
+                }
+                module.default(req, res);
+              })
+              .catch((error) => {
+                res.statusCode = 500;
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify({ error: error.message }));
+              });
+          });
+        },
+      },
+      {
+        name: "api-set-countdown-dev",
+        configureServer(server) {
+          server.middlewares.use("/api/set-countdown", (req, res) => {
+            import("./api/set-countdown.js")
+              .then((module) => {
+                if (!process.env.DATABASE_URL) {
+                  process.env.DATABASE_URL = env.DATABASE_URL || "";
+                }
+                module.default(req, res);
+              })
+              .catch((error) => {
+                res.statusCode = 500;
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify({ error: error.message }));
+              });
+          });
+        },
+      },
     ],
     server: {
       proxy: {

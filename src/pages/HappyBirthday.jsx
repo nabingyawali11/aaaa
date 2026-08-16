@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Cake, Heart, Flower2, ArrowRight } from "lucide-react";
-import { getNextBirthday, getBirthdayAge } from "../data/birthday";
+import { getCountdownTarget, getBirthdayAge, loadSharedCountdown } from "../data/birthday";
 
 const balloons = [
   { left: "6%", size: 56, delay: 0, duration: 16, sway: 24 },
@@ -51,11 +51,26 @@ const TimeBox = ({ value, label }) => (
 
 const HappyBirthday = () => {
   const navigate = useNavigate();
-  const [target] = useState(() => getNextBirthday());
-  const [timeLeft, setTimeLeft] = useState(() => getNextBirthday() - Date.now());
+  const [target, setTarget] = useState(() => getCountdownTarget());
+  const [timeLeft, setTimeLeft] = useState(() => getCountdownTarget() - Date.now());
   const [reached, setReached] = useState(false);
 
   const age = getBirthdayAge();
+
+  useEffect(() => {
+    let mounted = true;
+    loadSharedCountdown().then((sharedTarget) => {
+      if (!mounted) return;
+      setTarget(sharedTarget);
+      setTimeLeft(sharedTarget - Date.now());
+      if (sharedTarget - Date.now() <= 0) {
+        setReached(true);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const timer = window.setInterval(() => {

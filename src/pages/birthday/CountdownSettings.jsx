@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CalendarClock, Save, RotateCcw, ArrowRight, CheckCircle2 } from "lucide-react";
-import { getCustomCountdown, setCustomCountdown, getNextBirthday } from "../../data/birthday";
+import { getCountdownTarget, loadSharedCountdown, saveSharedCountdown } from "../../data/birthday";
 
 const toLocalInputValue = (date) => {
   const d = new Date(date);
@@ -11,27 +11,60 @@ const toLocalInputValue = (date) => {
 
 const CountdownSettings = () => {
   const navigate = useNavigate();
-  const [custom, setCustom] = useState(() => getCustomCountdown());
-  const [value, setValue] = useState(() => toLocalInputValue(custom || getNextBirthday()));
+  const [value, setValue] = useState(() => toLocalInputValue(getCountdownTarget()));
+  const [custom, setCustom] = useState(() => getCountdownTarget());
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let mounted = true;
+    loadSharedCountdown().then((target) => {
+      if (!mounted) return;
+      setCustom(target);
+      setValue(toLocalInputValue(target));
+      setLoading(false);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const flashSaved = () => {
     setSaved(true);
     window.setTimeout(() => setSaved(false), 2500);
   };
 
-  const save = () => {
-    if (!value) return;
-    setCustomCountdown(new Date(value));
-    setCustom(getCustomCountdown());
-    flashSaved();
+  const save = async () => {
+    if (!value || saving) return;
+    setSaving(true);
+    setError("");
+    try {
+      const target = await saveSharedCountdown(new Date(value));
+      setCustom(target || getCountdownTarget());
+      flashSaved();
+    } catch (err) {
+      setError(err.message || "Could not save. Is the server reachable?");
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const reset = () => {
-    setCustomCountdown(null);
-    setCustom(null);
-    setValue(toLocalInputValue(getNextBirthday()));
-    flashSaved();
+  const reset = async () => {
+    if (saving) return;
+    setSaving(true);
+    setError("");
+    try {
+      const target = await saveSharedCountdown(null);
+      setCustom(target || getCountdownTarget());
+      setValue(toLocalInputValue(getCountdownTarget()));
+      flashSaved();
+    } catch (err) {
+      setError(err.message || "Could not reset. Is the server reachable?");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -54,7 +87,8 @@ const CountdownSettings = () => {
           </h1>
           <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-slate-400">
             Set a custom date &amp; time for the countdown to reach zero. It
-            overrides the default birthday moment.
+            overrides the default birthday moment and is shared with every
+            device.
           </p>
 
           <label
@@ -74,30 +108,40 @@ const CountdownSettings = () => {
           <div className="mt-4 rounded-xl border border-white/10 bg-slate-900/50 px-4 py-3 text-left text-xs leading-relaxed text-slate-400">
             <span className="text-slate-500">Currently targeting: </span>
             <span className="font-semibold text-amber-200">
-              {custom
-                ? custom.toLocaleString()
-                : `Default — next Aug 16, 10:01 PM (${getNextBirthday().toLocaleString()})`}
+              {loading ? "Loading…" : custom.toLocaleString()}
             </span>
+            <div className="mt-1 text-[10px] text-slate-500">
+              Saved to the shared server — this applies on every device, not
+              just this one.
+            </div>
           </div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
               onClick={save}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-900 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-amber-400"
+              disabled={saving || loading}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-900 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <Save size={16} />
-              Save Target
+              {saving ? "Saving…" : "Save Target"}
             </button>
             <button
               type="button"
               onClick={reset}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/15 bg-slate-900/60 px-6 py-3 text-sm font-semibold text-slate-300 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-amber-400/40 hover:text-amber-200"
+              disabled={saving || loading}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/15 bg-slate-900/60 px-6 py-3 text-sm font-semibold text-slate-300 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-amber-400/40 hover:text-amber-200 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <RotateCcw size={16} />
               Reset to Default
             </button>
           </div>
+
+          {error && (
+            <div className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-2.5 text-xs font-medium text-rose-300">
+              {error}
+            </div>
+          )}
 
           {saved && (
             <div className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2.5 text-xs font-medium text-emerald-300">

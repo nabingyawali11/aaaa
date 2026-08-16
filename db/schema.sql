@@ -38,3 +38,10 @@ CREATE TABLE IF NOT EXISTS birthday_letters (
   user_agent TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Shared countdown target (single row, id = 1). Set from /countdown/set
+CREATE TABLE IF NOT EXISTS countdown_target (
+  id INTEGER PRIMARY KEY,
+  target TIMESTAMP WITH TIME ZONE,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

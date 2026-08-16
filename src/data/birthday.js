@@ -19,8 +19,11 @@ export const BIRTH_DATE_GREGORIAN = new Date(2006, 7, 16);
 
 const COUNTDOWN_TARGET_KEY = "aayusa_countdown_target";
 
-// Custom countdown target (set from /countdown/set). Returns null when unset.
-export function getCustomCountdown() {
+// Last-known shared countdown target (from the Neon-backed API). undefined =
+// not loaded yet; a Date once loaded; null means "use the default birthday".
+let sharedCountdownCache;
+
+function readCachedTarget() {
   try {
     const saved = window.localStorage.getItem(COUNTDOWN_TARGET_KEY);
     if (!saved) return null;
@@ -31,19 +34,56 @@ export function getCustomCountdown() {
   }
 }
 
-export function setCustomCountdown(date) {
+function cacheTarget(target) {
   try {
-    if (date) {
-      window.localStorage.setItem(COUNTDOWN_TARGET_KEY, date.toISOString());
+    if (target) {
+      window.localStorage.setItem(COUNTDOWN_TARGET_KEY, target.toISOString());
     } else {
       window.localStorage.removeItem(COUNTDOWN_TARGET_KEY);
     }
   } catch {}
 }
 
+// Synchronous resolver: shared target (if loaded) > last-known cached target > default birthday.
+export function getCountdownTarget() {
+  if (sharedCountdownCache !== undefined) {
+    return sharedCountdownCache || getNextBirthday();
+  }
+  return readCachedTarget() || getNextBirthday();
+}
+
+// Fetch the shared target from the server so every device sees the same countdown.
+export async function loadSharedCountdown() {
+  try {
+    const res = await fetch("/api/get-countdown");
+    if (!res.ok) throw new Error("Failed to load shared countdown");
+    const data = await res.json();
+    const target = data && data.target ? new Date(data.target) : null;
+    sharedCountdownCache = target;
+    cacheTarget(target);
+  } catch {
+    // keep whatever we already have
+  }
+  return getCountdownTarget();
+}
+
+// Persist the target to the shared Neon backend (affects all devices).
+export async function saveSharedCountdown(date) {
+  const res = await fetch("/api/set-countdown", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ target: date ? date.toISOString() : null }),
+  });
+  if (!res.ok) {
+    throw new Error("Failed to save shared countdown");
+  }
+  const data = await res.json();
+  sharedCountdownCache = data && data.target ? new Date(data.target) : null;
+  cacheTarget(sharedCountdownCache);
+  return sharedCountdownCache;
+}
+
 export function getNextBirthday() {
-  const custom = getCustomCountdown();
-  if (custom) return custom;
   const now = new Date();
   const next = new Date(now.getFullYear(), BIRTH_DATE_GREGORIAN.getMonth(), BIRTH_DATE_GREGORIAN.getDate(), 22, 1, 0);
   if (next.getTime() < now.getTime()) {

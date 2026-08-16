@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Music, Music2, ArrowRight, Sparkles } from "lucide-react";
-import { getNextBirthday, getBirthdayAge } from "../../data/birthday";
+import { getCountdownTarget, getBirthdayAge, loadSharedCountdown } from "../../data/birthday";
 import happyBirthdaySong from "../../assets/song/happy-birthday-song.mp3";
 
 const particles = Array.from({ length: 18 }, (_, i) => ({
@@ -40,13 +40,28 @@ const TimeBox = ({ value, label }) => (
 
 const CountdownPage = ({ forceReveal = false }) => {
   const navigate = useNavigate();
-  const [target, setTarget] = useState(() => getNextBirthday());
-  const [timeLeft, setTimeLeft] = useState(() => getNextBirthday() - Date.now());
+  const [target, setTarget] = useState(() => getCountdownTarget());
+  const [timeLeft, setTimeLeft] = useState(() => getCountdownTarget() - Date.now());
   const [reached, setReached] = useState(forceReveal);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   const age = getBirthdayAge();
+
+  useEffect(() => {
+    let mounted = true;
+    loadSharedCountdown().then((sharedTarget) => {
+      if (!mounted) return;
+      setTarget(sharedTarget);
+      setTimeLeft(sharedTarget - Date.now());
+      if (sharedTarget - Date.now() <= 0) {
+        setReached(true);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
