@@ -556,7 +556,7 @@ const MissPageContent = () => {
                 <p className={`mt-2 text-sm ${theme.gateError}`}>Incorrect password</p>
               )}
               <p className={`mt-3 rounded-lg px-3 py-2 text-xs ${theme.gateHint}`}>
-                Hint: First time we meet and exchange name and talk
+                Hint: What do you think it could be? Think deeply
               </p>
               <button
                 type="submit"
